@@ -3,7 +3,7 @@
 
 THÀNH VIÊN NHÓM:
 
-Ninh Đức Thọ
-Phan Văn Đức Anh
-Phạm Quang Huy
-Võ Ngọc Quý
+Ninh Đức Thọ.
+Phan Văn Đức Anh.
+Phạm Quang Huy.
+Võ Ngọc Quý.

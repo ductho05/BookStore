@@ -27,6 +27,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     ImageView btn_pdetail_cart;
     ImageView btn_heart;
     TextView tv_discount_price;
+
+    ImageView btn_add_to_cart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +42,13 @@ public class ProductDetailActivity extends AppCompatActivity {
         btn_pdetail_cart = (ImageView) findViewById(R.id.btn_pdetail_cart);
         btn_heart = (ImageView) findViewById(R.id.btn_heart);
         tv_discount_price = (TextView) findViewById(R.id.tv_discount_price);
+        btn_add_to_cart = (ImageView) findViewById(R.id.btn_add_to_cart);
         btn_pdetail_back.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_pdetail_search.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_pdetail_home.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_pdetail_cart.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_heart.setColorFilter(ContextCompat.getColor(this, R.color.red));
+        btn_add_to_cart.setColorFilter(ContextCompat.getColor(this, R.color.white));
         tv_discount_price.setPaintFlags(tv_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     }
 }

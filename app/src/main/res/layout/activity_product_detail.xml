@@ -174,11 +174,12 @@
 
             <View
                 android:layout_width="90dp"
-                android:layout_height="4dp"
+                android:layout_height="6dp"
                 android:background="@drawable/duongke"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="4dp"/>
+                android:layout_marginTop="4dp"
+                android:backgroundTint="@color/primary_color"/>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -486,12 +487,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="15dp"
                 android:paddingLeft="40dp"
                 android:text="Bạn Đọc Quan Tâm"
                 android:textColor="@color/primary_color"
                 android:textSize="16dp"
                 android:textStyle="bold" />
+
+            <View
+                android:layout_width="160dp"
+                android:layout_height="6dp"
+                android:background="@drawable/duongke"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="4dp"
+                android:backgroundTint="@color/primary_color"/>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -940,10 +949,61 @@
                 android:layout_marginBottom="15dp"
                 android:paddingStart="40dp"
                 android:paddingEnd="40dp"
+                android:paddingBottom="50dp"
                 android:text="Đến với bất kỳ hiệu sách nào (trực tiếp hoặc trực tuyến), bạn sẽ tìm thấy rất nhiều sách Python. Nếu đã quen với việc đọc sách, bạn sẽ quen với cái nhìn tổng quan nhanh chóng giúp bạn quyết định liệu cuốn sách này liệu có thực sự thích hợp với bạn hay không. Cuốn sách này mong muốn phổ cập ngôn ngữ Python đến với nhiều bạn có mong muốn tìm hiểu lập trình máy tính."
                 android:textColor="@color/text_color"
                 android:textSize="16dp" />
 
         </LinearLayout>
     </ScrollView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="680dp"
+        android:background="@color/primary_color"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar3"
+        app:layout_constraintStart_toStartOf="@+id/toolbar3"
+        app:layout_constraintTop_toTopOf="@+id/toolbar3">
+
+        <ImageView
+            android:id="@+id/btn_add_to_cart"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            app:srcCompat="@drawable/outline_add_shopping_cart_24"
+            android:background="@color/teal_200"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/btn_buy_now"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:background="@color/primary_color"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_marginTop="2dp"
+            android:text="Mua ngay"
+            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity.checkout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
+import com.example.myapplication.R;
 
 public class Payment_Method extends AppCompatActivity {
 

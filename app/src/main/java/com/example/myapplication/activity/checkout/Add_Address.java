@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activity.checkout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.example.myapplication.R;
 
 public class Add_Address extends AppCompatActivity {
 

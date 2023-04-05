@@ -1,4 +1,4 @@
-package com.example.myapplication.Cart;
+package com.example.myapplication.model;
 
 public class CartModel {
     private String nameItem;

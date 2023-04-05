@@ -1,4 +1,4 @@
-package com.example.uihome;
+package com.example.myapplication.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.myapplication.model.Book_in_home_Model;
+import com.example.myapplication.R;
 
 import java.util.ArrayList;
 

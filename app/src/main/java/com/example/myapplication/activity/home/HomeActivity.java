@@ -1,4 +1,4 @@
-package com.example.uihome;
+package com.example.myapplication.activity.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.example.myapplication.adapter.Book_in_home_Adapter;
+import com.example.myapplication.model.Book_in_home_Model;
+import com.example.myapplication.R;
 
 import java.util.ArrayList;
 

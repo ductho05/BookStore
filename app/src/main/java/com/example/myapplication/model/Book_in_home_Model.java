@@ -1,4 +1,4 @@
-package com.example.uihome;
+package com.example.myapplication.model;
 
 public class Book_in_home_Model {
     public String title;

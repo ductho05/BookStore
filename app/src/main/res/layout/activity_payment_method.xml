@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:forceHasOverlappingRendering="false"
-    tools:context=".Payment_Method">
+    tools:context=".activity.checkout.Payment_Method">
 
     <View
         android:id="@+id/view4"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,22 +12,25 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".ProductDetailActivity"
+            android:name=".activity.checkout.CheckOut_Address_Activity"
             android:exported="false" />
         <activity
-            android:name=".Add_Address"
+            android:name=".activity.checkout.Add_Address"
             android:exported="false" />
         <activity
-            android:name=".OrderPlaced_Activity"
+            android:name=".activity.home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".Payment_Method"
+            android:name=".activity.checkout.OrderPlaced_Activity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.checkout.Payment_Method"
             android:exported="false" />
         <activity
-            android:name=".CheckOut_Address_Activity"
+            android:name=".activity.home.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.productdetail.ProductDetailActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -12,13 +12,16 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".activity.home.HomeActivity"
+            android:exported="false"/>
+        <activity
             android:name=".activity.checkout.CheckOut_Address_Activity"
             android:exported="false" />
         <activity
             android:name=".activity.checkout.Add_Address"
             android:exported="false" />
         <activity
-            android:name=".activity.home.HomeActivity"
+            android:name=".activity.Cart.CartActivity"
             android:exported="false" />
         <activity
             android:name=".activity.checkout.OrderPlaced_Activity"

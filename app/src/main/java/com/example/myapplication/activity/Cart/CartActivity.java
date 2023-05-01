@@ -1,4 +1,4 @@
-package com.example.myapplication.Cart;
+package com.example.myapplication.activity.Cart;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.CartAdapter;
+import com.example.myapplication.model.CartModel;
 
 import java.util.ArrayList;
 

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,6 +11,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@color/primary_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Thú Bông Rồng Sữa "
+            android:textColor="#4D4D4D"
             app:layout_constraintStart_toStartOf="@+id/salePriceItem"
             app:layout_constraintTop_toTopOf="@+id/imageItem" />
 
@@ -51,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:text="99.000 đ"
+            android:textColor="#4D4D4D"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
             app:layout_constraintStart_toEndOf="@+id/imageItem"
             app:layout_constraintTop_toBottomOf="@+id/nameItem" />
@@ -61,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="105.000 đ"
+            android:textColor="@color/grey"
             app:layout_constraintStart_toEndOf="@+id/salePriceItem"
             app:layout_constraintTop_toTopOf="@+id/salePriceItem" />
 
@@ -76,6 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+"
+                android:textColor="@color/red"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -86,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="1"
                 android:textAlignment="center"
+                android:textColor="@color/purple_500"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textView14"
                 app:layout_constraintStart_toEndOf="@+id/textView13"
@@ -96,6 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-"
+                android:textColor="@color/red"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toStartOf="@+id/amountItem"
                 app:layout_constraintStart_toStartOf="parent"

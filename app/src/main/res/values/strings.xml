@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">Book Store</string>
+    <string name="app_name">project</string>
+    <string name="email">Email</string>
+    <string name="sign_in_to_continue_to_chatvia17">Sign in to continue to Chatvia17</string>
+    <string name="title_sign_in">Sign In</string>
+    <string name="chatvia17">Chatvia17</string>
+    <string name="hide">*********</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="get_your_chatvia_account_now">Get your Chatvia account now</string>
+    <string name="username">Username</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="sign_up">Sign up</string>
+    <string name="already_have_an_account">Already have an account ?</string>
+    <string name="signin">Signin</string>
+    <string name="done">Done</string>
+    <string name="reset_password">Reset Password</string>
+
+    <string name="content_signup" translatable="false">Don\'t you have an account?</string>
+    <string name="signup" translatable="false">Signup now</string>
+    <string name="sign_in" translatable="false">Sign in</string>
+    <string name="remember_me" translatable="false">Remember me</string>
+    <string name="forgot_password" translatable="false">Forgot password?</string>
+    <string name="mail_hint">admin@gmail.com</string>
 </resources>

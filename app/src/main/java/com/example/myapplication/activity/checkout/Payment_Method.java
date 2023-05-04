@@ -2,6 +2,7 @@ package com.example.myapplication.activity.checkout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,25 +25,19 @@ public class Payment_Method extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.translate_left_to_right);
-
-
-        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //view.startAnimation(animation);
-                finish();
-                Intent intent = new Intent(Payment_Method.this, CheckOut_Address_Activity.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.btn_back).setOnClickListener(view -> {
+            supportFinishAfterTransition();
+            Intent intent = new Intent(Payment_Method.this, CheckOut_Address_Activity.class);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(Payment_Method.this);
+            startActivity(intent, optionsCompat.toBundle());
         });
 
-        findViewById(R.id.btn_ctn_buy).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Payment_Method.this, OrderPlaced_Activity.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.btn_ctn_buy).setOnClickListener(view -> {
+            Intent intent = new Intent(Payment_Method.this, OrderPlaced_Activity.class);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(Payment_Method.this);
+            startActivity(intent, optionsCompat.toBundle());
         });
 
         findViewById(R.id.payment_method_list).setOnHoverListener(new View.OnHoverListener() {

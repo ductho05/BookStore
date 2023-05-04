@@ -3,6 +3,8 @@ package com.example.myapplication.activity.checkout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.app.ComponentActivity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -75,22 +77,20 @@ public class CheckOut_Address_Activity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                Intent intent = new Intent(CheckOut_Address_Activity.this, Payment_Method.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.btn_next).setOnClickListener(view -> {
+            supportFinishAfterTransition();
+            Intent intent = new Intent(CheckOut_Address_Activity.this, Payment_Method.class);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(CheckOut_Address_Activity.this);
+            startActivity(intent, optionsCompat.toBundle());
         });
 
-        findViewById(R.id.btn_add_address).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                Intent intent = new Intent(CheckOut_Address_Activity.this, Add_Address.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.btn_add_address).setOnClickListener(view -> {
+            supportFinishAfterTransition();
+            Intent intent = new Intent(CheckOut_Address_Activity.this, Add_Address.class);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(CheckOut_Address_Activity.this);
+            startActivity(intent, optionsCompat.toBundle());
         });
     }
 }

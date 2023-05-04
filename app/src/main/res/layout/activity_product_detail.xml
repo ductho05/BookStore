@@ -70,7 +70,7 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="406dp"
+        android:layout_width="match_parent"
         android:layout_height="673dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -184,9 +184,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_productIntro"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"/>
+                android:layout_height="wrap_content"/>
 
 
             <TextView
@@ -232,9 +230,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_readerCare"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"/>
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:layout_width="200dp"
@@ -264,8 +260,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
-                android:paddingStart="40dp"
-                android:paddingEnd="40dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:text="MÔ TẢ SẢN PHẨM"
                 android:textColor="@color/text_color"
                 android:textSize="16sp"
@@ -288,9 +284,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:paddingLeft="40dp"
+                    android:paddingLeft="10dp"
                     android:paddingTop="5dp"
-                    android:paddingRight="40dp"
+                    android:paddingRight="10dp"
                     android:paddingBottom="5dp">
 
                     <TextView
@@ -308,9 +304,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:paddingLeft="40dp"
+                    android:paddingLeft="10dp"
                     android:paddingTop="5dp"
-                    android:paddingRight="40dp"
+                    android:paddingRight="10dp"
                     android:paddingBottom="5dp">
 
                     <TextView
@@ -328,9 +324,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:paddingLeft="40dp"
+                    android:paddingLeft="10dp"
                     android:paddingTop="5dp"
-                    android:paddingRight="40dp"
+                    android:paddingRight="10dp"
                     android:paddingBottom="5dp">
 
                     <TextView
@@ -348,9 +344,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:paddingLeft="40dp"
+                    android:paddingLeft="10dp"
                     android:paddingTop="5dp"
-                    android:paddingRight="40dp"
+                    android:paddingRight="10dp"
                     android:paddingBottom="5dp">
 
                     <TextView
@@ -368,9 +364,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:paddingLeft="40dp"
+                    android:paddingLeft="10dp"
                     android:paddingTop="5dp"
-                    android:paddingRight="40dp"
+                    android:paddingRight="10dp"
                     android:paddingBottom="5dp">
 
                     <TextView
@@ -390,8 +386,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
-                android:paddingStart="40dp"
-                android:paddingEnd="40dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:text="Kỹ Thuật Lập Trình - Python Nâng Cao"
                 android:textColor="@color/text_color"
                 android:textSize="16dp"
@@ -401,8 +397,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:paddingStart="40dp"
-                android:paddingEnd="40dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:paddingBottom="50dp"
                 android:text="Đến với bất kỳ hiệu sách nào (trực tiếp hoặc trực tuyến), bạn sẽ tìm thấy rất nhiều sách Python. Nếu đã quen với việc đọc sách, bạn sẽ quen với cái nhìn tổng quan nhanh chóng giúp bạn quyết định liệu cuốn sách này liệu có thực sự thích hợp với bạn hay không. Cuốn sách này mong muốn phổ cập ngôn ngữ Python đến với nhiều bạn có mong muốn tìm hiểu lập trình máy tính."
                 android:textColor="@color/text_color"
@@ -436,7 +432,7 @@
 
         <ImageView
             android:id="@+id/btn_add_to_cart"
-            android:layout_width="180dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             app:srcCompat="@drawable/outline_add_shopping_cart_24"
@@ -447,7 +443,7 @@
 
         <TextView
             android:id="@+id/btn_buy_now"
-            android:layout_width="180dp"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:background="@color/primary_color"

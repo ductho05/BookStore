@@ -2,6 +2,7 @@ package com.example.myapplication.activity.checkout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,9 +27,11 @@ public class Add_Address extends AppCompatActivity {
         findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                supportFinishAfterTransition();
                 Intent intent = new Intent(Add_Address.this, CheckOut_Address_Activity.class);
-                startActivity(intent);
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(Add_Address.this);
+                startActivity(intent, optionsCompat.toBundle());
             }
         });
     }

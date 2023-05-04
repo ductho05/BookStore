@@ -2,6 +2,7 @@ package com.example.myapplication.activity.checkout;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,13 +27,12 @@ public class OrderPlaced_Activity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                Intent intent = new Intent(OrderPlaced_Activity.this, Payment_Method.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.btn_back).setOnClickListener(view -> {
+            supportFinishAfterTransition();
+            Intent intent = new Intent(OrderPlaced_Activity.this, Payment_Method.class);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(OrderPlaced_Activity.this);
+            startActivity(intent, optionsCompat.toBundle());
         });
     }
 }

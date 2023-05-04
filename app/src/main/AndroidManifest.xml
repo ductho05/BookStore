@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
             android:name=".LoginActivity"
@@ -40,6 +41,21 @@
             android:exported="false" />
         <activity
             android:name=".activity.checkout.CheckOut_Address_Activity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+ <activity
+            android:name=".activity.login.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.login.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

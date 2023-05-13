@@ -3,5 +3,6 @@
     <corners
         android:radius="8dp"
         android:bottomLeftRadius="0dp"/>
-    <solid android:color="@color/primary_color"/>background_left_message_item.xml
+    <solid android:color="@color/primary_color"/>
+
 </shape>

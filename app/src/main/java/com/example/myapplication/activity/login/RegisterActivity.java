@@ -1,10 +1,11 @@
-package com.example.project.ui.activity;
+package com.example.myapplication.activity.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.project.R;
+import com.example.myapplication.R;
+
 
 public class RegisterActivity extends AppCompatActivity {
 

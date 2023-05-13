@@ -61,7 +61,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btn_pdetail_search.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_pdetail_home.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_pdetail_cart.setColorFilter(ContextCompat.getColor(this, R.color.white));
-        btn_heart.setColorFilter(ContextCompat.getColor(this, R.color.red));
+        btn_heart.setColorFilter(ContextCompat.getColor(this, R.color.red_900));
         btn_add_to_cart.setColorFilter(ContextCompat.getColor(this, R.color.white));
         tv_discount_price.setPaintFlags(tv_discount_price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
@@ -71,30 +71,30 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 //        Thêm dữ liệu cho product
         productList1 = new ArrayList<>();
-        productList1.add(new Product(1L,"Chúc một ngày tốt lành - Nguyễn Nhật Ánh", "https://upload.wikimedia.org/wikipedia/vi/c/c8/Ch%C3%BAc_m%E1%BB%99t_ng%C3%A0y_t%E1%BB%91t_l%C3%A0nh_cover.jpg",
-                115000, 0.2, "Chúc một ngày tốt lành là tác phẩm của nhà văn chuyên viết truyện cho thiếu nhi Nguyễn Nhật Ánh, kể về cuộc sống hằng ngày của con người cũng như các con vật ở một làng quê. " +
-                "Truyện được chính thức phát hành vào ngày 6 tháng 3 năm 2014 bởi nhà xuất bản Trẻ", "NXB Trẻ", "Nguyễn Nhật Ánh", 2014,
-                288, true));
-
-        productList1.add(new Product(1L,"Chúc một ngày tốt lành - Nguyễn Nhật Ánh", "https://upload.wikimedia.org/wikipedia/vi/c/c8/Ch%C3%BAc_m%E1%BB%99t_ng%C3%A0y_t%E1%BB%91t_l%C3%A0nh_cover.jpg",
-                115000, 0.2, "Chúc một ngày tốt lành là tác phẩm của nhà văn chuyên viết truyện cho thiếu nhi Nguyễn Nhật Ánh, kể về cuộc sống hằng ngày của con người cũng như các con vật ở một làng quê. " +
-                "Truyện được chính thức phát hành vào ngày 6 tháng 3 năm 2014 bởi nhà xuất bản Trẻ", "NXB Trẻ", "Nguyễn Nhật Ánh", 2014,
-                288, true));
-
-        productList1.add(new Product(1L,"Chúc một ngày tốt lành - Nguyễn Nhật Ánh", "https://upload.wikimedia.org/wikipedia/vi/c/c8/Ch%C3%BAc_m%E1%BB%99t_ng%C3%A0y_t%E1%BB%91t_l%C3%A0nh_cover.jpg",
-                115000, 0.2, "Chúc một ngày tốt lành là tác phẩm của nhà văn chuyên viết truyện cho thiếu nhi Nguyễn Nhật Ánh, kể về cuộc sống hằng ngày của con người cũng như các con vật ở một làng quê. " +
-                "Truyện được chính thức phát hành vào ngày 6 tháng 3 năm 2014 bởi nhà xuất bản Trẻ", "NXB Trẻ", "Nguyễn Nhật Ánh", 2014,
-                288, true));
-
-        productList1.add(new Product(1L,"Chúc một ngày tốt lành - Nguyễn Nhật Ánh", "https://upload.wikimedia.org/wikipedia/vi/c/c8/Ch%C3%BAc_m%E1%BB%99t_ng%C3%A0y_t%E1%BB%91t_l%C3%A0nh_cover.jpg",
-                115000, 0.2, "Chúc một ngày tốt lành là tác phẩm của nhà văn chuyên viết truyện cho thiếu nhi Nguyễn Nhật Ánh, kể về cuộc sống hằng ngày của con người cũng như các con vật ở một làng quê. " +
-                "Truyện được chính thức phát hành vào ngày 6 tháng 3 năm 2014 bởi nhà xuất bản Trẻ", "NXB Trẻ", "Nguyễn Nhật Ánh", 2014,
-                288, true));
-
-        productList1.add(new Product(1L,"Chúc một ngày tốt lành - Nguyễn Nhật Ánh", "https://upload.wikimedia.org/wikipedia/vi/c/c8/Ch%C3%BAc_m%E1%BB%99t_ng%C3%A0y_t%E1%BB%91t_l%C3%A0nh_cover.jpg",
-                115000, 0.2, "Chúc một ngày tốt lành là tác phẩm của nhà văn chuyên viết truyện cho thiếu nhi Nguyễn Nhật Ánh, kể về cuộc sống hằng ngày của con người cũng như các con vật ở một làng quê. " +
-                "Truyện được chính thức phát hành vào ngày 6 tháng 3 năm 2014 bởi nhà xuất bản Trẻ", "NXB Trẻ", "Nguyễn Nhật Ánh", 2014,
-                288, true));
+//        productList1.add(new Product(1L,"Chúc một ngày tốt lành - Nguyễn Nhật Ánh", "https://upload.wikimedia.org/wikipedia/vi/c/c8/Ch%C3%BAc_m%E1%BB%99t_ng%C3%A0y_t%E1%BB%91t_l%C3%A0nh_cover.jpg",
+//                115000, 0.2, "Chúc một ngày tốt lành là tác phẩm của nhà văn chuyên viết truyện cho thiếu nhi Nguyễn Nhật Ánh, kể về cuộc sống hằng ngày của con người cũng như các con vật ở một làng quê. " +
+//                "Truyện được chính thức phát hành vào ngày 6 tháng 3 năm 2014 bởi nhà xuất bản Trẻ", "NXB Trẻ", "Nguyễn Nhật Ánh", 2014,
+//                288, true));
+//
+//        productList1.add(new Product(1L,"Chúc một ngày tốt lành - Nguyễn Nhật Ánh", "https://upload.wikimedia.org/wikipedia/vi/c/c8/Ch%C3%BAc_m%E1%BB%99t_ng%C3%A0y_t%E1%BB%91t_l%C3%A0nh_cover.jpg",
+//                115000, 0.2, "Chúc một ngày tốt lành là tác phẩm của nhà văn chuyên viết truyện cho thiếu nhi Nguyễn Nhật Ánh, kể về cuộc sống hằng ngày của con người cũng như các con vật ở một làng quê. " +
+//                "Truyện được chính thức phát hành vào ngày 6 tháng 3 năm 2014 bởi nhà xuất bản Trẻ", "NXB Trẻ", "Nguyễn Nhật Ánh", 2014,
+//                288, true));
+//
+//        productList1.add(new Product(1L,"Chúc một ngày tốt lành - Nguyễn Nhật Ánh", "https://upload.wikimedia.org/wikipedia/vi/c/c8/Ch%C3%BAc_m%E1%BB%99t_ng%C3%A0y_t%E1%BB%91t_l%C3%A0nh_cover.jpg",
+//                115000, 0.2, "Chúc một ngày tốt lành là tác phẩm của nhà văn chuyên viết truyện cho thiếu nhi Nguyễn Nhật Ánh, kể về cuộc sống hằng ngày của con người cũng như các con vật ở một làng quê. " +
+//                "Truyện được chính thức phát hành vào ngày 6 tháng 3 năm 2014 bởi nhà xuất bản Trẻ", "NXB Trẻ", "Nguyễn Nhật Ánh", 2014,
+//                288, true));
+//
+//        productList1.add(new Product(1L,"Chúc một ngày tốt lành - Nguyễn Nhật Ánh", "https://upload.wikimedia.org/wikipedia/vi/c/c8/Ch%C3%BAc_m%E1%BB%99t_ng%C3%A0y_t%E1%BB%91t_l%C3%A0nh_cover.jpg",
+//                115000, 0.2, "Chúc một ngày tốt lành là tác phẩm của nhà văn chuyên viết truyện cho thiếu nhi Nguyễn Nhật Ánh, kể về cuộc sống hằng ngày của con người cũng như các con vật ở một làng quê. " +
+//                "Truyện được chính thức phát hành vào ngày 6 tháng 3 năm 2014 bởi nhà xuất bản Trẻ", "NXB Trẻ", "Nguyễn Nhật Ánh", 2014,
+//                288, true));
+//
+//        productList1.add(new Product(1L,"Chúc một ngày tốt lành - Nguyễn Nhật Ánh", "https://upload.wikimedia.org/wikipedia/vi/c/c8/Ch%C3%BAc_m%E1%BB%99t_ng%C3%A0y_t%E1%BB%91t_l%C3%A0nh_cover.jpg",
+//                115000, 0.2, "Chúc một ngày tốt lành là tác phẩm của nhà văn chuyên viết truyện cho thiếu nhi Nguyễn Nhật Ánh, kể về cuộc sống hằng ngày của con người cũng như các con vật ở một làng quê. " +
+//                "Truyện được chính thức phát hành vào ngày 6 tháng 3 năm 2014 bởi nhà xuất bản Trẻ", "NXB Trẻ", "Nguyễn Nhật Ánh", 2014,
+//                288, true));
 
         productDetailAdapter = new ProductDetailAdapter(productList1, this);
         rv_productIntro.setAdapter(productDetailAdapter);
@@ -108,30 +108,30 @@ public class ProductDetailActivity extends AppCompatActivity {
 //        Thêm dữ liệu cho product
 
         productList2 = new ArrayList<>();
-        productList2.add(new Product(2L, "Mắt biếc - Nguyễn Nhật Ánh", "https://thuvientinhlaocai.vn/uploads/news/2020_08/gioi-thieu-sach/mat-biec.jpg",
-                110000, 0.1, "Mắt biếc là tiểu thuyết của nhà văn Nguyễn Nhật Ánh trong loạt truyện viết về tình yêu thanh thiếu niên của tác giả này cùng với Thằng quỷ nhỏ, Cô gái đến từ hôm qua,... Đây được xem là một trong những tác phẩm tiêu biểu của Nguyễn Nhật Ánh," +
-                " từng được dịch giả Kato Sakae dịch để giới thiệu với độc giả Nhật Bản với tựa đề Tsuburana hitomi", "NXB Trẻ", "Nguyễn Nhật Ánh", 1990,
-                234, true));
-
-        productList2.add(new Product(2L, "Mắt biếc - Nguyễn Nhật Ánh", "https://thuvientinhlaocai.vn/uploads/news/2020_08/gioi-thieu-sach/mat-biec.jpg",
-                110000, 0.1, "Mắt biếc là tiểu thuyết của nhà văn Nguyễn Nhật Ánh trong loạt truyện viết về tình yêu thanh thiếu niên của tác giả này cùng với Thằng quỷ nhỏ, Cô gái đến từ hôm qua,... Đây được xem là một trong những tác phẩm tiêu biểu của Nguyễn Nhật Ánh," +
-                " từng được dịch giả Kato Sakae dịch để giới thiệu với độc giả Nhật Bản với tựa đề Tsuburana hitomi", "NXB Trẻ", "Nguyễn Nhật Ánh", 1990,
-                234, true));
-
-        productList2.add(new Product(2L, "Mắt biếc - Nguyễn Nhật Ánh", "https://thuvientinhlaocai.vn/uploads/news/2020_08/gioi-thieu-sach/mat-biec.jpg",
-                110000, 0.1, "Mắt biếc là tiểu thuyết của nhà văn Nguyễn Nhật Ánh trong loạt truyện viết về tình yêu thanh thiếu niên của tác giả này cùng với Thằng quỷ nhỏ, Cô gái đến từ hôm qua,... Đây được xem là một trong những tác phẩm tiêu biểu của Nguyễn Nhật Ánh," +
-                " từng được dịch giả Kato Sakae dịch để giới thiệu với độc giả Nhật Bản với tựa đề Tsuburana hitomi", "NXB Trẻ", "Nguyễn Nhật Ánh", 1990,
-                234, true));
-
-        productList2.add(new Product(2L, "Mắt biếc - Nguyễn Nhật Ánh", "https://thuvientinhlaocai.vn/uploads/news/2020_08/gioi-thieu-sach/mat-biec.jpg",
-                110000, 0.1, "Mắt biếc là tiểu thuyết của nhà văn Nguyễn Nhật Ánh trong loạt truyện viết về tình yêu thanh thiếu niên của tác giả này cùng với Thằng quỷ nhỏ, Cô gái đến từ hôm qua,... Đây được xem là một trong những tác phẩm tiêu biểu của Nguyễn Nhật Ánh," +
-                " từng được dịch giả Kato Sakae dịch để giới thiệu với độc giả Nhật Bản với tựa đề Tsuburana hitomi", "NXB Trẻ", "Nguyễn Nhật Ánh", 1990,
-                234, true));
-
-        productList2.add(new Product(2L, "Mắt biếc - Nguyễn Nhật Ánh", "https://thuvientinhlaocai.vn/uploads/news/2020_08/gioi-thieu-sach/mat-biec.jpg",
-                110000, 0.1, "Mắt biếc là tiểu thuyết của nhà văn Nguyễn Nhật Ánh trong loạt truyện viết về tình yêu thanh thiếu niên của tác giả này cùng với Thằng quỷ nhỏ, Cô gái đến từ hôm qua,... Đây được xem là một trong những tác phẩm tiêu biểu của Nguyễn Nhật Ánh," +
-                " từng được dịch giả Kato Sakae dịch để giới thiệu với độc giả Nhật Bản với tựa đề Tsuburana hitomi", "NXB Trẻ", "Nguyễn Nhật Ánh", 1990,
-                234, true));
+//        productList2.add(new Product(2L, "Mắt biếc - Nguyễn Nhật Ánh", "https://thuvientinhlaocai.vn/uploads/news/2020_08/gioi-thieu-sach/mat-biec.jpg",
+//                110000, 0.1, "Mắt biếc là tiểu thuyết của nhà văn Nguyễn Nhật Ánh trong loạt truyện viết về tình yêu thanh thiếu niên của tác giả này cùng với Thằng quỷ nhỏ, Cô gái đến từ hôm qua,... Đây được xem là một trong những tác phẩm tiêu biểu của Nguyễn Nhật Ánh," +
+//                " từng được dịch giả Kato Sakae dịch để giới thiệu với độc giả Nhật Bản với tựa đề Tsuburana hitomi", "NXB Trẻ", "Nguyễn Nhật Ánh", 1990,
+//                234, true));
+//
+//        productList2.add(new Product(2L, "Mắt biếc - Nguyễn Nhật Ánh", "https://thuvientinhlaocai.vn/uploads/news/2020_08/gioi-thieu-sach/mat-biec.jpg",
+//                110000, 0.1, "Mắt biếc là tiểu thuyết của nhà văn Nguyễn Nhật Ánh trong loạt truyện viết về tình yêu thanh thiếu niên của tác giả này cùng với Thằng quỷ nhỏ, Cô gái đến từ hôm qua,... Đây được xem là một trong những tác phẩm tiêu biểu của Nguyễn Nhật Ánh," +
+//                " từng được dịch giả Kato Sakae dịch để giới thiệu với độc giả Nhật Bản với tựa đề Tsuburana hitomi", "NXB Trẻ", "Nguyễn Nhật Ánh", 1990,
+//                234, true));
+//
+//        productList2.add(new Product(2L, "Mắt biếc - Nguyễn Nhật Ánh", "https://thuvientinhlaocai.vn/uploads/news/2020_08/gioi-thieu-sach/mat-biec.jpg",
+//                110000, 0.1, "Mắt biếc là tiểu thuyết của nhà văn Nguyễn Nhật Ánh trong loạt truyện viết về tình yêu thanh thiếu niên của tác giả này cùng với Thằng quỷ nhỏ, Cô gái đến từ hôm qua,... Đây được xem là một trong những tác phẩm tiêu biểu của Nguyễn Nhật Ánh," +
+//                " từng được dịch giả Kato Sakae dịch để giới thiệu với độc giả Nhật Bản với tựa đề Tsuburana hitomi", "NXB Trẻ", "Nguyễn Nhật Ánh", 1990,
+//                234, true));
+//
+//        productList2.add(new Product(2L, "Mắt biếc - Nguyễn Nhật Ánh", "https://thuvientinhlaocai.vn/uploads/news/2020_08/gioi-thieu-sach/mat-biec.jpg",
+//                110000, 0.1, "Mắt biếc là tiểu thuyết của nhà văn Nguyễn Nhật Ánh trong loạt truyện viết về tình yêu thanh thiếu niên của tác giả này cùng với Thằng quỷ nhỏ, Cô gái đến từ hôm qua,... Đây được xem là một trong những tác phẩm tiêu biểu của Nguyễn Nhật Ánh," +
+//                " từng được dịch giả Kato Sakae dịch để giới thiệu với độc giả Nhật Bản với tựa đề Tsuburana hitomi", "NXB Trẻ", "Nguyễn Nhật Ánh", 1990,
+//                234, true));
+//
+//        productList2.add(new Product(2L, "Mắt biếc - Nguyễn Nhật Ánh", "https://thuvientinhlaocai.vn/uploads/news/2020_08/gioi-thieu-sach/mat-biec.jpg",
+//                110000, 0.1, "Mắt biếc là tiểu thuyết của nhà văn Nguyễn Nhật Ánh trong loạt truyện viết về tình yêu thanh thiếu niên của tác giả này cùng với Thằng quỷ nhỏ, Cô gái đến từ hôm qua,... Đây được xem là một trong những tác phẩm tiêu biểu của Nguyễn Nhật Ánh," +
+//                " từng được dịch giả Kato Sakae dịch để giới thiệu với độc giả Nhật Bản với tựa đề Tsuburana hitomi", "NXB Trẻ", "Nguyễn Nhật Ánh", 1990,
+//                234, true));
 
         productDetailAdapter2 = new ProductDetailAdapter(productList2, this);
         rv_readerCare.setAdapter(productDetailAdapter2);

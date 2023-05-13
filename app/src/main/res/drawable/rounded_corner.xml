@@ -11,7 +11,7 @@
     <!-- Định dạng màu nền cho khung viền -->
     <solid android:color="@android:color/transparent"/>
     <stroke
-        android:color="@color/border_color"
+        android:color="@color/purple_500"
         android:width="2dp"/>
 
 </shape>

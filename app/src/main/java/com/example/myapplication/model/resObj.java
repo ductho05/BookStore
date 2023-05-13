@@ -1,16 +1,14 @@
 package com.example.myapplication.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class resObj implements Serializable {
     private String status;
     private String message;
-    private Object data;
+    private List<Product> data;
 
-    public resObj() {
-    }
-
-    public resObj(String status, String message, Object data) {
+    public resObj(String status, String message, List<Product> data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -32,11 +30,11 @@ public class resObj implements Serializable {
         this.message = message;
     }
 
-    public Object getData() {
+    public List<Product> getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(List<Product> data) {
         this.data = data;
     }
 }

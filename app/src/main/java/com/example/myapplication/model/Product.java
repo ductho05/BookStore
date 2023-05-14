@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
-public class Product implements Parcelable {
+public class Product implements Serializable, Parcelable {
     private String _id;
     public String title;
     public String author;
@@ -16,12 +16,15 @@ public class Product implements Parcelable {
     public double old_price;
     public double rate;
     public int sold;
-    public String description;
+    public String desciption;
     public String status;
     public String images;
-    public Category category;
+    public Category categoryId;
 
-    public Product(String _id, String title, String author, String published_date, double price, double old_price, double rate, int sold, String description, String status, String images, Category category) {
+    public Product() {
+    }
+
+    public Product(String _id, String title, String author, String published_date, double price, double old_price, double rate, int sold, String desciption, String status, String images, Category categoryId) {
         this._id = _id;
         this.title = title;
         this.author = author;
@@ -30,10 +33,10 @@ public class Product implements Parcelable {
         this.old_price = old_price;
         this.rate = rate;
         this.sold = sold;
-        this.description = description;
+        this.desciption = desciption;
         this.status = status;
         this.images = images;
-        this.category = category;
+        this.categoryId = categoryId;
     }
 
     protected Product(Parcel in) {
@@ -45,10 +48,9 @@ public class Product implements Parcelable {
         old_price = in.readDouble();
         rate = in.readDouble();
         sold = in.readInt();
-        description = in.readString();
+        desciption = in.readString();
         status = in.readString();
         images = in.readString();
-        category = in.readParcelable(Category.class.getClassLoader());
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -128,11 +130,11 @@ public class Product implements Parcelable {
     }
 
     public String getDescription() {
-        return description;
+        return desciption;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.desciption = description;
     }
 
     public String getStatus() {
@@ -151,12 +153,12 @@ public class Product implements Parcelable {
         this.images = images;
     }
 
-    public Category getCategory() {
-        return category;
+    public Category getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Category categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override
@@ -165,18 +167,17 @@ public class Product implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(@NonNull Parcel dest, int i) {
-        dest.writeString(_id);
-        dest.writeString(title);
-        dest.writeString(author);
-        dest.writeString(published_date);
-        dest.writeDouble(price);
-        dest.writeDouble(old_price);
-        dest.writeDouble(rate);
-        dest.writeInt(sold);
-        dest.writeString(description);
-        dest.writeString(status);
-        dest.writeString(images);
-        dest.writeParcelable(category, i);
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(_id);
+        parcel.writeString(title);
+        parcel.writeString(author);
+        parcel.writeString(published_date);
+        parcel.writeDouble(price);
+        parcel.writeDouble(old_price);
+        parcel.writeDouble(rate);
+        parcel.writeInt(sold);
+        parcel.writeString(desciption);
+        parcel.writeString(status);
+        parcel.writeString(images);
     }
 }

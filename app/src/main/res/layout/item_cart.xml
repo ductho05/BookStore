@@ -3,128 +3,134 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="160dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/primary_color"
+        android:background="@drawable/cartitembackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <CheckBox
-            android:id="@+id/cbSelectedItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageItem"
-            android:layout_width="300px"
-            android:layout_height="300px"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cbSelectedItem"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            <CheckBox
+                android:id="@+id/cbSelectedItem"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/nameItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Thú Bông Rồng Sữa "
-            android:textColor="#4D4D4D"
-            app:layout_constraintStart_toStartOf="@+id/salePriceItem"
-            app:layout_constraintTop_toTopOf="@+id/imageItem" />
+            <ImageView
+                android:id="@+id/imageItem"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ktlt2"
+                android:layout_marginRight="10dp"/>
 
-        <TextView
-            android:id="@+id/salePriceItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:text="99.000 đ"
-            android:textColor="#4D4D4D"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-            app:layout_constraintStart_toEndOf="@+id/imageItem"
-            app:layout_constraintTop_toBottomOf="@+id/nameItem" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="20dp">
 
-        <TextView
-            android:id="@+id/originalPriceItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="105.000 đ"
-            android:textColor="@color/gray_100"
-            app:layout_constraintStart_toEndOf="@+id/salePriceItem"
-            app:layout_constraintTop_toTopOf="@+id/salePriceItem" />
+                <TextView
+                    android:id="@+id/nameItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Kỹ thuật lập trình python nâng cao"
+                    android:textColor="#4D4D4D"
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/imageItem"
-            app:layout_constraintStart_toStartOf="@+id/salePriceItem">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
 
-            <TextView
-                android:id="@+id/btnPlus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="+"
-                android:textColor="#FB0000"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/amountItem"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/salePriceItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="99.000 đ"
+                        android:textColor="@color/primary_color"
+                        android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/amountItem"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textAlignment="center"
-                android:textColor="@color/purple_500"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnPlus"
-                app:layout_constraintStart_toEndOf="@+id/btnMinus"
-                app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/originalPriceItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="105.000 đ"
+                        android:textColor="@color/text_color2"
+                        android:layout_marginLeft="10dp"/>
 
-            <TextView
-                android:id="@+id/btnMinus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="-"
-                android:textColor="#FB0000"
-                android:textSize="30sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/amountItem"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
+                </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
 
-        <ImageView
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-            app:srcCompat="@drawable/baseline_delete_24" />
+                    <ImageView
+                        android:id="@+id/btnMinus"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="4dp"
+                        android:text="-"
+                        android:textColor="@color/red"
+                        android:textSize="30sp"
+                        android:src="@drawable/minus"
+                        android:background="@drawable/rounded_corner"
+                        />
 
+                    <TextView
+                        android:id="@+id/amountItem"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:text="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        android:textColor="@color/primary_color"
+                        />
+
+                    <ImageView
+                        android:id="@+id/btnPlus"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="4dp"
+                        android:text="+"
+                        android:textColor="@color/red"
+                        android:textSize="20sp"
+                        android:src="@drawable/plus"
+                        android:background="@drawable/rounded_corner"
+                        />
+
+                    <ImageView
+                        android:id="@+id/btnDelete"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="20dp"
+                        app:srcCompat="@drawable/delete" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,4 +20,4 @@
 //    public void updatePrice(ArrayList<CartModel> listDomains, TextView textView) {
 //        textView.setText(priceControl(listDomains));
 //    }
-//}
+

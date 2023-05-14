@@ -152,7 +152,7 @@ public class AllFragment extends Fragment {
             optionfilter = "price";
             sort = "desc";
         }
-        option = apiService.getFilterProduct(_categoryId, optionfilter, 1, MAX, sort, 0);
+        option = apiService.getFilterProduct(null, optionfilter, 1, MAX, sort, 0);
         option.enqueue(new Callback<resObj<List<Product>>>() {
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
@@ -187,7 +187,7 @@ public class AllFragment extends Fragment {
                     resObj<List<Product>> resObj = response.body();
                     myList = resObj.getData();
                     Log.d("myList12", myList.toString());
-                    adapter= new ProductDetailAdapter(myList, CategoryActivity.getInstance());
+                    adapter = new ProductDetailAdapter(myList, CategoryActivity.getInstance());
                     recyclerView.setHasFixedSize(true);
                     DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
                     DividerItemDecoration divider2 = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL);
@@ -203,7 +203,7 @@ public class AllFragment extends Fragment {
             public void onFailure(Call<resObj<List<Product>>> call, Throwable t) {
                 Log.d("myList12", "FAIL");
             }
-        }   );
+        });
     }
 
     private void AnhXa() {

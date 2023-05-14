@@ -1,12 +1,18 @@
 package com.example.myapplication.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Objects;
+
+
 
 public class resObj<T> implements Serializable {
     private String status;
     private String message;
     private T data;
+
+    public resObj() {
+    }
 
     public resObj(String status, String message, T data) {
         this.status = status;
@@ -36,5 +42,9 @@ public class resObj<T> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public Boolean isSuccess() {
+        return Objects.equals(status, "OK");
     }
 }

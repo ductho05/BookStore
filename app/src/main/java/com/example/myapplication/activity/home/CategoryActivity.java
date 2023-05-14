@@ -27,6 +27,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -108,6 +109,19 @@ public class CategoryActivity extends AppCompatActivity {
     public static CategoryActivity getInstance() {
         return instance;
     }
+
+    private Call<resObj<ArrayList<Product>>> GetFilter() {
+        String filter = getIntent().getStringExtra("Filter");
+        Call<resObj<ArrayList<Product>>> option = null;
+        if (Objects.equals(filter, "NEW"))
+            option = apiService.getNewProduct("1");
+        else if (Objects.equals(filter, "SALE"))
+            option = apiService.getBestSellerProduct("1");
+        else
+            option = apiService.getLowestProduct("1");
+        return option;
+    }
+
 
 
     private void GetDataCategory () {

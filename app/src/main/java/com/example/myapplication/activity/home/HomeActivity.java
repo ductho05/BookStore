@@ -274,9 +274,10 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     }
     private void setViewLastBook() {
-        ApiService.apiService.getFilterProduct("", "published_date", 1, 20, "desc", Integer.parseInt(QUALITY)).enqueue(new Callback<resObj<List<Product>>>() {
+                ApiService.apiService.getFilterProduct("", "published_date", 1, 20, "desc", Integer.parseInt(QUALITY)).enqueue(new Callback<resObj<List<Product>>>() {
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
+
                 if (response.isSuccessful()) {
                     products = response.body().getData();
                     adapter = new ProductDetailAdapter(products, HomeActivity.this);
@@ -296,7 +297,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void setViewBestSeller() {
-        ApiService.apiService.getBestSellerProduct(QUALITY).enqueue(new Callback<resObj<List<Product>>>() {
+        ApiService.apiService.getFilterProduct("", "sold", 1, 20, "desc", Integer.parseInt(QUALITY)).enqueue(new Callback<resObj<List<Product>>>() {
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                 if (response.isSuccessful()) {
@@ -304,8 +305,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
                     adapter = new ProductDetailAdapter(products, HomeActivity.this);
                     listViewBestSeller.setHasFixedSize(true);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false);
-                    //RecyclerView.LayoutManager linearLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
-
                     listViewBestSeller.setLayoutManager(linearLayoutManager);
                     listViewBestSeller.setAdapter(adapter);
                     //productDetailAdapter.notifyDataSetChanged();
@@ -318,6 +317,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
     }
+
 
     public void setViewForYou() {
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);

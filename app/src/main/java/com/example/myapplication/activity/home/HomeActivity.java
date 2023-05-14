@@ -104,7 +104,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void onClick(View view) {
                 // Truyền du lieu qua CategoryActivity
-
                 Intent intent = new Intent(HomeActivity.this, CategoryActivity.class);
                 intent.putExtra("Filter", "Mới nhất");
                 startActivity(intent);
@@ -275,9 +274,15 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     }
     private void setViewLastBook() {
+<<<<<<< HEAD
         ApiService.apiService.getNewProduct(QUALITY).enqueue(new Callback<resObj<ArrayList<Product>>>() {
             @Override
             public void onResponse(Call<resObj<ArrayList<Product>>> call, Response<resObj<ArrayList<Product>>> response) {
+=======
+        ApiService.apiService.getFilterProduct("", "published_date", 1, 20, "desc", Integer.parseInt(QUALITY)).enqueue(new Callback<resObj<List<Product>>>() {
+            @Override
+            public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
+>>>>>>> 1133d06bfa8a2b244f3710588b41e5f011c23c65
                 if (response.isSuccessful()) {
                     products = response.body().getData();
                     adapter = new ProductDetailAdapter(products, HomeActivity.this);
@@ -290,16 +295,26 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
 
             @Override
+<<<<<<< HEAD
             public void onFailure(Call<resObj<ArrayList<Product>>> call, Throwable t) {
+=======
+            public void onFailure(Call<resObj<List<Product>>> call, Throwable t) {
+>>>>>>> 1133d06bfa8a2b244f3710588b41e5f011c23c65
                 Log.d("logg", t.getMessage());
             }
         });
     }
 
     private void setViewBestSeller() {
+<<<<<<< HEAD
         ApiService.apiService.getBestSellerProduct(QUALITY).enqueue(new Callback<resObj<ArrayList<Product>>>() {
             @Override
             public void onResponse(Call<resObj<ArrayList<Product>>> call, Response<resObj<ArrayList<Product>>> response) {
+=======
+        ApiService.apiService.getBestSellerProduct(QUALITY).enqueue(new Callback<resObj<List<Product>>>() {
+            @Override
+            public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
+>>>>>>> 1133d06bfa8a2b244f3710588b41e5f011c23c65
                 if (response.isSuccessful()) {
                     products = response.body().getData();
                     adapter = new ProductDetailAdapter(products, HomeActivity.this);
@@ -314,7 +329,11 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
 
             @Override
+<<<<<<< HEAD
             public void onFailure(Call<resObj<ArrayList<Product>>> call, Throwable t) {
+=======
+            public void onFailure(Call<resObj<List<Product>>> call, Throwable t) {
+>>>>>>> 1133d06bfa8a2b244f3710588b41e5f011c23c65
                 Log.d("logg", t.getMessage());
             }
         });

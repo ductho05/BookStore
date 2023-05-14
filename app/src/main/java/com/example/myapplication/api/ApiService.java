@@ -1,11 +1,15 @@
 package com.example.myapplication.api;
 
+<<<<<<< HEAD
 import com.example.myapplication.model.Cart;
 import com.example.myapplication.model.CartItem;
 import com.example.myapplication.model.CartItemModel;
 import com.example.myapplication.model.CartModel;
 import com.example.myapplication.model.Order;
 import com.example.myapplication.model.OrderItem;
+=======
+import com.example.myapplication.model.Category;
+>>>>>>> 1133d06bfa8a2b244f3710588b41e5f011c23c65
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.resObj;
@@ -59,6 +63,7 @@ public interface ApiService {
 
     // hiển thị 8 sách mới nhất
     @GET("products/new/{num}")
+<<<<<<< HEAD
     Call<resObj<ArrayList<Product>>> getNewProduct(@Path("num") String num);
 
     // hiển thị 8 sách bán chạy nhất
@@ -68,10 +73,22 @@ public interface ApiService {
     // hiển thị 8 sách bán rẻ nhất
     @GET("products/sale/{num}")
     Call<resObj<ArrayList<Product>>> getLowestProduct(@Path("num") String num);
+=======
+    Call<resObj<List<Product>>> getNewProduct(@Path("num") String num);
+
+    // hiển thị 8 sách bán chạy nhất
+    @GET("products/bestseller/{num})")
+    Call<resObj<List<Product>>> getBestSellerProduct(@Path("num") String num);
+
+    // hiển thị 8 sách bán rẻ nhất
+    @GET("products/sale/{num}")
+    Call<resObj<List<Product>>> getLowestProduct(@Path("num") String num);
+>>>>>>> 1133d06bfa8a2b244f3710588b41e5f011c23c65
 
     // Tìm sản phẩm theo tên:
     @GET("products/title/{title}")
     Call<resObj<List<Product>>> getProductByTitle(@Path("title") String title,
+<<<<<<< HEAD
                                                   @Query("num") int num
     );
 
@@ -90,6 +107,25 @@ public interface ApiService {
     //    Cart
     @POST("cart/user")
     Call<resObj<CartModel>> getCartByUser(@Query("_id") String user);
+=======
+                                   @Query("num") int num
+                                   );
+
+
+    // Tìm sản phẩm theo danh mục:
+    @GET("products/category/{category}")
+    Call<resObj<List<Product>>> getProductByCategory(@Path("category") String category
+                                      );
+
+    // Lọc sản phẩm của từng danh mục
+    @GET("products")
+    Call<resObj<List<Product>>> getFilterProduct(@Query("category") String category,
+                                  @Query("filter") String filter,
+                                  @Query("page") int page,
+                                  @Query("perPage") int perPage,
+                                  @Query("sort") String sort,
+                                  @Query("num") int num);
+>>>>>>> 1133d06bfa8a2b244f3710588b41e5f011c23c65
 
     @POST("cart/add")
     Call<resObj<Cart>> addCart(@Body Cart cart);
@@ -98,8 +134,14 @@ public interface ApiService {
     @POST("cartitems/product")
     Call<resObj<CartItemModel>> getCartItemByProduct(@Query("product") String product);
 
+<<<<<<< HEAD
     @POST("cartitems/add")
     Call<resObj<CartItem>> addCartItem(@Body CartItem cartItem);
+=======
+    // Trang Category
+    @GET("categories/")
+    Call<resObj<List<Category>>> getAllCategory();
+>>>>>>> 1133d06bfa8a2b244f3710588b41e5f011c23c65
 
     @POST("cartitems/user")
     Call<resObj<List<CartItemModel>>> getAllCartItemByUser(@Query("id") String id);

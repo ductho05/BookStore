@@ -57,10 +57,13 @@ public class AllFragment extends Fragment {
     private OptionFitler optionFitler;
 
     public List<Product> myList;
+    String _categoryId;
 
 
 
-    public AllFragment() {
+
+    public AllFragment(String categoryId) {
+        _categoryId = categoryId;
     }
 
 
@@ -74,12 +77,26 @@ public class AllFragment extends Fragment {
 
         mView = inflater.inflate(R.layout.fragment_all, container, false);
         AnhXa();
-
         SetSpiner(categoryActivity.getFilter());
-
+        Log.d("filteưq131r", _categoryId + " " + categoryActivity.getFilter());
+        //GetCategory();
 
         return mView;
     }
+
+//    private void GetCategory() {
+//        if (_layout == "Kinh Tế") {
+//            category = "593";
+//        } else if (_layout == "Thiếu Nhi") {
+//            category = "1754";
+//        }
+//        else if (_layout == "Văn Học") {
+//            category = "1755";
+//        }
+//        {
+//            category = "";
+//        }
+//    }
 
     private void SetSpiner(String filter) {
         List<String> list = new ArrayList<>();
@@ -106,7 +123,7 @@ public class AllFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                GetData();
+                //GetData();
             }
         }   );
 
@@ -135,7 +152,11 @@ public class AllFragment extends Fragment {
             optionfilter = "price";
             sort = "desc";
         }
+<<<<<<< HEAD
         option = apiService.getFilterProduct(null, optionfilter, 1, MAX, sort, 0);
+=======
+        option = apiService.getFilterProduct(_categoryId, optionfilter, 1, MAX, sort, 0);
+>>>>>>> 1133d06bfa8a2b244f3710588b41e5f011c23c65
         option.enqueue(new Callback<resObj<List<Product>>>() {
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
@@ -162,20 +183,12 @@ public class AllFragment extends Fragment {
         }   );
     }
 
-//    private Call<resObj> GetFilter() {
-//        String filter = getIntent().getStringExtra("Filter");
-//        Call<resObj> option = null;
-//        if (Objects.equals(filter, "NEW"))
-//            option = apiService.getNewProduct("1");
-//        else if (Objects.equals(filter, "SALE"))
-//            option = apiService.getBestSellerProduct("1");
-//        else
-//            option = apiService.getLowestProduct("1");
-//        return option;
-//    }
-
     private void GetData() {
+<<<<<<< HEAD
         ApiService.apiService.getFilterProduct(null, null, 1, MAX, null, 0).enqueue(new Callback<resObj<List<Product>>>() {
+=======
+        ApiService.apiService.getFilterProduct(_categoryId, null, 1, MAX, null, 0).enqueue(new Callback<resObj<List<Product>>>() {
+>>>>>>> 1133d06bfa8a2b244f3710588b41e5f011c23c65
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                 if (response.isSuccessful()) {

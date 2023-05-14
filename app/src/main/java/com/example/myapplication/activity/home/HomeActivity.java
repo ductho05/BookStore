@@ -1,6 +1,7 @@
 package com.example.myapplication.activity.home;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +27,9 @@ import com.example.myapplication.adapter.ProductDetailAdapter;
 import com.example.myapplication.adapter.SlideAdapter;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.R;
+import com.example.myapplication.fragment.AllFragment;
 import com.example.myapplication.model.Category;
+import com.example.myapplication.model.OptionFitler;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.Slide;
 import com.example.myapplication.model.resObj;
@@ -48,7 +51,7 @@ import retrofit2.Response;
 public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private String QUALITY = "12";
-    private String RANDOM_CATE = "";
+    //private String RANDOM_CATE = "";
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
     private SlideAdapter photoAdapter;
@@ -78,15 +81,20 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
-        RANDOM_CATE=getRandomCateFlashSale();
+
         AnhXa();
+
         ClickOneThing();
+        //setViewFlashSale();
         onStart();
         setSlideHome();
-        setViewFlashSale();
         setViewLastBook();
         setViewForYou();
         setViewBestSeller();
+    }
+
+    public String getQuality() {
+        return QUALITY;
     }
 
 
@@ -96,8 +104,9 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void onClick(View view) {
                 // Truyền du lieu qua CategoryActivity
+
                 Intent intent = new Intent(HomeActivity.this, CategoryActivity.class);
-                intent.putExtra("Filter", "NEW");
+                intent.putExtra("Filter", "Mới nhất");
                 startActivity(intent);
             }
         });
@@ -107,7 +116,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             public void onClick(View view) {
                 // Truyền du lieu qua CategoryActivity
                 Intent intent = new Intent(HomeActivity.this, CategoryActivity.class);
-                intent.putExtra("Filter", "SALE");
+                intent.putExtra("Filter", "Bán chạy nhất");
                 startActivity(intent);
             }
         });
@@ -129,16 +138,21 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         });
     }
 
+
+
+
     @Override
     public void onStart() {
         super.onStart();
         long now = System.currentTimeMillis();
         long midnight = getMidnight(now);
+        onRefresh();
 
 
         CountDownTimer timer = new CountDownTimer(midnight - now, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+
                 int hours = (int) (millisUntilFinished / (60 * 60 * 1000));
                 int minutes = (int) ((millisUntilFinished / (60 * 1000)) % 60);
                 int seconds = (int) ((millisUntilFinished / 1000) % 60);
@@ -148,9 +162,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             @Override
             public void onFinish() {
-//                txtTimer.setText("00:00:00");
-
-                onRefresh();
                 onStart();
             }
         };
@@ -158,7 +169,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private String getRandomCateFlashSale() {
-        String cate = "";
+
         int[] cates = {871,
                 316,
                 664,
@@ -180,8 +191,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
                 5246};
         Random rand = new Random();
         int randomIndex = rand.nextInt(cates.length);
-        cate = String.valueOf(cates[randomIndex]);
-        return cate;
+        return String.valueOf(cates[randomIndex]);
     }
 
     private int getCurrentHour() {
@@ -234,7 +244,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void setViewFlashSale() {
-        ApiService.apiService.getFilterProduct(RANDOM_CATE, "discount", 1, 2000, "desc", Integer.parseInt(QUALITY)).enqueue(new Callback<resObj>() {
+        ApiService.apiService.getFilterProduct(getRandomCateFlashSale(), "discount", 1, 2000, "desc", Integer.parseInt(QUALITY)).enqueue(new Callback<resObj>() {
             @Override
             public void onResponse(Call<resObj> call, Response<resObj> response) {
                 if (response.isSuccessful()) {
@@ -358,9 +368,10 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
     }
 
+
     @Override
     public void onRefresh() {
-        RANDOM_CATE=getRandomCateFlashSale();
+
         setViewFlashSale();
 //        setViewLastBook();
 //        setViewBestSeller();

@@ -53,6 +53,8 @@ public class CategoryActivity extends AppCompatActivity {
     private ImageView backtohome;
     TextView tvSearch;
 
+    private String mfilter = "";
+
     public TabLayout tabLayout;
     public ViewPager viewPager;
 
@@ -71,13 +73,16 @@ public class CategoryActivity extends AppCompatActivity {
 //      ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
+
         viewPager.setAdapter(viewPaperAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
 
 
-//        String filter = getIntent().getStringExtra("Filter");
-//        Bundle bundle = new Bundle();
+        String filter = getIntent().getStringExtra("Filter");
+        Log.d("TA121G", "onCreate: " + filter);
+        
+        senData(filter);
 //        bundle.putString("key", filter);
 //
 //        Log.d("TA121G", "onCreate: " + bundle);
@@ -88,6 +93,17 @@ public class CategoryActivity extends AppCompatActivity {
 //        transaction.commit();
 
         //GetDataCategory();
+    }
+
+    private void senData(String filter) {
+        mfilter = filter;
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.viewPager, new AllFragment());
+        ft.commit();
+    }
+
+    public String getFilter() {
+        return mfilter;
     }
 
 
@@ -101,6 +117,8 @@ public class CategoryActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+
 
     public static CategoryActivity getInstance() {
         return instance;

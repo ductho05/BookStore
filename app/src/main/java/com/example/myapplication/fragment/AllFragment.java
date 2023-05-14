@@ -40,26 +40,29 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Query;
 
 
 public class AllFragment extends Fragment {
 
 
-    public static final String MAX = "10";
+    public static final int MAX = 20;
     public View mView;
     private Spinner spinner;
     public RecyclerView recyclerView;
     public RecyclerView.Adapter adapter = null;
 
+    private CategoryActivity categoryActivity;
 
     private OptionFitler optionFitler;
 
     public List<Product> myList;
 
 
-    public AllFragment() {
 
+    public AllFragment() {
     }
+
 
 //    public AllFragment(OptionFitler optionFitler) {
 //        this.optionFitler = optionFitler;
@@ -71,25 +74,34 @@ public class AllFragment extends Fragment {
 
         mView = inflater.inflate(R.layout.fragment_all, container, false);
         AnhXa();
-        SetSpiner();
-        return mView;
 
+        SetSpiner(categoryActivity.getFilter());
+
+
+        return mView;
     }
 
-    private void SetSpiner() {
+    private void SetSpiner(String filter) {
         List<String> list = new ArrayList<>();
         list.add("Trending");
         list.add("Mới nhất");
-        list.add("Bán chạy");
-        list.add("Giá thấp");
-        list.add("Giá cao");
+        list.add("Bán chạy nhất");
+        list.add("Giá thấp nhất");
+        list.add("Giá cao nhất");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(CategoryActivity.getInstance(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        if (filter != null) {
+            int spinnerPosition = adapter.getPosition(filter);
+            spinner.setSelection(spinnerPosition);
+        }
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                GetSelectedFilter();
+                if ("Trending".equals(spinner.getSelectedItem().toString()))
+                    GetData();
+                else
+                    GetSelectedFilter();
             }
 
             @Override
@@ -103,16 +115,27 @@ public class AllFragment extends Fragment {
     public void GetSelectedFilter () {
         String filter = spinner.getSelectedItem().toString();
         Call<resObj> option = null;
-        if (Objects.equals(filter, "Mới nhất"))
-            option = apiService.getNewProduct("1");
-        else if (Objects.equals(filter, "Bán chạy"))
-            option = apiService.getBestSellerProduct("1");
-        else if (Objects.equals(filter, "Giá thấp"))
-            option = apiService.getLowestProduct("1");
-        else if (Objects.equals(filter, "Giá cao"))
-            option = apiService.getLowestProduct("1");
+        String optionfilter = null;
+        String sort = null;
+        if (Objects.equals(filter, "Mới nhất")) {
+            optionfilter = "published_date";
+            sort = "desc";
+        }
+        else if (Objects.equals(filter, "Bán chạy nhất")) {
+            optionfilter = "sold";
+            sort = "desc";
+        }
+        else if (Objects.equals(filter, "Giá thấp nhất"))
+        {
+            optionfilter = "price";
+            sort = "asc";
+        }
         else
-            option = apiService.getBestSellerProduct("1");
+        {
+            optionfilter = "price";
+            sort = "desc";
+        }
+        option = apiService.getFilterProduct(null, optionfilter, 1, MAX, sort, 0);
         option.enqueue(new Callback<resObj>() {
             @Override
             public void onResponse(Call<resObj> call, Response<resObj> response) {
@@ -152,7 +175,7 @@ public class AllFragment extends Fragment {
 //    }
 
     private void GetData() {
-        ApiService.apiService.getBestSellerProduct("645b0835a916f1a8008b68d2").enqueue(new Callback<resObj>() {
+        ApiService.apiService.getFilterProduct(null, null, 1, MAX, null, 0).enqueue(new Callback<resObj>() {
             @Override
             public void onResponse(Call<resObj> call, Response<resObj> response) {
                 if (response.isSuccessful()) {
@@ -181,6 +204,7 @@ public class AllFragment extends Fragment {
     private void AnhXa() {
         recyclerView = mView.findViewById(R.id.rycall);
         spinner = mView.findViewById(R.id.spinner);
+        categoryActivity = (CategoryActivity) getActivity();
     }
 
 }

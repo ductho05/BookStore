@@ -23,7 +23,8 @@ public interface ApiService {
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
+            .baseUrl("http://192.168.1.131:3000/bookstore/api/v1/") // becoffe
+            //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
             //.baseUrl("http://192.168.47.147:3000/bookstore/api/v1/") // Cổng dành cho Mạng
             //.baseUrl("http://192.168.1.30:3000/bookstore/api/v1/")
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -57,7 +58,7 @@ public interface ApiService {
                                       );
 
     // Lọc sản phẩm của từng danh mục
-    @GET("products/")
+    @GET("products")
     Call<resObj> getFilterProduct(@Query("category") String category,
                                   @Query("filter") String filter,
                                   @Query("page") int page,
@@ -66,6 +67,10 @@ public interface ApiService {
                                   @Query("num") int num);
 
 
+
+    // Trang Category
+    @GET("categories/")
+    Call<resObj> getAllCategory();
 
     @POST("users/")
     Call<resObj> getUserByEmail(@Query("email") String email);

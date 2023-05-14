@@ -2,8 +2,6 @@ package com.example.myapplication.helper;
 
 import android.widget.TextView;
 
-import com.example.myapplication.model.CartModel;
-
 import java.util.ArrayList;
 
 public class ManagementCart {

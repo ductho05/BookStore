@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.CartAdapter;
 import com.example.myapplication.helper.ManagementCart;
-import com.example.myapplication.model.CartModel;
 
 import java.util.ArrayList;
 

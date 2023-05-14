@@ -71,11 +71,13 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="673dp"
+        android:layout_height="619dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,20 +85,19 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/images"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/ktlt2" />
+                />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:paddingStart="40dp"
-                android:paddingRight="40dp"
-                android:text="Kỹ Thuật Lập Trình - Python Nâng Cao"
+                android:paddingStart="20dp"
+                android:paddingRight="20dp"
                 android:textColor="@color/text_color"
                 android:textSize="16sp" />
 
@@ -119,8 +120,8 @@
                     android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="40dp"
-                    android:paddingRight="10dp"
+                    android:paddingStart="20dp"
+                    android:paddingRight="20dp"
                     android:text="107.800 đ"
                     android:textColor="@color/primary_color"
                     android:textSize="24sp"
@@ -130,8 +131,8 @@
                     android:id="@+id/tv_discount_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingStart="20dp"
+                    android:paddingRight="20dp"
                     android:text="154.000 đ"
                     android:textColor="@color/text_color2"
                     android:textSize="16dp" />
@@ -140,18 +141,18 @@
                     android:id="@+id/tv_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
                     android:layout_marginLeft="10dp"
+                    android:background="@drawable/round_background"
+                    android:gravity="center"
+                    android:paddingStart="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="2dp"
                     android:text="-30%"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:background="@drawable/round_background"
-                    android:textAlignment="center"
-                    android:gravity="center"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <TextView
@@ -175,16 +176,19 @@
             <View
                 android:layout_width="90dp"
                 android:layout_height="6dp"
-                android:background="@drawable/duongke"
-                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="4dp"
-                android:backgroundTint="@color/primary_color"/>
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/duongke"
+                android:backgroundTint="@color/primary_color" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_productIntro"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginHorizontal="5dp">
+            </androidx.recyclerview.widget.RecyclerView>
 
 
             <TextView
@@ -221,16 +225,19 @@
             <View
                 android:layout_width="160dp"
                 android:layout_height="6dp"
-                android:background="@drawable/duongke"
-                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="4dp"
-                android:backgroundTint="@color/primary_color"/>
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/duongke"
+                android:backgroundTint="@color/primary_color" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_readerCare"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginHorizontal="5dp">
+            </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:layout_width="200dp"
@@ -273,7 +280,7 @@
                 android:layout_height="1dp"
                 android:background="@drawable/space_background" />
 
-            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -295,27 +302,8 @@
                         android:textSize="16dp" />
 
                     <TextView
+                        android:id="@+id/id"
                         android:text="9786043345216"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp">
-
-                    <TextView
-                        android:text="Suplier_List"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:text="Cty Thương mại STK"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
                 </TableRow>
@@ -335,27 +323,8 @@
                         android:textSize="16dp" />
 
                     <TextView
+                        android:id="@+id/author"
                         android:text="Nguyễn Quốc Huy"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp">
-
-                    <TextView
-                        android:text="Nhà xuất bản"
-                        android:textColor="@color/black"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:text="NXB Thanh Niên"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
                 </TableRow>
@@ -375,6 +344,7 @@
                         android:textSize="16dp" />
 
                     <TextView
+                        android:id="@+id/year_publish"
                         android:text="2022"
                         android:textColor="@color/black"
                         android:textSize="16dp" />
@@ -382,6 +352,7 @@
             </TableLayout>
 
             <TextView
+                android:id="@+id/title2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -394,6 +365,7 @@
                 android:textStyle="bold" />
 
             <com.codesgood.views.JustifiedTextView
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -411,14 +383,13 @@
         android:id="@+id/toolbar3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="680dp"
         android:background="@color/primary_color"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
         app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
@@ -430,10 +401,39 @@
         app:layout_constraintStart_toStartOf="@+id/toolbar3"
         app:layout_constraintTop_toTopOf="@+id/toolbar3">
 
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/btn_minus"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/minus" />
+
+            <TextView
+                android:id="@+id/quantity"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:text="1"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/btn_plus"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/plus"/>
+        </LinearLayout>
+
         <ImageView
             android:id="@+id/btn_add_to_cart"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
             android:layout_marginBottom="2dp"
             app:srcCompat="@drawable/outline_add_shopping_cart_24"
             android:background="@color/teal_200"
@@ -443,8 +443,8 @@
 
         <TextView
             android:id="@+id/btn_buy_now"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
             android:layout_marginBottom="2dp"
             android:background="@color/primary_color"
             android:paddingTop="16dp"

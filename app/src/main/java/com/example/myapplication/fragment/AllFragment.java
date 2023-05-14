@@ -114,7 +114,7 @@ public class AllFragment extends Fragment {
 
     public void GetSelectedFilter () {
         String filter = spinner.getSelectedItem().toString();
-        Call<resObj> option = null;
+        Call<resObj<List<Product>>> option = null;
         String optionfilter = null;
         String sort = null;
         if (Objects.equals(filter, "Mới nhất")) {
@@ -136,11 +136,11 @@ public class AllFragment extends Fragment {
             sort = "desc";
         }
         option = apiService.getFilterProduct(null, optionfilter, 1, MAX, sort, 0);
-        option.enqueue(new Callback<resObj>() {
+        option.enqueue(new Callback<resObj<List<Product>>>() {
             @Override
-            public void onResponse(Call<resObj> call, Response<resObj> response) {
+            public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                 if (response.isSuccessful()) {
-                    resObj resObj = response.body();
+                    resObj<List<Product>> resObj = response.body();
                     myList = resObj.getData();
                     Log.d("myList12", myList.toString());
                     adapter= new ProductDetailAdapter(myList, CategoryActivity.getInstance());
@@ -156,7 +156,7 @@ public class AllFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<resObj> call, Throwable t) {
+            public void onFailure(Call<resObj<List<Product>>> call, Throwable t) {
                 Log.d("myList12", "FAIL");
             }
         }   );
@@ -175,11 +175,11 @@ public class AllFragment extends Fragment {
 //    }
 
     private void GetData() {
-        ApiService.apiService.getFilterProduct(null, null, 1, MAX, null, 0).enqueue(new Callback<resObj>() {
+        ApiService.apiService.getFilterProduct(null, null, 1, MAX, null, 0).enqueue(new Callback<resObj<List<Product>>>() {
             @Override
-            public void onResponse(Call<resObj> call, Response<resObj> response) {
+            public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                 if (response.isSuccessful()) {
-                    resObj resObj = response.body();
+                    resObj<List<Product>> resObj = response.body();
                     myList = resObj.getData();
                     Log.d("myList12", myList.toString());
                     adapter= new ProductDetailAdapter(myList, CategoryActivity.getInstance());
@@ -195,7 +195,7 @@ public class AllFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<resObj> call, Throwable t) {
+            public void onFailure(Call<resObj<List<Product>>> call, Throwable t) {
                 Log.d("myList12", "FAIL");
             }
         }   );

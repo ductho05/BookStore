@@ -124,9 +124,9 @@ public class CategoryActivity extends AppCompatActivity {
         return instance;
     }
 
-    private Call<resObj> GetFilter() {
+    private Call<resObj<ArrayList<Product>>> GetFilter() {
         String filter = getIntent().getStringExtra("Filter");
-        Call<resObj> option = null;
+        Call<resObj<ArrayList<Product>>> option = null;
         if (Objects.equals(filter, "NEW"))
             option = apiService.getNewProduct("1");
         else if (Objects.equals(filter, "SALE"))
@@ -138,9 +138,9 @@ public class CategoryActivity extends AppCompatActivity {
 
 
     private void GetDataCategory() {
-        GetFilter().enqueue(new Callback<resObj>() {
+        GetFilter().enqueue(new Callback<resObj<ArrayList<Product>>>() {
             @Override
-            public void onResponse(@NonNull Call<resObj> call, @NonNull Response<resObj> response) {
+            public void onResponse(@NonNull Call<resObj<ArrayList<Product>>> call, @NonNull Response<resObj<ArrayList<Product>>> response) {
                 if (response.isSuccessful()){
                     assert response.body() != null;
                     productList = response.body().getData();
@@ -153,7 +153,7 @@ public class CategoryActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<resObj> call, Throwable t) {
+            public void onFailure(Call<resObj<ArrayList<Product>>> call, Throwable t) {
                 Log.d("Lỗi", t.getMessage());
             }
         });

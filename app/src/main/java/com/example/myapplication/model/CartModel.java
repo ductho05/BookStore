@@ -1,61 +1,61 @@
 package com.example.myapplication.model;
 
-public class CartModel {
-    private String nameItem;
-    private String originalPriceItem;
-    private String salePriceItem;
-    private String imageItem;
-    private int amount;
+import java.io.Serializable;
 
-    public CartModel(String nameItem, String priceItem, String salePriceItem, String imageItem, int amount) {
-        this.nameItem = nameItem;
-        this.originalPriceItem = priceItem;
-        this.salePriceItem = salePriceItem;
-        this.imageItem = imageItem;
-        this.amount = amount;
+public class CartModel implements Serializable {
+    private String _id;
+    private int total;
+    private User user;
+    private String createdAt;
+    private String updatedAt;
+
+    public CartModel() {
     }
 
-    public String getNameItem() {
-        return nameItem;
+    public CartModel(int total, User user, String createdAt, String updatedAt) {
+        this.total = total;
+        this.user = user;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
-    public String getOriginalPriceItem() {
-        return originalPriceItem;
+    public String get_id() {
+        return _id;
     }
 
-    public String getSalePriceItem() {
-        return salePriceItem;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
-    public String getImageItem() {
-        return imageItem;
+    public int getTotal() {
+        return total;
     }
 
-    public int getAmount() {
-        return amount;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
-    public void setNameItem(String nameItem) {
-        this.nameItem = nameItem;
+    public User getUser() {
+        return user;
     }
 
-    public void setOriginalPriceItem(String originalPriceItem) {
-        this.originalPriceItem = originalPriceItem;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setSalePriceItem(String salePriceItem) {
-        this.salePriceItem = salePriceItem;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setImageItem(String imageItem) {
-        this.imageItem = imageItem;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public int getAmount(int amount) {
-        return  amount;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

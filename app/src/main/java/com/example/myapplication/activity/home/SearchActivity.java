@@ -98,9 +98,9 @@ public class SearchActivity extends AppCompatActivity {
                     public void run() {
 
 
-                        ApiService.apiService.getProductByTitle(newText, 9).enqueue(new Callback<resObj>() {
+                        ApiService.apiService.getProductByTitle(newText, 9).enqueue(new Callback<resObj<List<Product>>>() {
                             @Override
-                            public void onResponse(Call<resObj> call, Response<resObj> response) {
+                            public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                                 if (response.isSuccessful()) {
                                     products = response.body().getData();
                                     if (products.size() == 0) {
@@ -121,7 +121,7 @@ public class SearchActivity extends AppCompatActivity {
                             }
 
                                 @Override
-                                public void onFailure(Call<resObj> call, Throwable t) {
+                                public void onFailure(Call<resObj<List<Product>>> call, Throwable t) {
                                     Log.d("logg", t.getMessage());
                                 }
                             });

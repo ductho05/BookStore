@@ -55,11 +55,11 @@ public class KTFragment extends Fragment {
     }
 
     private void GetData() {
-        ApiService.apiService.getProductByCategory("645b0835a916f1a8008b68d2").enqueue(new Callback<resObj>() {
+        ApiService.apiService.getProductByCategory("645b0835a916f1a8008b68d2", 0).enqueue(new Callback<resObj<List<Product>>>() {
             @Override
-            public void onResponse(Call<resObj> call, Response<resObj> response) {
+            public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                 if (response.isSuccessful()) {
-                    resObj resObj = response.body();
+                    resObj<List<Product>> resObj = response.body();
                     myList = resObj.getData();
                     Log.d("myList12", myList.toString());
                     adapter= new ProductDetailAdapter(myList, CategoryActivity.getInstance());
@@ -75,7 +75,7 @@ public class KTFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<resObj> call, Throwable t) {
+            public void onFailure(Call<resObj<List<Product>>> call, Throwable t) {
                 Log.d("myList12", "FAIL");
             }
         }   );

@@ -3,12 +3,12 @@ package com.example.myapplication.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class resObj implements Serializable {
+public class resObj<T> implements Serializable {
     private String status;
     private String message;
-    private List<Product> data;
+    private T data;
 
-    public resObj(String status, String message, List<Product> data) {
+    public resObj(String status, String message, T data) {
         this.status = status;
         this.message = message;
         this.data = data;
@@ -30,11 +30,11 @@ public class resObj implements Serializable {
         this.message = message;
     }
 
-    public List<Product> getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(List<Product> data) {
+    public void setData(T data) {
         this.data = data;
     }
 }

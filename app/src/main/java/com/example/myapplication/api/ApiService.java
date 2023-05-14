@@ -1,5 +1,6 @@
 package com.example.myapplication.api;
 
+import com.example.myapplication.model.Category;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.resObj;
 import com.google.gson.Gson;
@@ -35,31 +36,31 @@ public interface ApiService {
 
     // hiển thị 8 sách mới nhất
     @GET("products/new/{num}")
-    Call<resObj> getNewProduct(@Path("num") String num);
+    Call<resObj<List<Product>>> getNewProduct(@Path("num") String num);
 
     // hiển thị 8 sách bán chạy nhất
     @GET("products/bestseller/{num})")
-    Call<resObj> getBestSellerProduct(@Path("num") String num);
+    Call<resObj<List<Product>>> getBestSellerProduct(@Path("num") String num);
 
     // hiển thị 8 sách bán rẻ nhất
     @GET("products/sale/{num}")
-    Call<resObj> getLowestProduct(@Path("num") String num);
+    Call<resObj<List<Product>>> getLowestProduct(@Path("num") String num);
 
     // Tìm sản phẩm theo tên:
     @GET("products/title/{title}")
-    Call<resObj> getProductByTitle(@Path("title") String title,
+    Call<resObj<List<Product>>> getProductByTitle(@Path("title") String title,
                                    @Query("num") int num
                                    );
 
 
     // Tìm sản phẩm theo danh mục:
     @GET("products/category/{category}")
-    Call<resObj> getProductByCategory(@Path("category") String category
+    Call<resObj<List<Product>>> getProductByCategory(@Path("category") String category
                                       );
 
     // Lọc sản phẩm của từng danh mục
     @GET("products")
-    Call<resObj> getFilterProduct(@Query("category") String category,
+    Call<resObj<List<Product>>> getFilterProduct(@Query("category") String category,
                                   @Query("filter") String filter,
                                   @Query("page") int page,
                                   @Query("perPage") int perPage,
@@ -70,7 +71,7 @@ public interface ApiService {
 
     // Trang Category
     @GET("categories/")
-    Call<resObj> getAllCategory();
+    Call<resObj<List<Category>>> getAllCategory();
 
     @POST("users/")
     Call<resObj> getUserByEmail(@Query("email") String email);

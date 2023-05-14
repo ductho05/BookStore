@@ -67,10 +67,6 @@ public class AllFragment extends Fragment {
     }
 
 
-//    public AllFragment(OptionFitler optionFitler) {
-//        this.optionFitler = optionFitler;
-//    }
-
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -152,7 +148,7 @@ public class AllFragment extends Fragment {
             optionfilter = "price";
             sort = "desc";
         }
-        option = apiService.getFilterProduct(null, optionfilter, 1, MAX, sort, 0);
+        option = apiService.getFilterProduct(_categoryId, optionfilter, 1, MAX, sort, 0);
         option.enqueue(new Callback<resObj<List<Product>>>() {
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {

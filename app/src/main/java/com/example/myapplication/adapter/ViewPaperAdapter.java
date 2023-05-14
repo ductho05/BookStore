@@ -64,21 +64,5 @@ public class ViewPaperAdapter extends FragmentStatePagerAdapter {
                 return getlistcate()[i];
         }
         return "Tất cả";
-//        switch (position){
-//            case 0:
-//                return getCategories().get(0).getName();
-//            case 1:
-//                return "Kinh Tế";
-//            case 2:
-//                return "Thiếu Nhi";
-//            case 3:
-//                return "Văn Học";
-//            case 4:
-//                return "Khoa Học Kỹ Thuật";
-//            case 5:
-//                return "Kỹ Năng Sống";
-//            default:
-//                return "Tất cả";
-//        }
     }
 }

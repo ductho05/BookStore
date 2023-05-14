@@ -32,17 +32,18 @@
         app:layout_constraintVertical_bias="0.615"
         app:srcCompat="@drawable/back" />
 
-    <ImageView
+    <TextView
         android:id="@+id/btn_pdetail_search"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:drawableStart="@drawable/baseline_search_24"
+        android:drawableTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toEndOf="@+id/btn_pdetail_back"
         app:layout_constraintTop_toTopOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.615"
-        app:srcCompat="@drawable/baseline_search_24" />
+        app:layout_constraintVertical_bias="0.615"/>
 
     <ImageView
         android:id="@+id/btn_pdetail_home"
@@ -56,8 +57,7 @@
         app:layout_constraintVertical_bias="0.615"
         app:srcCompat="@drawable/outline_home_24" />
 
-    <ImageView
-        android:id="@+id/btn_pdetail_cart"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
@@ -65,8 +65,26 @@
         app:layout_constraintHorizontal_bias="0.261"
         app:layout_constraintStart_toEndOf="@+id/btn_pdetail_home"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.615"
-        app:srcCompat="@drawable/outline_shopping_cart_24" />
+        app:layout_constraintVertical_bias="0.615">
+
+        <ImageView
+            android:id="@+id/btn_pdetail_cart"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_shopping_cart_24"/>
+
+        <TextView
+            android:id="@+id/quantityCart"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:text="0"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/circle_background"
+            android:layout_gravity="top|end"
+            android:gravity="center"/>
+
+    </FrameLayout>
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -192,6 +210,7 @@
 
 
             <TextView
+                android:id="@+id/btn_seeMoreIntro"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
@@ -240,6 +259,7 @@
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
+                android:id="@+id/btn_seeMoreCare"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
@@ -368,13 +388,31 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:paddingBottom="50dp"
                 android:text="Đến với bất kỳ hiệu sách nào (trực tiếp hoặc trực tuyến), bạn sẽ tìm thấy rất nhiều sách Python. Nếu đã quen với việc đọc sách, bạn sẽ quen với cái nhìn tổng quan nhanh chóng giúp bạn quyết định liệu cuốn sách này liệu có thực sự thích hợp với bạn hay không. Cuốn sách này mong muốn phổ cập ngôn ngữ Python đến với nhiều bạn có mong muốn tìm hiểu lập trình máy tính."
                 android:textColor="@color/text_color"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:maxLines="10"
+                android:ellipsize="end"
+                android:lineSpacingExtra="8dp"
+                android:lineSpacingMultiplier="1.2"/>
+
+            <TextView
+                android:id="@+id/btn_seeMoreInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableEnd="@drawable/baseline_keyboard_arrow_right_24"
+                android:drawableTint="@color/primary_color"
+                android:gravity="center"
+                android:text="Xem Thêm"
+                android:textAlignment="center"
+                android:textColor="@color/primary_color"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:translationX="150dp"
+                android:layout_marginBottom="50dp"/>
 
         </LinearLayout>
     </ScrollView>

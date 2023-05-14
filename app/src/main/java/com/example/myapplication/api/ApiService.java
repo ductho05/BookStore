@@ -43,7 +43,7 @@ public interface ApiService {
             //.baseUrl("http://192.168.1.123:3000/bookstore/api/v1/") // becoffe
 
             //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
-            .baseUrl("http://192.168.47.147:3000/bookstore/api/v1/") // Cổng dành cho Mạng
+            .baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng
             //.baseUrl("http://192.168.1.30:3000/bookstore/api/v1/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -117,7 +117,6 @@ public interface ApiService {
     // Cart Items
     @POST("cartitems/product")
     Call<resObj<CartItemModel>> getCartItemByProduct(@Query("product") String product);
-
 
     @POST("cartitems/add")
     Call<resObj<CartItem>> addCartItem(@Body CartItem cartItem);

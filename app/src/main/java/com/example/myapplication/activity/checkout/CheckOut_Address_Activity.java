@@ -55,7 +55,7 @@ public class CheckOut_Address_Activity extends AppCompatActivity {
         setContentView(R.layout.checkout_address_activity);
         AnhXa();
         btnNextOrder.setEnabled(false);
-        btnNextOrder.setBackgroundColor(Color.rgb(254, 232, 176));
+        btnNextOrder.setBackgroundColor(Color.rgb(245,246,250));
         validate(ed_name);
         validate(ed_phone);
         validate(ed_city);
@@ -77,8 +77,9 @@ public class CheckOut_Address_Activity extends AppCompatActivity {
             cartItems = getData(order, orderItems);
             supportFinishAfterTransition();
             Intent intent = new Intent(CheckOut_Address_Activity.this, Payment_Method.class);
-            Log.e("cartItem Checkout Address", cartItems.get(0).getProduct().title);
-            Log.e("order Checkout Address", order.getName());
+            for (CartItemModel i:cartItems) {
+                Log.e("ListCartItem Cart: ", i.getProduct().getTitle());
+            }
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("cartItems", cartItems);
             intent.putExtras(bundle);
@@ -103,10 +104,10 @@ public class CheckOut_Address_Activity extends AppCompatActivity {
                 if (text.isEmpty()) {
                     edText.setError("Vui lòng nhập trường này");
                     btnNextOrder.setEnabled(false);
-                    btnNextOrder.setBackgroundColor(Color.rgb(254, 232, 176));
+                    btnNextOrder.setBackgroundColor(Color.rgb(245,246,250));
                 } else {
                     btnNextOrder.setEnabled(true);
-                    btnNextOrder.setBackgroundColor(Color.rgb(255,152,0));
+                    btnNextOrder.setBackgroundColor(Color.rgb(77,177,136));
                 }
             }
 

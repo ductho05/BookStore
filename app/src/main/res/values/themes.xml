@@ -3,8 +3,8 @@
         <!-- Primary brand color. -->
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">true</item>
-        <item name="colorPrimary">#ff5e00</item>
-        <item name="colorPrimaryVariant">#ff5e00</item>
+        <item name="colorPrimary">#4DB188</item>
+        <item name="colorPrimaryVariant">#4DB188</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

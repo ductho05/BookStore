@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -44,6 +45,7 @@ public class OrderPlaced_Activity extends AppCompatActivity {
                     .makeSceneTransitionAnimation(OrderPlaced_Activity.this);
             startActivity(intent, optionsCompat.toBundle());
         });
+
     }
 
     private void AnhXa() {

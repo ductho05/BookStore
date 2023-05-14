@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.cart.CartActivity;
+import com.example.myapplication.activity.home.CategoryActivity;
 import com.example.myapplication.activity.home.HomeActivity;
 import com.example.myapplication.activity.home.SearchActivity;
 import com.example.myapplication.adapter.ProductDetailAdapter;
@@ -55,7 +56,7 @@ import retrofit2.Retrofit;
 public class ProductDetailActivity extends AppCompatActivity {
 
     ImageView btn_pdetail_back;
-    ImageView btn_pdetail_search;
+    TextView btn_pdetail_search;
     ImageView btn_pdetail_home;
     ImageView btn_pdetail_cart;
     ImageView btn_heart;
@@ -68,8 +69,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     TextView discount;
     ImageView btn_plus;
     ImageView btn_minus;
-    TextView quantity, id, author, year_publish, description,title2;
-    TextView btn_buyNow;
+    TextView quantity, id, author, year_publish, description,title2, btn_seeMoreIntro, btn_seeMoreCare, btn_seeMoreInfo;
+    TextView btn_buyNow, quantityCart;
     private RecyclerView rv_productIntro;
     private RecyclerView rv_readerCare;
     private ProductDetailAdapter productDetailAdapter1;
@@ -92,21 +93,15 @@ public class ProductDetailActivity extends AppCompatActivity {
         displayProduct(_id);
         setProductIntro();
         setProductCare(_id);
-        btn_pdetail_search.setOnTouchListener(new View.OnTouchListener() {
+        setQuantityCart();
+        btn_pdetail_search.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundResource(R.drawable.my_view_pressed);
-                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    v.setBackgroundResource(R.drawable.white_backgroud);
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        Intent intent = new Intent(ProductDetailActivity.this, SearchActivity.class);
-                        startActivity(intent);
-                    }
-                }
-                return false;
+            public void onClick(View view) {
+                supportFinishAfterTransition();
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(ProductDetailActivity.this, R.anim.animation_down, R.anim.no_animation);
+                Intent intent = new Intent(ProductDetailActivity.this, SearchActivity.class);
+                startActivity(intent, options.toBundle());
             }
-
         });
 
         btn_pdetail_home.setOnClickListener(view -> {
@@ -211,7 +206,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                                     }
                                 }
                                 @Override
-                                public void onFailure(Call<resObj<CartItemModel>> call, Throwable t) {}
+                                public void onFailure(Call<resObj<CartItemModel>> call, Throwable t) {
+                                    Log.e("Xem sản phẩm có trong giỏ: ", t.getMessage());
+                                }
                             });
                 } else {
                     // Chưa có cart
@@ -236,6 +233,26 @@ public class ProductDetailActivity extends AppCompatActivity {
                 Log.e("lỗi: ", "Không thành công");
             }
         }));
+    }
+
+    private void setQuantityCart() {
+        ApiService.apiService.getAllCartItemByUser(user).enqueue(new Callback<resObj<List<CartItemModel>>>() {
+            @Override
+            public void onResponse(Call<resObj<List<CartItemModel>>> call, Response<resObj<List<CartItemModel>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<CartItemModel> list = response.body().getData();
+                    if (list != null) {
+                        String quantityCartItem = String.valueOf(list.size() + 1);
+                        quantityCart.setText(quantityCartItem);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<resObj<List<CartItemModel>>> call, Throwable t) {
+                Log.e("QuantityCart Item: ", t.getMessage());
+            }
+        });
     }
 
     private void setProductCare(String id) {
@@ -318,6 +335,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<resObj<CartItem>> call, Response<resObj<CartItem>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    recreate();
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     Toast.makeText(getApplicationContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Sản phẩm chưa được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
@@ -393,6 +412,13 @@ public class ProductDetailActivity extends AppCompatActivity {
                         description.setText(product.getDescription());
                         title2.setText(product.getTitle());
                         year_publish.setText(product.getPublished_date());
+
+                        btn_seeMoreInfo.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                            }
+                        });
                     }
                 }
             }
@@ -410,11 +436,23 @@ public class ProductDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btn_seeMoreIntro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                supportFinishAfterTransition();
+                supportFinishAfterTransition();
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(ProductDetailActivity.this, R.anim.animation_down, R.anim.no_animation);
+                Intent intent = new Intent(ProductDetailActivity.this, CategoryActivity.class);
+                intent.putExtra("Filter", "Mới nhất");
+                startActivity(intent, options.toBundle());
+            }
+        });
+
     }
 
     private void SetFrontEnd() {
         btn_pdetail_back.setColorFilter(ContextCompat.getColor(this, R.color.white));
-        btn_pdetail_search.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_pdetail_home.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_pdetail_cart.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_heart.setColorFilter(ContextCompat.getColor(this, R.color.red));
@@ -424,7 +462,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void AnhXa() {
         btn_pdetail_back = (ImageView) findViewById(R.id.btn_pdetail_back);
-        btn_pdetail_search = (ImageView) findViewById(R.id.btn_pdetail_search);
+        btn_pdetail_search = findViewById(R.id.btn_pdetail_search);
         btn_pdetail_home = (ImageView) findViewById(R.id.btn_pdetail_home);
         btn_pdetail_cart = (ImageView) findViewById(R.id.btn_pdetail_cart);
         btn_heart = (ImageView) findViewById(R.id.btn_heart);
@@ -445,5 +483,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         title2 = findViewById(R.id.title2);
         year_publish = findViewById(R.id.year_publish);
         btn_buyNow = findViewById(R.id.btn_buy_now);
+        quantityCart = findViewById(R.id.quantityCart);
+        btn_seeMoreIntro = findViewById(R.id.btn_seeMoreIntro);
+        btn_seeMoreCare = findViewById(R.id.btn_seeMoreCare);
+        btn_seeMoreInfo = findViewById(R.id.btn_seeMoreInfo);
     }
 }

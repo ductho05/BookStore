@@ -44,12 +44,16 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
     @Override
     public ProductDetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.e("AAAAANJUS", mContext.toString());
-        if (mContext.toString().contains("HomeActivity") || mContext.toString().contains("ProductDetailActivity")) {
+        if (mContext.toString().contains("SearchActivity")) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search, null);
+            return new ViewHolder(view);
+        }
+        else if (mContext.toString().contains("HomeActivity")) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.productitem, null);
             return new ViewHolder(view);
         }
         else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search, null);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cate, null);
             return new ViewHolder(view);
         }
     }

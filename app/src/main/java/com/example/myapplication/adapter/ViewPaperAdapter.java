@@ -6,11 +6,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.myapplication.fragment.AllFragment;
-import com.example.myapplication.fragment.KhoahockythuatFragment;
-import com.example.myapplication.fragment.KinhteFragment;
-import com.example.myapplication.fragment.KynagsongFragment;
-import com.example.myapplication.fragment.ThieunhiFragment;
-import com.example.myapplication.fragment.VanhocFragment;
+import com.example.myapplication.fragment.KHKTFragment;
+import com.example.myapplication.fragment.KNSFragment;
+import com.example.myapplication.fragment.KTFragment;
+import com.example.myapplication.fragment.TNFragment;
+import com.example.myapplication.fragment.VHFragment;
 
 public class ViewPaperAdapter extends FragmentStatePagerAdapter {
     public ViewPaperAdapter(@NonNull FragmentManager fm, int behavior) {
@@ -24,16 +24,16 @@ public class ViewPaperAdapter extends FragmentStatePagerAdapter {
         switch (position){
             case 0:
                 return new AllFragment();
-            case 1:
-                return new KinhteFragment();
-            case 2:
-                return new VanhocFragment();
-            case 3:
-                return new KynagsongFragment();
-            case 4:
-                return new ThieunhiFragment();
-            case 5:
-                return new KhoahockythuatFragment();
+                case 1:
+                return new KTFragment();
+                case 2:
+                return new TNFragment();
+                case 3:
+                return new VHFragment();
+                case 4:
+                return new KHKTFragment();
+                case 5:
+                return new KNSFragment();
             default:
                 return new AllFragment();
         }
@@ -45,22 +45,21 @@ public class ViewPaperAdapter extends FragmentStatePagerAdapter {
     }
 
 
-
     @Override
     public CharSequence getPageTitle(int position){
         switch (position){
             case 0:
                 return "Tất cả";
             case 1:
-                return "Kinh tế";
+                return "Kinh Tế";
             case 2:
-                return "Văn học";
+                return "Thiếu Nhi";
             case 3:
-                return "Kỹ năng sống";
+                return "Văn Học";
             case 4:
-                return "Thiếu nhi";
+                return "Khoa Học Kỹ Thuật";
             case 5:
-                return "Khoa học kỹ thuật";
+                return "Kỹ Năng Sống";
             default:
                 return "Tất cả";
         }

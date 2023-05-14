@@ -33,6 +33,7 @@ import com.example.myapplication.model.resObj;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,39 +96,39 @@ public class SearchActivity extends AppCompatActivity {
                 debounceTimer.debounce(new Runnable() {
                     @Override
                     public void run() {
+
+
                         ApiService.apiService.getProductByTitle(newText, 9).enqueue(new Callback<resObj>() {
                             @Override
                             public void onResponse(Call<resObj> call, Response<resObj> response) {
                                 if (response.isSuccessful()) {
-
                                     products = response.body().getData();
                                     if (products.size() == 0) {
                                         tvNoResult.setVisibility(View.VISIBLE);
-
+                                        recyclerView.setVisibility(View.GONE);
                                     } else {
                                         tvNoResult.setVisibility(View.GONE);
-
+                                        recyclerView.setVisibility(View.VISIBLE);
+                                        adapter = new ProductDetailAdapter(products, SearchActivity.this);
+                                        recyclerView.setHasFixedSize(true);
+                                        DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
+                                        recyclerView.addItemDecoration(divider);
+                                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchActivity.this, LinearLayoutManager.VERTICAL, false);
+                                        recyclerView.setLayoutManager(linearLayoutManager);
+                                        recyclerView.setAdapter(adapter);
                                     }
-                                    adapter = new ProductDetailAdapter(products, SearchActivity.this);
-                                    recyclerView.setHasFixedSize(true);
-                                    DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
-                                    recyclerView.addItemDecoration(divider);
-                                    //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchActivity.this, LinearLayoutManager.VERTICAL, false);
-                                    RecyclerView.LayoutManager linearLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
-                                    recyclerView.setLayoutManager(linearLayoutManager);
-                                    recyclerView.setAdapter(adapter);
-                                    //productDetailAdapter.notifyDataSetChanged();
                                 }
-
                             }
 
-                            @Override
-                            public void onFailure(Call<resObj> call, Throwable t) {
-                                Log.d("logg", t.getMessage());
-                            }
-                        });
+                                @Override
+                                public void onFailure(Call<resObj> call, Throwable t) {
+                                    Log.d("logg", t.getMessage());
+                                }
+                            });
                     }
+
                 });
+
                     return true;
             }
         });

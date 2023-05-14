@@ -2,6 +2,7 @@ package com.example.myapplication.activity.home;
 
 import static com.example.myapplication.api.ApiService.*;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -33,6 +34,7 @@ import com.example.myapplication.model.Category;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.resObj;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,14 +48,15 @@ import retrofit2.Response;
 
 public class CategoryActivity extends AppCompatActivity {
 
-    private static final String MAX = "100";
+
+    private static CategoryActivity instance;
     private ImageView backtohome;
     TextView tvSearch;
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    public TabLayout tabLayout;
+    public ViewPager viewPager;
 
-    List<Product> productList = new ArrayList<>();
+    public List<Product> productList = new ArrayList<>();
 
 
     @Override
@@ -61,28 +64,30 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        instance = this;
         setContentView(R.layout.activity_category);
         AnhXa();
         ClickOneAThing();
+//      ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+
         viewPager.setAdapter(viewPaperAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        //String filter = getIntent().getStringExtra("Filter");
-        //Log.d("filteq1qwr", filter);
-//        Bundle bundle = new Bundle();
-//        AllFragment myFragment = new AllFragment();
-//        bundle.putString("key", "value");
-//        //bundle.pu("filter", filter);
-////                    bundle.putInt("listKey", 1);
-//
-//        myFragment.setArguments(bundle);
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction transaction = fragmentManager.beginTransaction();
-//        transaction.replace(R.id.viewPager, myFragment);
-//        transaction.commit();
-        GetDataCategory();
 
+
+//        String filter = getIntent().getStringExtra("Filter");
+//        Bundle bundle = new Bundle();
+//        bundle.putString("key", filter);
+//
+//        Log.d("TA121G", "onCreate: " + bundle);
+//        AllFragment fragment = new AllFragment();
+//        fragment.setArguments(bundle);
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.viewPager, fragment);
+//        transaction.commit();
+
+        //GetDataCategory();
     }
 
 
@@ -97,15 +102,19 @@ public class CategoryActivity extends AppCompatActivity {
         });
     }
 
+    public static CategoryActivity getInstance() {
+        return instance;
+    }
+
     private Call<resObj> GetFilter() {
         String filter = getIntent().getStringExtra("Filter");
         Call<resObj> option = null;
         if (Objects.equals(filter, "NEW"))
-            option = apiService.getNewProduct(MAX);
+            option = apiService.getNewProduct("1");
         else if (Objects.equals(filter, "SALE"))
-            option = apiService.getBestSellerProduct(MAX);
+            option = apiService.getBestSellerProduct("1");
         else
-            option = apiService.getLowestProduct(MAX);
+            option = apiService.getLowestProduct("1");
         return option;
     }
 
@@ -113,15 +122,15 @@ public class CategoryActivity extends AppCompatActivity {
     private void GetDataCategory() {
         GetFilter().enqueue(new Callback<resObj>() {
             @Override
-            public void onResponse(Call<resObj> call, Response<resObj> response) {
+            public void onResponse(@NonNull Call<resObj> call, @NonNull Response<resObj> response) {
                 if (response.isSuccessful()){
+                    assert response.body() != null;
                     productList = response.body().getData();
-                    ArrayList<Product> products = new ArrayList<>(productList);
-                    AllFragment fragment = new AllFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList("list", products);
-                    fragment.setArguments(bundle);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.viewPager, fragment).commit();
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    //AllFragment fragment = AllFragment.newInstance(productList);
+//                    ft.add(R.id.viewPager, fragment);
+//                    ft.setReorderingAllowed(true);
+//                    ft.commit();
                 }
             }
 
@@ -137,7 +146,6 @@ public class CategoryActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
         backtohome = findViewById(R.id.backtohome);
-
         tvSearch = findViewById(R.id.tvSearch);
     }
 }

@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -29,9 +31,12 @@ import com.example.myapplication.model.Product;
 import com.example.myapplication.model.Slide;
 import com.example.myapplication.model.resObj;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,13 +45,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private String QUALITY = "12";
+    private String RANDOM_CATE = "";
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
     private SlideAdapter photoAdapter;
 
+    SwipeRefreshLayout homeSwipeRefreshLayout;
     private List<Slide> mListPhoto;
 
     private Timer mTimer;
@@ -71,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
+        RANDOM_CATE=getRandomCateFlashSale();
         AnhXa();
         ClickOneThing();
         onStart();
@@ -126,6 +134,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onStart();
         long now = System.currentTimeMillis();
         long midnight = getMidnight(now);
+
+
         CountDownTimer timer = new CountDownTimer(midnight - now, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -138,18 +148,62 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                txtTimer.setText("00:00:00");
+//                txtTimer.setText("00:00:00");
+
+                onRefresh();
+                onStart();
             }
         };
         timer.start();
     }
 
+    private String getRandomCateFlashSale() {
+        String cate = "";
+        int[] cates = {871,
+                316,
+                664,
+                886,
+                8322,
+                1856,
+                861,
+                6750,
+                665,
+                7671,
+                1367,
+                1922,
+                593,
+                9733,
+                843,
+                9721,
+                1754,
+                385,
+                5246};
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(cates.length);
+        cate = String.valueOf(cates[randomIndex]);
+        return cate;
+    }
+
+    private int getCurrentHour() {
+        int hour = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            hour = LocalTime.now().getHour();
+        }
+        return hour;
+    }
+
     private long getMidnight(long time) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(time);
-        calendar.set(Calendar.HOUR_OF_DAY, 24);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, (getCurrentHour()));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            calendar.set(Calendar.MINUTE, LocalTime.now().getMinute()+1);
+        }
+
+
+        calendar.set(Calendar.SECOND, 0 );
+
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTimeInMillis();
     }
@@ -180,7 +234,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setViewFlashSale() {
-        ApiService.apiService.getLowestProduct(QUALITY).enqueue(new Callback<resObj>() {
+        ApiService.apiService.getFilterProduct(RANDOM_CATE, "discount", 1, 2000, "desc", Integer.parseInt(QUALITY)).enqueue(new Callback<resObj>() {
             @Override
             public void onResponse(Call<resObj> call, Response<resObj> response) {
                 if (response.isSuccessful()) {
@@ -287,8 +341,10 @@ public class HomeActivity extends AppCompatActivity {
                         } else {
                             viewPager.setCurrentItem(0);
                         }
+
                     }
                 });
+
             }
         }, 500, 2000);
     }
@@ -300,5 +356,21 @@ public class HomeActivity extends AppCompatActivity {
             mTimer.cancel();
             mTimer = null;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        RANDOM_CATE=getRandomCateFlashSale();
+        setViewFlashSale();
+//        setViewLastBook();
+//        setViewBestSeller();
+//        setViewForYou();
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                homeSwipeRefreshLayout.setRefreshing(false);
+//            }
+//        }, 2000);
     }
 }

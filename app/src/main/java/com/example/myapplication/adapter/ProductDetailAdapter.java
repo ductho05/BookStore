@@ -1,6 +1,11 @@
 package com.example.myapplication.adapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.home.SearchActivity;
+import com.example.myapplication.activity.productdetail.ProductDetailActivity;
 import com.example.myapplication.model.Product;
 
 import java.text.NumberFormat;
@@ -33,13 +40,12 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
     public ProductDetailAdapter(List<Product> productList, Context mContext) {
         this.productList = productList;
         this.mContext = mContext;
-
     }
 
     @NonNull
     @Override
     public ProductDetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.e("AAAAANJUS", mContext.toString());
+
         if (mContext.toString().contains("SearchActivity")) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search, null);
             return new ViewHolder(view);
@@ -57,6 +63,19 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
     @Override
     public void onBindViewHolder(@NonNull ProductDetailAdapter.ViewHolder holder, int position) {
         Product product = productList.get(position);
+
+//        holder.productLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Log.e("AAA22AANJUS", holder.productName.getText().toString());
+////                Intent intent = new Intent(mContext, ProductDetailActivity.class);
+////                Bundle bundle = new Bundle();
+////                bundle.putSerializable("product", product);
+////                intent.putExtras(bundle);
+////                mContext.startActivity(intent);
+//
+//            }
+//        });
         Glide.with(mContext).load(product.getImages()).into(holder.productImage);
         holder.productName.setText(product.getTitle());
         holder.productPriceDiscount.setText(String.valueOf(NumberFormat.getCurrencyInstance(
@@ -69,22 +88,27 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return productList==null?0:productList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView productImage;
+        private LinearLayout productLayout;
         private TextView productName;
         private TextView productPriceDiscount;
         private TextView productDiscount;
         private TextView productPrice;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             productImage = (ImageView) itemView.findViewById(R.id.productImage);
+
             productName = (TextView) itemView.findViewById(R.id.productName);
             productPriceDiscount = (TextView) itemView.findViewById(R.id.productPriceDiscount);
             productDiscount = (TextView) itemView.findViewById(R.id.productDiscount);
             productPrice = (TextView) itemView.findViewById(R.id.productPrice);
+
+           // productLayout = (LinearLayout) itemView.findViewById(R.id.item);
         }
     }
 }

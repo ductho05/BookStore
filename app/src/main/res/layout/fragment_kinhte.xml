@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.VanhocFragment">
+    >
 
     <!-- TODO: Update blank fragment layout -->
-    <HorizontalScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/big_color">
@@ -14,9 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ryckinhte"
-            android:layout_marginHorizontal="10dp"
+
             />
-    </HorizontalScrollView>
+    </ScrollView>
 
 
 </FrameLayout>

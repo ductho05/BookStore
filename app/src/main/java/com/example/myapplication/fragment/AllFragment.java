@@ -4,6 +4,7 @@ import static com.example.myapplication.api.ApiService.apiService;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.example.myapplication.activity.home.HomeActivity;
 import com.example.myapplication.activity.home.SearchActivity;
 import com.example.myapplication.adapter.ProductDetailAdapter;
 import com.example.myapplication.api.ApiService;
+import com.example.myapplication.helper.PaginationScroll;
 import com.example.myapplication.model.OptionFitler;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.resObj;
@@ -46,7 +49,16 @@ import retrofit2.http.Query;
 public class AllFragment extends Fragment {
 
 
-    public static final int MAX = 20;
+    private String optionfilter = null;
+    private String sort = null;
+    private boolean isLoading;
+    private boolean isLastPage;
+    private int currentPage = 1;
+    private int totalPage = 150;
+
+    private ProgressBar progressBar;
+
+    public static final int MAX = 8;
     public View mView;
     private Spinner spinner;
     public RecyclerView recyclerView;
@@ -74,7 +86,7 @@ public class AllFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_all, container, false);
         AnhXa();
         SetSpiner(categoryActivity.getFilter());
-        Log.d("filteưq131r", _categoryId + " " + categoryActivity.getFilter());
+        //Log.d("filteưq131r", _categoryId + " " + categoryActivity.getFilter());
         //GetCategory();
 
         return mView;
@@ -128,8 +140,7 @@ public class AllFragment extends Fragment {
     public void GetSelectedFilter () {
         String filter = spinner.getSelectedItem().toString();
         Call<resObj<List<Product>>> option = null;
-        String optionfilter = null;
-        String sort = null;
+
         if (Objects.equals(filter, "Mới nhất")) {
             optionfilter = "published_date";
             sort = "desc";
@@ -149,22 +160,48 @@ public class AllFragment extends Fragment {
             sort = "desc";
         }
         option = apiService.getFilterProduct(_categoryId, optionfilter, 1, MAX, sort, 0);
+        Log.d("myLis23t1221", "myList.toString()");
         option.enqueue(new Callback<resObj<List<Product>>>() {
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                 if (response.isSuccessful()) {
                     resObj<List<Product>> resObj = response.body();
                     myList = resObj.getData();
-                    Log.d("myList12", myList.toString());
+                    Log.d("myList123232", myList.toString());
                     adapter= new ProductDetailAdapter(myList, CategoryActivity.getInstance());
                     recyclerView.setHasFixedSize(true);
                     DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
                     DividerItemDecoration divider2 = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL);
                     recyclerView.addItemDecoration(divider);
                     recyclerView.addItemDecoration(divider2);
-                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(CategoryActivity.getInstance(), 2);
+                    LinearLayoutManager layoutManager = new GridLayoutManager(CategoryActivity.getInstance(), 2);
+                    //LinearLayoutManager layoutManager = new LinearLayoutManager(CategoryActivity.getInstance());
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(adapter);
+                    recyclerView.addOnScrollListener(new PaginationScroll(layoutManager) {
+
+                        @Override
+                        public void loadMoreItems() {
+                            isLoading = true;
+                            progressBar.setVisibility(View.VISIBLE);
+                            currentPage += 1;
+                            if (currentPage <= totalPage) {
+                                loadNextPage(optionfilter, sort, currentPage);
+                            }
+                        }
+
+                        @Override
+                        public boolean isLoading() {
+                            return isLoading;
+                        }
+
+                        @Override
+                        public boolean isLastPage() {
+                            return isLastPage;
+                        }
+                    });
+
+
                 }
             }
 
@@ -173,6 +210,38 @@ public class AllFragment extends Fragment {
                 Log.d("myList12", "FAIL");
             }
         }   );
+    }
+
+    private void loadNextPage(String  optionfilter, String sort, int page) {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                apiService.getFilterProduct(_categoryId, optionfilter, page, MAX, sort, 0).enqueue(new Callback<resObj<List<Product>>>() {
+                    @Override
+                    public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
+                        if (response.isSuccessful()) {
+                            resObj<List<Product>> resObj = response.body();
+                            List<Product> list = resObj.getData();
+                            myList.addAll(list);
+                            adapter.notifyDataSetChanged();
+                            isLoading = false;
+                            progressBar.setVisibility(View.GONE);
+                            if (currentPage == totalPage)
+                            {
+                                isLastPage = true;
+                            }
+                            Log.d("myList1221", myList.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<resObj<List<Product>>> call, Throwable t) {
+                        Log.d("myList12", "FAIL");
+                    }
+                });
+            }
+        }, 1000);
     }
 
     private void GetData() {
@@ -206,6 +275,7 @@ public class AllFragment extends Fragment {
         recyclerView = mView.findViewById(R.id.rycall);
         spinner = mView.findViewById(R.id.spinner);
         categoryActivity = (CategoryActivity) getActivity();
+        progressBar = mView.findViewById(R.id.progressBar);
     }
 
 }

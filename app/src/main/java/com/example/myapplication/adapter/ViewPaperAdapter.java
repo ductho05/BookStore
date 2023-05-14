@@ -17,9 +17,6 @@ public class ViewPaperAdapter extends FragmentStatePagerAdapter {
         super(fm, behavior);
         this.listCate = listCate;
     }
-
-
-
     @NonNull
     @Override
     public Fragment getItem(int position) {

@@ -58,7 +58,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
 
         AnhXa();
         setViewCart();
-        customListCartItem(listCartItem);
 
         btn_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +65,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
                 Set<CartItemModel> set = new HashSet<>(listCartItem);
                 listCartItem.clear();
                 listCartItem.addAll(set);
+                for (CartItemModel i:listCartItem) {
+                    Log.e("ListCartItem Cart: ", i.getProduct().getTitle());
+                }
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("listCartItem", listCartItem);
                 Intent intent = new Intent(CartActivity.this, CheckOut_Address_Activity.class);
@@ -75,12 +77,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
                 finish();
             }
         });
-    }
-
-    private void customListCartItem(ArrayList<CartItemModel> listCartItem) {
-        Set<CartItemModel> set = new HashSet<>(listCartItem);
-        listCartItem.clear();
-        listCartItem.addAll(set);
     }
 
     public void AnhXa() {
@@ -148,21 +144,27 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
                 new Locale("vi", "VN")).format(total_price));
         if (total_price == 0) {
             btn_checkout.setEnabled(false);
-            btn_checkout.setBackgroundColor(Color.rgb(254, 232, 176));
+            btn_checkout.setBackgroundColor(Color.rgb(245,246,250));
 
         } else {
             btn_checkout.setEnabled(true);
-            btn_checkout.setBackgroundColor(Color.rgb(255,152,0));
+            btn_checkout.setBackgroundColor(Color.rgb(77,177,136));
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onItemEvent(boolean isDelete) {
+    public void onItemEvent(boolean isDelete,double total_price) {
+        this.total_price = total_price;
         adapter.notifyDataSetChanged();
+        totalPrice.setText(NumberFormat.getCurrencyInstance(
+                new Locale("vi", "VN")).format(total_price));
         if (isDelete) {
             recreate();
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            cbAll.setChecked(false);
+            Toast.makeText(getApplicationContext(), "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(getApplicationContext(), "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
+
     }
 }

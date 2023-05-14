@@ -40,7 +40,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
     }
 
     public interface OnItemEventListener {
-        void onItemEvent(boolean isDelete);
+        void onItemEvent(boolean isDelete, double price);
     }
     private List<CartItemModel> listDomains;
     private boolean isMasterChecked = false;
@@ -94,10 +94,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             CartItemModel cartItem = listDomains.get(holder.getAdapterPosition());
             cartItem.setChecked(isChecked);
             if (isChecked) {
-                total_price += cartItem.getProduct().getPrice();
+                total_price += cartItem.getProduct().getPrice() * cartItem.getQuantity();
                 checkedItems.add(listDomains.get(holder.getAdapterPosition()));
             } else {
-                total_price -= cartItem.getProduct().getPrice();
+                total_price -= cartItem.getProduct().getPrice() * cartItem.getQuantity();
                 checkedItems.remove(listDomains.get(holder.getAdapterPosition()));
             }
             listener.onItemClick(holder.getAdapterPosition(), isChecked, total_price, checkedItems);
@@ -115,8 +115,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
                     @Override
                     public void onResponse(Call<resObj<String>> call, Response<resObj<String>> response) {
                         if (response.isSuccessful()) {
-
-                            mOnItemEventListener.onItemEvent(false);
+                            if (total_price > 0) {
+                                total_price -= listDomains.get(holder.getAdapterPosition()).getProduct().getPrice();
+                            }
+                            mOnItemEventListener.onItemEvent(false, total_price);
                         }
                     }
                     @Override
@@ -135,8 +137,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
                 @Override
                 public void onResponse(Call<resObj<String>> call, Response<resObj<String>> response) {
                     if (response.isSuccessful()) {
-                        isDelete = false;
-                        mOnItemEventListener.onItemEvent(false);
+                        if (total_price >  0) {
+                            total_price += listDomains.get(holder.getAdapterPosition()).getProduct().getPrice();
+                        }
+                        mOnItemEventListener.onItemEvent(false, total_price);
                     }
                 }
                 @Override
@@ -151,8 +155,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
                 @Override
                 public void onResponse(Call<resObj<String>> call, Response<resObj<String>> response) {
                     if (response.isSuccessful()) {
-                        isDelete = true;
-                        mOnItemEventListener.onItemEvent(true);
+                        mOnItemEventListener.onItemEvent(true, total_price);
                     }
                 }
                 @Override

@@ -119,11 +119,11 @@
     <color name="message">#F5F7FB</color>
 
     <color name="border_color">#D8D8D8</color>
-    <color name="primary_color">#FF9800</color>
+    <color name="primary_color">#4DB188</color>
     <color name="primary_colorEnable">#FEE8B0</color>
     <color name="text_color">#4D4D4D</color>
     <color name="text_color2">#B2B2B2</color>
-    <color name="background_color">#F9F5EB</color>
+    <color name="background_color">#F5F6FA</color>
     <color name="red">#E21818</color>
     <color name="grey">#F6F1F1</color>
 </resources>

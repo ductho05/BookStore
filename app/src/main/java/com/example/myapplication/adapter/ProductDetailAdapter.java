@@ -48,7 +48,7 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_search, null);
             return new ViewHolder(view);
         }
-        else if (mContext.toString().contains("HomeActivity")) {
+        else if (mContext.toString().contains("HomeActivity") || mContext.toString().contains("ProductDetailActivity")) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.productitem, null);
             return new ViewHolder(view);
         }

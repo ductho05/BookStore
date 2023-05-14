@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +51,7 @@ public class Payment_Method extends AppCompatActivity {
 
     ArrayList<CartItemModel> cartItems = new ArrayList<>();
     Order order = new Order();
+    ArrayList<OrderItem> orderItems = new ArrayList<OrderItem>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +72,7 @@ public class Payment_Method extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         order = (Order) intents.getSerializableExtra("order");
         Log.d("Order: ",String.valueOf(order.getName()));
-        ArrayList<OrderItem> orderItems = (ArrayList<OrderItem>) intents.getSerializableExtra("orderItems");
+        orderItems = (ArrayList<OrderItem>) intents.getSerializableExtra("orderItems");
         cartItems = bundle.getParcelableArrayList("cartItems");
         float distance = calculateDistance(10.872116, 106.804195, 12.1568, 107.9549);
         float shipping_cost = calculateShippingCost(distance);
@@ -193,6 +196,5 @@ public class Payment_Method extends AppCompatActivity {
         shippingCost = findViewById(R.id.shippingCost);
         total_price = findViewById(R.id.total_price);
         btn_order = findViewById(R.id.btn_order);
-
     }
 }

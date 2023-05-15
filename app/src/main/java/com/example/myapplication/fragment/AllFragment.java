@@ -70,12 +70,14 @@ public class AllFragment extends Fragment {
 
     public List<Product> myList;
     String _categoryId;
+    String _searchText;
 
 
 
 
-    public AllFragment(String categoryId) {
+    public AllFragment(String categoryId, String searchText) {
         _categoryId = categoryId;
+        _searchText = searchText;
     }
 
 
@@ -85,26 +87,10 @@ public class AllFragment extends Fragment {
 
         mView = inflater.inflate(R.layout.fragment_all, container, false);
         AnhXa();
+        Log.d("tâsasaest", "onCreateView: " + _categoryId + " " + _searchText);
         SetSpiner(categoryActivity.getFilter());
-        //Log.d("filteưq131r", _categoryId + " " + categoryActivity.getFilter());
-        //GetCategory();
-
         return mView;
     }
-
-//    private void GetCategory() {
-//        if (_layout == "Kinh Tế") {
-//            category = "593";
-//        } else if (_layout == "Thiếu Nhi") {
-//            category = "1754";
-//        }
-//        else if (_layout == "Văn Học") {
-//            category = "1755";
-//        }
-//        {
-//            category = "";
-//        }
-//    }
 
     private void SetSpiner(String filter) {
         List<String> list = new ArrayList<>();
@@ -159,7 +145,7 @@ public class AllFragment extends Fragment {
             optionfilter = "price";
             sort = "desc";
         }
-        option = apiService.getFilterProduct(_categoryId, optionfilter, 1, MAX, sort, 0);
+        option = apiService.getFilterProduct(_categoryId, optionfilter, 1, MAX, sort, 0, _searchText);
         Log.d("myLis23t1221", "myList.toString()");
         option.enqueue(new Callback<resObj<List<Product>>>() {
             @Override
@@ -200,11 +186,8 @@ public class AllFragment extends Fragment {
                             return isLastPage;
                         }
                     });
-
-
                 }
             }
-
             @Override
             public void onFailure(Call<resObj<List<Product>>> call, Throwable t) {
                 Log.d("myList12", "FAIL");
@@ -217,7 +200,7 @@ public class AllFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                apiService.getFilterProduct(_categoryId, optionfilter, page, MAX, sort, 0).enqueue(new Callback<resObj<List<Product>>>() {
+                apiService.getFilterProduct(_categoryId, optionfilter, page, MAX, sort, 0, _searchText).enqueue(new Callback<resObj<List<Product>>>() {
                     @Override
                     public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                         if (response.isSuccessful()) {
@@ -241,11 +224,11 @@ public class AllFragment extends Fragment {
                     }
                 });
             }
-        }, 1000);
+        }, 3000);
     }
 
     private void GetData() {
-        ApiService.apiService.getFilterProduct(_categoryId, null, 1, MAX, null, 0).enqueue(new Callback<resObj<List<Product>>>() {
+        ApiService.apiService.getFilterProduct(_categoryId, null, 1, MAX, null, 0, _searchText).enqueue(new Callback<resObj<List<Product>>>() {
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                 if (response.isSuccessful()) {
@@ -258,9 +241,31 @@ public class AllFragment extends Fragment {
                     DividerItemDecoration divider2 = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL);
                     recyclerView.addItemDecoration(divider);
                     recyclerView.addItemDecoration(divider2);
-                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(CategoryActivity.getInstance(), 2);
+                    LinearLayoutManager layoutManager = new GridLayoutManager(CategoryActivity.getInstance(), 2);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(adapter);
+                    recyclerView.addOnScrollListener(new PaginationScroll(layoutManager) {
+
+                        @Override
+                        public void loadMoreItems() {
+                            isLoading = true;
+                            progressBar.setVisibility(View.VISIBLE);
+                            currentPage += 1;
+                            if (currentPage <= totalPage) {
+                                loadNextPage(optionfilter, sort, currentPage);
+                            }
+                        }
+
+                        @Override
+                        public boolean isLoading() {
+                            return isLoading;
+                        }
+
+                        @Override
+                        public boolean isLastPage() {
+                            return isLastPage;
+                        }
+                    });
                 }
             }
 

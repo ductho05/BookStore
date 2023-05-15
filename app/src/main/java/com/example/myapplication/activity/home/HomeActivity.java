@@ -243,7 +243,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void setViewFlashSale() {
-        ApiService.apiService.getFilterProduct(getRandomCateFlashSale(), "discount", 1, 2000, "desc", Integer.parseInt(QUALITY)).enqueue(new Callback<resObj<List<Product>>>() {
+        ApiService.apiService.getFilterProduct(getRandomCateFlashSale(), "discount", 1, 2000, "desc", Integer.parseInt(QUALITY), null).enqueue(new Callback<resObj<List<Product>>>() {
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                 if (response.isSuccessful()) {
@@ -274,7 +274,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     }
     private void setViewLastBook() {
-                ApiService.apiService.getFilterProduct("", "published_date", 1, 20, "desc", Integer.parseInt(QUALITY)).enqueue(new Callback<resObj<List<Product>>>() {
+                ApiService.apiService.getFilterProduct("", "published_date", 1, 20, "desc", Integer.parseInt(QUALITY), null).enqueue(new Callback<resObj<List<Product>>>() {
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
 
@@ -297,7 +297,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void setViewBestSeller() {
-        ApiService.apiService.getFilterProduct("", "sold", 1, 20, "desc", Integer.parseInt(QUALITY)).enqueue(new Callback<resObj<List<Product>>>() {
+        ApiService.apiService.getFilterProduct("", "sold", 1, 20, "desc", Integer.parseInt(QUALITY), null).enqueue(new Callback<resObj<List<Product>>>() {
             @Override
             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
                 if (response.isSuccessful()) {

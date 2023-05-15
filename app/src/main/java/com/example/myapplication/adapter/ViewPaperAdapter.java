@@ -12,10 +12,12 @@ import java.util.List;
 
 public class ViewPaperAdapter extends FragmentStatePagerAdapter {
 
+    private String mtitle;
     private List<Category> listCate;
-    public ViewPaperAdapter(@NonNull FragmentManager fm, int behavior, List<Category> listCate) {
+    public ViewPaperAdapter(@NonNull FragmentManager fm, int behavior, List<Category> listCate, String mtitle) {
         super(fm, behavior);
         this.listCate = listCate;
+        this.mtitle = mtitle;
     }
     @NonNull
     @Override
@@ -23,9 +25,9 @@ public class ViewPaperAdapter extends FragmentStatePagerAdapter {
 
         for (int i = 0; i < getCategories().length; i++) {
             if (position == i)
-                return new AllFragment(getCategories()[i]);
+                return new AllFragment(getCategories()[i], mtitle);
         }
-        return new AllFragment(getCategories()[0]);
+        return new AllFragment(getCategories()[0], mtitle);
     }
 
     @Override

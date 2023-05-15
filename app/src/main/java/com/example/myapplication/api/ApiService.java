@@ -42,8 +42,9 @@ public interface ApiService {
 
             //.baseUrl("http://192.168.1.123:3000/bookstore/api/v1/") // becoffe
 
-            //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
-            .baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng
+            .baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
+            //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng
+            //.baseUrl("http://192.168.47.147:3000/bookstore/api/v1/")// Cổng dành cho Mạng
             //.baseUrl("http://192.168.1.30:3000/bookstore/api/v1/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -95,7 +96,8 @@ public interface ApiService {
                                                  @Query("page") int page,
                                                  @Query("perPage") int perPage,
                                                  @Query("sort") String sort,
-                                                 @Query("num") int num);
+                                                 @Query("num") int num,
+                                                 @Query("title") String title);
     //    Cart
     @POST("cart/user")
     Call<resObj<CartModel>> getCartByUser(@Query("_id") String user);

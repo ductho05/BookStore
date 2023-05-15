@@ -21,6 +21,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -42,12 +44,17 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity {
 
     private ProductDetailAdapter productDetailAdapter;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, recyclerViewFavorite;
     private RecyclerView.Adapter adapter;
+
+    ImageView backtohome;
     private List<Product> products;
 
-    private TextView tvNoResult;
-    private Button btnSearchMore;
+    private List<Product> popularSearch;
+    private LinearLayout first_linearLayout, second_linearLayout;
+
+    private TextView tvNoResult, promotion, tvfavorite;
+    //private Button btnSearchMore;
 
     private SearchView searchView;
 
@@ -61,9 +68,10 @@ public class SearchActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_search);
-        tvNoResult = findViewById(R.id.tvNoProduct);
-        btnSearchMore = findViewById(R.id.btnSearchMore);
-        searchView = findViewById(R.id.search_view);
+
+        AnhXa();
+        setFirstLinearlayout();
+        ClickOneAThing();
         searchView.clearFocus();
         recyclerView = findViewById(R.id.recyclerViewSearch);
 
@@ -75,9 +83,12 @@ public class SearchActivity extends AppCompatActivity {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (!recyclerView.canScrollVertically(1)) {
-                    btnSearchMore.setVisibility(View.VISIBLE);
+                  //  btnSearchMore.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.VISIBLE);
+
                 } else {
-                    btnSearchMore.setVisibility(View.GONE);
+                   // btnSearchMore.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -87,7 +98,10 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                Intent intent = new Intent(SearchActivity.this, CategoryActivity.class);
+                intent.putExtra("title", query);
+                startActivity(intent);
+                return true;
             }
 
             @Override
@@ -96,8 +110,6 @@ public class SearchActivity extends AppCompatActivity {
                 debounceTimer.debounce(new Runnable() {
                     @Override
                     public void run() {
-
-
                         ApiService.apiService.getProductByTitle(newText, 9).enqueue(new Callback<resObj<List<Product>>>() {
                             @Override
                             public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
@@ -132,6 +144,54 @@ public class SearchActivity extends AppCompatActivity {
                     return true;
             }
         });
+    }
+
+    private void ClickOneAThing() {
+        backtohome.setOnClickListener(v -> {
+            finish();
+        });
+    }
+
+    private void setFirstLinearlayout() {
+        promotion.setCompoundDrawablesWithIntrinsicBounds(R.drawable.fire, 0, R.drawable.fire, 0);
+        tvfavorite.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_favorite_24, 0, 0, 0);
+
+
+        ApiService.apiService.getFilterProduct("", "rate", 1, 50, "desc", 9, "").enqueue(new Callback<resObj<List<Product>>>() {
+            @Override
+            public void onResponse(Call<resObj<List<Product>>> call, Response<resObj<List<Product>>> response) {
+                if (response.isSuccessful()) {
+                    popularSearch = response.body().getData();
+                    adapter = new ProductDetailAdapter(popularSearch, SearchActivity.this);
+                    recyclerViewFavorite.setHasFixedSize(true);
+                    DividerItemDecoration divider = new DividerItemDecoration(recyclerViewFavorite.getContext(), LinearLayoutManager.VERTICAL);
+                    recyclerViewFavorite.addItemDecoration(divider);
+                    DividerItemDecoration divider2 = new DividerItemDecoration(recyclerViewFavorite.getContext(), LinearLayoutManager.HORIZONTAL);
+                    recyclerViewFavorite.addItemDecoration(divider2);
+                    LinearLayoutManager layoutManager = new GridLayoutManager(SearchActivity.this, 3);
+                    recyclerViewFavorite.setLayoutManager(layoutManager);
+                    recyclerViewFavorite.setAdapter(adapter);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<resObj<List<Product>>> call, Throwable t) {
+                Log.d("logg", t.getMessage());
+            }
+        });
+    }
+
+    private void AnhXa() {
+        backtohome = findViewById(R.id.backtohome);
+        tvfavorite = findViewById(R.id.tvfavorite);
+        promotion = findViewById(R.id.promotion);
+        tvNoResult = findViewById(R.id.tvNoProduct);
+      //  btnSearchMore = findViewById(R.id.btnSearchMore);
+        searchView = findViewById(R.id.search_view);
+        first_linearLayout = findViewById(R.id.first_linearLayout);
+        second_linearLayout = findViewById(R.id.second_linearLayout);
+        recyclerViewFavorite = findViewById(R.id.recyclerViewPopularSearch);
     }
 
     @Override

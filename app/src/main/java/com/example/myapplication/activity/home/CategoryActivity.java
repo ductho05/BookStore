@@ -12,22 +12,22 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.ViewPaperAdapter;
 import com.example.myapplication.fragment.AllFragment;
 import com.example.myapplication.model.Category;
-import com.example.myapplication.model.Product;
 import com.example.myapplication.model.resObj;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,12 +40,14 @@ public class CategoryActivity extends AppCompatActivity {
     private ImageView backtohome;
     TextView tvSearch;
 
-    private String mfilter = "";
+    private String mfilter = "", mtitle = "";
 
+    LinearLayout search_linearLayout, filter_linearLayout;
     public TabLayout tabLayout;
-    public ViewPager viewPager;
+    public ViewPager viewPager, viewPagerSearch;
+    //public FrameLayout viewPagerSearch;
 
-    public List<Product> productList = new ArrayList<>();
+    //public List<Product> productList = new ArrayList<>();
     public List<Category> categoryList = new ArrayList<>();
 
 
@@ -56,42 +58,42 @@ public class CategoryActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         instance = this;
         setContentView(R.layout.activity_category);
+
         AnhXa();
-        ClickOneAThing();
-        GetDataCategory();
-        Log.d("TA121saG", "onCreate: " + categoryList);
-//      ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-
-
-
-
+        String title = getIntent().getStringExtra("title");
         String filter = getIntent().getStringExtra("Filter");
-        Log.d("TA121G", "onCreate: " + filter);
-        
-        senData(filter);
-//        bundle.putString("key", filter);
-//
-//        Log.d("TA121G", "onCreate: " + bundle);
-//        AllFragment fragment = new AllFragment();
-//        fragment.setArguments(bundle);
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.viewPager, fragment);
-//        transaction.commit();
+        Log.d("TA121saG", "onCreate: " + filter);
+        if (title != null) {
+            Log.d("TA121saG", "onCreate dsafa: " + filter);
+            filter_linearLayout.setVisibility(View.GONE);
+            search_linearLayout.setVisibility(View.VISIBLE);
+            senData("Tất cả", title);
+            List<Category> categoryList = new ArrayList<>();
+            ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager(),
+                    FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, categoryList, title);
+            viewPagerSearch.setAdapter(viewPaperAdapter);
+        }
+        else if (filter != null){
 
-        //GetDataCategory();
+            Log.d("TA121ssáaG", "onCreate filet: " + filter);
+            filter_linearLayout.setVisibility(View.VISIBLE);
+            search_linearLayout.setVisibility(View.GONE);
+            GetDataCategory();
+            senData(filter, "");
+        }
+        ClickOneAThing();
     }
 
-    private void senData(String filter) {
+    private void senData(String filter, String title) {
         mfilter = filter;
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.viewPager, new AllFragment("Tất cả"));
+        ft.replace(R.id.viewPager, new AllFragment("Tất cả", title));
         ft.commit();
     }
 
     public String getFilter() {
         return mfilter;
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     private void ClickOneAThing() {
@@ -110,20 +112,6 @@ public class CategoryActivity extends AppCompatActivity {
         return instance;
     }
 
-    private Call<resObj<ArrayList<Product>>> GetFilter() {
-        String filter = getIntent().getStringExtra("Filter");
-        Call<resObj<ArrayList<Product>>> option = null;
-        if (Objects.equals(filter, "NEW"))
-            option = apiService.getNewProduct("1");
-        else if (Objects.equals(filter, "SALE"))
-            option = apiService.getBestSellerProduct("1");
-        else
-            option = apiService.getLowestProduct("1");
-        return option;
-    }
-
-
-
     private void GetDataCategory () {
         apiService.getAllCategory().enqueue(new Callback<resObj<List<Category>>>() {
             @Override
@@ -133,7 +121,8 @@ public class CategoryActivity extends AppCompatActivity {
                     List<Category> cates;
                     cates = response.body().getData();
                     categoryList = cates;
-                    ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, categoryList);
+                    ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager(),
+                            FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, categoryList, "");
                     viewPager.setAdapter(viewPaperAdapter);
                     tabLayout.setupWithViewPager(viewPager);
                 }
@@ -144,11 +133,13 @@ public class CategoryActivity extends AppCompatActivity {
                 Log.d("Lỗi", t.getMessage());
             }
         });
-        Log.d("TA121G13123", "onCreate: " + categoryList);
     }
 
     private void AnhXa() {
 
+        viewPagerSearch = findViewById(R.id.viewPagerSearch);
+        search_linearLayout = findViewById(R.id.linearLayoutSearch);
+        filter_linearLayout = findViewById(R.id.linearLayoutFilter);
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
         backtohome = findViewById(R.id.backtohome);

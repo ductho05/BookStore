@@ -37,7 +37,6 @@ public class ProductDetailAdapter extends RecyclerView.Adapter<ProductDetailAdap
     public ProductDetailAdapter(List<Product> productList, Context mContext) {
         this.productList = productList;
         this.mContext = mContext;
-
     }
 
     @NonNull

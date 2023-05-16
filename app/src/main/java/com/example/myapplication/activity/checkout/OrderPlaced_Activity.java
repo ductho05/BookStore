@@ -1,12 +1,14 @@
 package com.example.myapplication.activity.checkout;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.cart.CartActivity;
 import com.example.myapplication.activity.home.HomeActivity;
 import com.example.myapplication.activity.order.StatusOrderActivity;
 
@@ -26,14 +29,12 @@ public class OrderPlaced_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_order_placed);
         AnhXa();
         ClickToAThing();
-
-
     }
 
     private void ClickToAThing() {
@@ -50,11 +51,9 @@ public class OrderPlaced_Activity extends AppCompatActivity {
         });
 
         btn_ctn_buy.setOnClickListener(view -> {
-            supportFinishAfterTransition();
             Intent intent = new Intent(OrderPlaced_Activity.this, HomeActivity.class);
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(OrderPlaced_Activity.this);
-            startActivity(intent, optionsCompat.toBundle());
+            startActivity(intent);
+            overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
         });
     }
 
@@ -63,5 +62,19 @@ public class OrderPlaced_Activity extends AppCompatActivity {
         btn_back = findViewById(R.id.btn_back);
         btn_back.setVisibility(View.GONE);
         btn_ctn_buy = findViewById(R.id.btn_ctn_buy);
+        noticeSuccessOrder();
     }
+
+    private void noticeSuccessOrder() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.noctice_order_place, null);
+
+        builder.setView(viewDialog);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
 }

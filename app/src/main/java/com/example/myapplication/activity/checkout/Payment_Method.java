@@ -1,7 +1,9 @@
 package com.example.myapplication.activity.checkout;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.app.ActivityOptionsCompat;
 
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,7 +26,10 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.home.HomeActivity;
 import com.example.myapplication.api.ApiService;
+import com.example.myapplication.api.MapApiService;
+import com.example.myapplication.constants.AppConstants;
 import com.example.myapplication.model.CartItemModel;
+import com.example.myapplication.model.NominatimResult;
 import com.example.myapplication.model.Order;
 import com.example.myapplication.model.OrderItem;
 import com.example.myapplication.model.resObj;
@@ -34,6 +40,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -62,7 +69,9 @@ public class Payment_Method extends AppCompatActivity {
         AnhXa();
         ClickOnThing();
 
-
+        findViewById(R.id.btn_back).setOnClickListener(view -> {
+            noticeCancelCheckout();
+        });
 
         Intent intents = getIntent();
         Bundle bundle = getIntent().getExtras();
@@ -70,7 +79,11 @@ public class Payment_Method extends AppCompatActivity {
         Log.d("Order: ",String.valueOf(order.getName()));
         orderItems = (ArrayList<OrderItem>) intents.getSerializableExtra("orderItems");
         cartItems = bundle.getParcelableArrayList("cartItems");
-        float distance = calculateDistance(10.872116, 106.804195, 12.1568, 107.9549);
+
+        float addressShipping_Lat = intents.getFloatExtra("lat", 0);
+        float addressShipping_Lon = intents.getFloatExtra("lon", 0);
+
+        float distance = calculateDistance(10.8518124, 106.768695, addressShipping_Lat, addressShipping_Lon);
         float shipping_cost = calculateShippingCost(distance);
 
         order.setShippingCost(shipping_cost);
@@ -139,9 +152,8 @@ public class Payment_Method extends AppCompatActivity {
                             });
                         }
                         Intent intent = new Intent(Payment_Method.this, OrderPlaced_Activity.class);
-                        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                                .makeSceneTransitionAnimation(Payment_Method.this);
-                        startActivity(intent, optionsCompat.toBundle());
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
                     } else {
                         Toast.makeText(getApplicationContext(), "Thanh toán đơn hàng không thành công", Toast.LENGTH_SHORT);
                     }
@@ -163,8 +175,29 @@ public class Payment_Method extends AppCompatActivity {
             Intent intent = new Intent(Payment_Method.this, HomeActivity.class);
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation(Payment_Method.this);
-            Toast.makeText(Payment_Method.this, "Hủy thanh toán đơn hàng này",  Toast.LENGTH_SHORT).show();
+            Toast.makeText(Payment_Method.this, "Hủy thanh toán đơn hàng này", Toast.LENGTH_SHORT).show();
             startActivity(intent, optionsCompat.toBundle());
+        });
+    }
+    @Override
+    public void onBackPressed() {
+        noticeCancelCheckout();
+    }
+    private void noticeCancelCheckout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.notice_cancel, null);
+
+        builder.setView(viewDialog);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        Button buttonOK = viewDialog.findViewById(R.id.buttonOK);
+        buttonOK.setOnClickListener(view -> {
+            Intent intent1 = new Intent(Payment_Method.this, HomeActivity.class);
+            startActivity(intent1);
+            overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
         });
     }
 

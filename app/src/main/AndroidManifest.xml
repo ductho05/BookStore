@@ -23,6 +23,12 @@
             android:name=".activity.order.DetailOrderItemActivity"
             android:exported="false" /> <!-- home -->
         <activity
+            android:name=".activity.productdetail.SeeMoreInfoProductDetail"
+            android:exported="false"
+            android:parentActivityName=".activity.productdetail.ProductDetailActivity"/>
+        <!-- home -->
+
+        <activity
             android:name=".activity.home.SearchActivity"
             android:exported="false" />
         <activity
@@ -45,7 +51,8 @@
             android:exported="false" /> <!-- Cart -->
         <activity
             android:name=".activity.cart.CartActivity"
-            android:exported="false" /> <!-- checkout -->
+            android:exported="false" />
+    <!-- checkout -->
         <activity
             android:name=".activity.checkout.Add_Address"
             android:exported="false" />
@@ -66,7 +73,8 @@
             android:exported="false" />
         <activity
             android:name=".activity.login.ProfileActivity"
-            android:exported="false" /> <!-- product detail -->
+            android:exported="false" />
+        <!-- product detail -->
         <activity
             android:name=".activity.productdetail.ProductDetailActivity"
             android:exported="false" />

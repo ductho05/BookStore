@@ -1,6 +1,7 @@
 package com.example.myapplication.activity.cart;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,6 +24,8 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.checkout.CheckOut_Address_Activity;
+import com.example.myapplication.activity.home.HomeActivity;
+import com.example.myapplication.activity.productdetail.ProductDetailActivity;
 import com.example.myapplication.adapter.CartAdapter;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.model.CartItemModel;
@@ -59,31 +63,60 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         AnhXa();
         setViewCart();
 
-        btn_checkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Set<CartItemModel> set = new HashSet<>(listCartItem);
-                listCartItem.clear();
-                listCartItem.addAll(set);
-                for (CartItemModel i:listCartItem) {
-                    Log.e("ListCartItem Cart: ", i.getProduct().getTitle());
-                }
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("listCartItem", listCartItem);
-                Intent intent = new Intent(CartActivity.this, CheckOut_Address_Activity.class);
-                intent.putExtras(bundle);
-                intent.putExtra("total_price", total_price);
-                startActivity(intent);
-                finish();
+        btn_checkout.setOnClickListener(view -> {
+            Set<CartItemModel> set = new HashSet<>(listCartItem);
+            listCartItem.clear();
+            listCartItem.addAll(set);
+            for (CartItemModel i:listCartItem) {
+                Log.e("ListCartItem Cart: ", i.getProduct().getTitle());
             }
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("listCartItem", listCartItem);
+            Intent intent = new Intent(CartActivity.this, CheckOut_Address_Activity.class);
+            intent.putExtras(bundle);
+            intent.putExtra("total_price", total_price);
+            startActivity(intent);
+            finish();
         });
     }
-
     public void AnhXa() {
         cbAll = findViewById(R.id.cbAll);
         totalPrice = findViewById(R.id.total_price);
         btn_checkout = findViewById(R.id.btn_checkout);
         recyclerView = findViewById(R.id.recycleView);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent1 = getIntent();
+        String productId = intent1.getStringExtra("_id");
+        Intent intent = new Intent(this, ProductDetailActivity.class);
+        intent.putExtra("_id", productId);
+        startActivity(intent);
+        overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
+    }
+
+    private void noticeDeleteCart() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.notice_delete_cart, null);
+
+        builder.setView(viewDialog);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        Button buttonOK = viewDialog.findViewById(R.id.buttonOK);
+        buttonOK.setOnClickListener(view -> {
+            cbAll.setChecked(false);
+            Intent intent1 = getIntent();
+            String productId = intent1.getStringExtra("_id");
+            Intent intent = new Intent(CartActivity.this, CartActivity.class);
+            intent.putExtra("_id", productId);
+            startActivity(intent);
+            overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
+        });
     }
 
     public void setViewCart() {
@@ -160,10 +193,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         totalPrice.setText(NumberFormat.getCurrencyInstance(
                 new Locale("vi", "VN")).format(total_price));
         if (isDelete) {
-            recreate();
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            cbAll.setChecked(false);
-            Toast.makeText(getApplicationContext(), "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
+            noticeDeleteCart();
         }
 
     }

@@ -1,6 +1,7 @@
 package com.example.myapplication.activity.productdetail;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
@@ -14,9 +15,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -94,14 +97,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         setProductIntro();
         setProductCare(_id);
         setQuantityCart();
-        btn_pdetail_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                supportFinishAfterTransition();
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(ProductDetailActivity.this, R.anim.animation_down, R.anim.no_animation);
-                Intent intent = new Intent(ProductDetailActivity.this, SearchActivity.class);
-                startActivity(intent, options.toBundle());
-            }
+        btn_pdetail_search.setOnClickListener(view -> {
+            supportFinishAfterTransition();
+            Intent intent12 = new Intent(ProductDetailActivity.this, SearchActivity.class);
+            startActivity(intent12);
+            overridePendingTransition(R.anim.slide_down, R.anim.no_animation);
         });
 
         btn_pdetail_home.setOnClickListener(view -> {
@@ -150,7 +150,28 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 public void onResponse(Call<resObj<CartItemModel>> call, Response<resObj<CartItemModel>> response) {
                                     if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                                         // Đã có sản phẩm trong giỏ hàng
-                                        Toast.makeText(getApplicationContext(), "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_LONG).show();
+                                        CartItemModel cartItem = response.body().getData();
+                                        int quantity = cartItem.getQuantity();
+                                        String cartItemId = cartItem.get_id();
+                                        quantity += 1;
+                                        cartItem.setQuantity(quantity);
+                                        ApiService.apiService.updateCartItem(cartItemId, cartItem).enqueue(new Callback<resObj<String>>() {
+                                            @Override
+                                            public void onResponse(Call<resObj<String>> call, Response<resObj<String>> response) {
+                                                if (response.isSuccessful() && response.body() != null) {
+                                                    Intent intent1 = getIntent();
+                                                    String productId = intent1.getStringExtra("_id");
+                                                    Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                                                    intent.putExtra("_id", productId);
+                                                    startActivity(intent);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<resObj<String>> call, Throwable t) {
+
+                                            }
+                                        });
                                     } else {
                                         // Thêm vào giỏ hàng
                                         AddToCartNow(cartItem);
@@ -199,7 +220,24 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 public void onResponse(Call<resObj<CartItemModel>> call, Response<resObj<CartItemModel>> response) {
                                     if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                                         // Đã có sản phẩm trong giỏ hàng
-                                        Toast.makeText(getApplicationContext(), "Sản phẩm đã có trong giỏ hàng", Toast.LENGTH_LONG).show();
+                                        CartItemModel cartItem = response.body().getData();
+                                        int quantity = cartItem.getQuantity();
+                                        String cartItemId = cartItem.get_id();
+                                        quantity += 1;
+                                        cartItem.setQuantity(quantity);
+                                        ApiService.apiService.updateCartItem(cartItemId, cartItem).enqueue(new Callback<resObj<String>>() {
+                                            @Override
+                                            public void onResponse(Call<resObj<String>> call, Response<resObj<String>> response) {
+                                                if (response.isSuccessful() && response.body() != null) {
+                                                    noticeAddToCart();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<resObj<String>> call, Throwable t) {
+
+                                            }
+                                        });
                                     } else {
                                         // Thêm vào giỏ hàng
                                         AddToCart(cartItem);
@@ -235,6 +273,36 @@ public class ProductDetailActivity extends AppCompatActivity {
         }));
     }
 
+    private void noticeAddToCart() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.cart_notification_dialog, null);
+
+        builder.setView(viewDialog);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        Button button_continue_shopping = viewDialog.findViewById(R.id.button_continue_shopping);
+        button_continue_shopping.setOnClickListener(view -> {
+            Intent intent1 = getIntent();
+            String productId = intent1.getStringExtra("_id");
+            Intent intent = new Intent(ProductDetailActivity.this, ProductDetailActivity.class);
+            intent.putExtra("_id", productId);
+            startActivity(intent);
+            overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
+        });
+
+        Button button_view_cart = viewDialog.findViewById(R.id.button_view_cart);
+        button_view_cart.setOnClickListener(view -> {
+            Intent intent1 = getIntent();
+            String productId = intent1.getStringExtra("_id");
+            Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+            intent.putExtra("_id", productId);
+            startActivity(intent);
+        });
+    }
+
     private void setQuantityCart() {
         ApiService.apiService.getAllCartItemByUser(user).enqueue(new Callback<resObj<List<CartItemModel>>>() {
             @Override
@@ -242,7 +310,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<CartItemModel> list = response.body().getData();
                     if (list != null) {
-                        String quantityCartItem = String.valueOf(list.size() + 1);
+                        String quantityCartItem = String.valueOf(list.size());
                         quantityCart.setText(quantityCartItem);
                     }
                 }
@@ -317,8 +385,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<resObj<CartItem>> call, Response<resObj<CartItem>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    finish();
+                    Intent intent1 = getIntent();
+                    String productId = intent1.getStringExtra("_id");
                     Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                    intent.putExtra("_id", productId);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Sản phẩm chưa được mua", Toast.LENGTH_SHORT).show();
@@ -335,9 +405,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<resObj<CartItem>> call, Response<resObj<CartItem>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    recreate();
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    Toast.makeText(getApplicationContext(), "Thêm vào giỏ hàng thành công", Toast.LENGTH_SHORT).show();
+                    noticeAddToCart();
                 } else {
                     Toast.makeText(getApplicationContext(), "Sản phẩm chưa được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                 }
@@ -416,7 +484,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                         btn_seeMoreInfo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
+                                String id = product.get_id();
+                                Intent intent = new Intent(ProductDetailActivity.this, SeeMoreInfoProductDetail.class);
+                                intent.putExtra("id", id);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
                             }
                         });
                     }
@@ -440,7 +512,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         btn_seeMoreIntro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                supportFinishAfterTransition();
                 supportFinishAfterTransition();
                 ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(ProductDetailActivity.this, R.anim.animation_down, R.anim.no_animation);
                 Intent intent = new Intent(ProductDetailActivity.this, CategoryActivity.class);

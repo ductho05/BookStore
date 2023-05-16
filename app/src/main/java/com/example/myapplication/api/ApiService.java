@@ -38,12 +38,12 @@ public interface ApiService {
 
     ApiService apiService = new Retrofit.Builder()
 
-            //.baseUrl("http://192.168.1.131:3000/bookstore/api/v1/") // becoffe
+            .baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
 
             //.baseUrl("http://192.168.1.123:3000/bookstore/api/v1/") // becoffe
 
-            .baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
-            //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng
+            //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
+            //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng Thọ
             //.baseUrl("http://192.168.47.147:3000/bookstore/api/v1/")// Cổng dành cho Mạng
             //.baseUrl("http://192.168.1.30:3000/bookstore/api/v1/")
             .addConverterFactory(GsonConverterFactory.create(gson))

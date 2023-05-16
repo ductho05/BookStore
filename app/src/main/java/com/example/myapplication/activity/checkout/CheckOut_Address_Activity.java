@@ -1,6 +1,7 @@
 package com.example.myapplication.activity.checkout;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityOptionsCompat;
@@ -14,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,19 +23,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.cart.CartActivity;
 import com.example.myapplication.activity.home.HomeActivity;
 import com.example.myapplication.activity.productdetail.ProductDetailActivity;
+import com.example.myapplication.api.MapApiService;
 import com.example.myapplication.model.CartItem;
 import com.example.myapplication.model.CartItemModel;
 import com.example.myapplication.model.CartModel;
+import com.example.myapplication.model.NominatimResult;
 import com.example.myapplication.model.Order;
 import com.example.myapplication.model.OrderItem;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CheckOut_Address_Activity extends AppCompatActivity {
 
@@ -61,15 +72,10 @@ public class CheckOut_Address_Activity extends AppCompatActivity {
         validate(ed_city);
         validate(ed_address);
 
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                supportFinishAfterTransition();
-                Intent intent1 = new Intent(CheckOut_Address_Activity.this, HomeActivity.class);
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(CheckOut_Address_Activity.this);
-                startActivity(intent1, optionsCompat.toBundle());
-            }
+        btn_back.setOnClickListener(view -> {
+            noticeCancelCheckout();
         });
+
         btnNextOrder.setOnClickListener(view -> {
             Order order = new Order();
             ArrayList<OrderItem> orderItems = new ArrayList<>();
@@ -85,19 +91,64 @@ public class CheckOut_Address_Activity extends AppCompatActivity {
             intent.putExtras(bundle);
             intent.putExtra("order", order);
             intent.putExtra("orderItems", orderItems);
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(CheckOut_Address_Activity.this);
-            startActivity(intent, optionsCompat.toBundle());
+
+            String address = order.getAddress() + order.getCity();
+            Log.e("Địa chỉ: ",address);
+            MapApiService.apiService.getCoordinates(address, "json", 1).enqueue(new Callback<List<NominatimResult>>() {
+                @Override
+                public void onResponse(Call<List<NominatimResult>> call, Response<List<NominatimResult>> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body().size() > 0) {
+                      NominatimResult  result = response.body().get(0);
+                      float addressShipping_Lat = Float.parseFloat(result.getLat());
+                      float addressShipping_Lon = Float.parseFloat(result.getLon());
+                      intent.putExtra("lat", addressShipping_Lat);
+                      intent.putExtra("lon", addressShipping_Lon);
+                      startActivity(intent);
+                      overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Không tìm thấy địa chỉ giao hàng",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<NominatimResult>> call, Throwable t) {
+                    Log.e("Lấy địa chỉ lỗi", t.getMessage());
+                }
+            });
+
+            startActivity(intent);
+            overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        noticeCancelCheckout();
+    }
+
+    private void noticeCancelCheckout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.notice_cancel, null);
+
+        builder.setView(viewDialog);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        Button buttonOK = viewDialog.findViewById(R.id.buttonOK);
+        buttonOK.setOnClickListener(view -> {
+            Intent intent1 = new Intent(CheckOut_Address_Activity.this, HomeActivity.class);
+            startActivity(intent1);
+            overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
         });
     }
 
     private void validate(EditText edText) {
         edText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String text = charSequence.toString();
@@ -110,7 +161,6 @@ public class CheckOut_Address_Activity extends AppCompatActivity {
                     btnNextOrder.setBackgroundColor(Color.rgb(77,177,136));
                 }
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();

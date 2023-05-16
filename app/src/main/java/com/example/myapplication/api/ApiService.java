@@ -10,6 +10,7 @@ import com.example.myapplication.model.OrderItem;
 
 import com.example.myapplication.model.Category;
 
+import com.example.myapplication.model.OrderModel;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.resObj;
@@ -38,11 +39,8 @@ public interface ApiService {
 
     ApiService apiService = new Retrofit.Builder()
 
-            //.baseUrl("http://192.168.1.131:3000/bookstore/api/v1/") // becoffe
-
-            //.baseUrl("http://192.168.1.123:3000/bookstore/api/v1/") // becoffe
-
-            .baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
+           .baseUrl("http://192.168.1.88:3000/bookstore/api/v1/") // becoffe
+            //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
             //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng
             //.baseUrl("http://192.168.47.147:3000/bookstore/api/v1/")// Cổng dành cho Mạng
             //.baseUrl("http://192.168.1.30:3000/bookstore/api/v1/")
@@ -64,7 +62,11 @@ public interface ApiService {
     @GET("products/{id}")
     Call<resObj<Product>> getProductById(@Path("id") String _id);
 
-    // Trang Home
+    // ORDER ******************************************
+    @GET("orders")
+    Call<resObj<List<OrderModel>>> getAllOrder(@Query("user") String user,
+                                               @Query("status") String status);
+    // HOME ***********************************
 
     // hiển thị 8 sách mới nhất
     @GET("products/new/{num}")
@@ -84,6 +86,10 @@ public interface ApiService {
     Call<resObj<List<Product>>> getProductByTitle(@Path("title") String title,
                                                   @Query("num") int num
     );
+
+
+
+
 
     //    Lấy  sản phẩm theo category
     @POST("products/category")

@@ -2,10 +2,8 @@ package com.example.myapplication.fragment;
 
 import static com.example.myapplication.api.ApiService.apiService;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -26,16 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.home.CategoryActivity;
-import com.example.myapplication.activity.home.HomeActivity;
-import com.example.myapplication.activity.home.SearchActivity;
 import com.example.myapplication.adapter.ProductDetailAdapter;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.helper.PaginationScroll;
-import com.example.myapplication.model.OptionFitler;
+import com.example.myapplication.model.StatusOrder;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.resObj;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +35,6 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Query;
 
 
 public class AllFragment extends Fragment {
@@ -66,7 +57,7 @@ public class AllFragment extends Fragment {
 
     private CategoryActivity categoryActivity;
 
-    private OptionFitler optionFitler;
+    private StatusOrder optionFitler;
 
     public List<Product> myList;
     String _categoryId;
@@ -87,7 +78,6 @@ public class AllFragment extends Fragment {
 
         mView = inflater.inflate(R.layout.fragment_all, container, false);
         AnhXa();
-        Log.d("tâsasaest", "onCreateView: " + _categoryId + " " + _searchText);
         SetSpiner(categoryActivity.getFilter());
         return mView;
     }

@@ -1,27 +1,19 @@
 package com.example.myapplication.activity.productdetail;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,9 +32,7 @@ import com.example.myapplication.model.CartModel;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.resObj;
-import com.google.android.material.appbar.AppBarLayout;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +41,6 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -87,6 +76,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_detail);
 
         AnhXa();
+        ClickToThing();
         SetFrontEnd();
         Intent intent = getIntent();
         String _id = intent.getStringExtra("_id");
@@ -233,6 +223,15 @@ public class ProductDetailActivity extends AppCompatActivity {
                 Log.e("lỗi: ", "Không thành công");
             }
         }));
+    }
+
+    private void ClickToThing() {
+        btn_pdetail_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void setQuantityCart() {
@@ -431,7 +430,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         btn_pdetail_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
                 Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
                 startActivity(intent);
             }
@@ -452,6 +450,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void SetFrontEnd() {
+
         btn_pdetail_back.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_pdetail_home.setColorFilter(ContextCompat.getColor(this, R.color.white));
         btn_pdetail_cart.setColorFilter(ContextCompat.getColor(this, R.color.white));

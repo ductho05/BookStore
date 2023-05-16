@@ -394,8 +394,8 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="70dp"
+                        android:layout_height="120dp"
                         android:layout_margin="10dp"
                         android:layout_weight="0.25"
                         android:background="@drawable/green_backgroud"
@@ -597,24 +597,18 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
+        android:layout_height="55dp"
         android:background="@drawable/background_home_bottommenu"
         android:elevation="4dp"
-        android:layout_height="55dp"
         android:paddingVertical="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+        app:layout_constraintStart_toStartOf="parent">
 
-<!--        <com.google.android.material.bottomappbar.BottomAppBar-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="bottom">-->
-<!--        </com.google.android.material.bottomappbar.BottomAppBar>-->
         <com.google.android.material.bottomappbar.BottomAppBar
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="match_parent">
 
-            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -622,6 +616,7 @@
                 android:weightSum="5">
 
                 <LinearLayout
+                    android:id="@+id/homepage"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -629,7 +624,7 @@
 
 
                     <ImageView
-                        android:id="@+id/homepage"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -647,24 +642,24 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
+                    android:id="@+id/imgthongbao"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
 
                     <ImageView
-                        android:id="@+id/imgsetting"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/settings" />
+                        app:srcCompat="@drawable/baseline_textsms_24" />
 
                     <TextView
                         android:id="@+id/tvSetting"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Setting"
+                        android:text="Thông báo"
                         android:textAlignment="center"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -672,12 +667,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:id="@+id/imgFavorite"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
 
                     <ImageView
-                        android:id="@+id/imgFavorite"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -696,12 +692,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:id="@+id/imgCart"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
 
                     <ImageView
-                        android:id="@+id/imgCart"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -718,6 +715,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btnUser"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

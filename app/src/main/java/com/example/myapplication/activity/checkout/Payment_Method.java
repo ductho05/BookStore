@@ -48,6 +48,7 @@ public class Payment_Method extends AppCompatActivity {
     private TextView shippingCost;
     private TextView total_price;
     private Button btn_order;
+    private ImageView btn_back;
 
     ArrayList<CartItemModel> cartItems = new ArrayList<>();
     Order order = new Order();
@@ -59,14 +60,9 @@ public class Payment_Method extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_payment_method);
         AnhXa();
+        ClickOnThing();
 
-        findViewById(R.id.btn_back).setOnClickListener(view -> {
-            supportFinishAfterTransition();
-            Intent intent = new Intent(Payment_Method.this, HomeActivity.class);
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(Payment_Method.this);
-            startActivity(intent, optionsCompat.toBundle());
-        });
+
 
         Intent intents = getIntent();
         Bundle bundle = getIntent().getExtras();
@@ -161,6 +157,17 @@ public class Payment_Method extends AppCompatActivity {
 
     }
 
+    private void ClickOnThing() {
+        btn_back.setOnClickListener(view -> {
+            supportFinishAfterTransition();
+            Intent intent = new Intent(Payment_Method.this, HomeActivity.class);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(Payment_Method.this);
+            Toast.makeText(Payment_Method.this, "Hủy thanh toán đơn hàng này",  Toast.LENGTH_SHORT).show();
+            startActivity(intent, optionsCompat.toBundle());
+        });
+    }
+
     private Date calculateExpectedDeliveryDate(Date processingDate, float distance, double speed) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(processingDate);
@@ -190,6 +197,7 @@ public class Payment_Method extends AppCompatActivity {
     }
 
     private void AnhXa() {
+        btn_back = findViewById(R.id.btn_back);
         rb_DeliveryCharges = findViewById(R.id.rb_DeliveryCharges);
         shippingDate = findViewById(R.id.shipping_date);
         price = findViewById(R.id.price);

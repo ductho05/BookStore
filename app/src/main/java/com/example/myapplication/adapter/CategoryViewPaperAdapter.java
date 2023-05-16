@@ -10,11 +10,11 @@ import com.example.myapplication.model.Category;
 
 import java.util.List;
 
-public class ViewPaperAdapter extends FragmentStatePagerAdapter {
+public class CategoryViewPaperAdapter extends FragmentStatePagerAdapter {
 
     private String mtitle;
     private List<Category> listCate;
-    public ViewPaperAdapter(@NonNull FragmentManager fm, int behavior, List<Category> listCate, String mtitle) {
+    public CategoryViewPaperAdapter(@NonNull FragmentManager fm, int behavior, List<Category> listCate, String mtitle) {
         super(fm, behavior);
         this.listCate = listCate;
         this.mtitle = mtitle;

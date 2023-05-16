@@ -1,7 +1,6 @@
 package com.example.myapplication.activity.home;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,16 +19,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.myapplication.activity.cart.CartActivity;
+import com.example.myapplication.activity.login.ProfileActivity;
 import com.example.myapplication.adapter.ProductDetailAdapter;
 import com.example.myapplication.adapter.SlideAdapter;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.R;
-import com.example.myapplication.fragment.AllFragment;
-import com.example.myapplication.model.Category;
-import com.example.myapplication.model.OptionFitler;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.Slide;
 import com.example.myapplication.model.resObj;
@@ -37,7 +35,6 @@ import com.example.myapplication.model.resObj;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -63,6 +60,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private TextView btnsearch, tvNewSeeMore, tvRunSeeMore;
 
+
     private TextView txtTimer;
 
     CountDownTimer Timer;
@@ -74,6 +72,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     List<Product> products;
 
 
+    LinearLayout btnUser, imgCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +99,20 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @SuppressLint("ClickableViewAccessibility")
     public void ClickOneThing() {
+        imgCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         tvNewSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,6 +232,8 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
 
     public void AnhXa() {
+        imgCart = findViewById(R.id.imgCart);
+        btnUser = findViewById(R.id.btnUser);
         tvNewSeeMore = findViewById(R.id.tvNewSeeMore);
         tvRunSeeMore = findViewById(R.id.tvRunSeeMore);
         btnsearch = findViewById(R.id.editTextTextPersonName);

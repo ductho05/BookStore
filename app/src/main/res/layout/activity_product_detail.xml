@@ -89,13 +89,13 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="619dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,8 +106,7 @@
                 android:id="@+id/images"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:layout_marginTop="10dp"
-                />
+                android:layout_marginTop="10dp" />
 
             <TextView
                 android:id="@+id/title"
@@ -204,9 +203,8 @@
                 android:id="@+id/rv_productIntro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginHorizontal="5dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="10dp"></androidx.recyclerview.widget.RecyclerView>
 
 
             <TextView
@@ -254,9 +252,8 @@
                 android:id="@+id/rv_readerCare"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginHorizontal="5dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginBottom="10dp"></androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:id="@+id/btn_seeMoreCare"
@@ -388,21 +385,22 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lineSpacingExtra="8dp"
+                android:lineSpacingMultiplier="1.2"
+                android:maxLines="10"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:text="Đến với bất kỳ hiệu sách nào (trực tiếp hoặc trực tuyến), bạn sẽ tìm thấy rất nhiều sách Python. Nếu đã quen với việc đọc sách, bạn sẽ quen với cái nhìn tổng quan nhanh chóng giúp bạn quyết định liệu cuốn sách này liệu có thực sự thích hợp với bạn hay không. Cuốn sách này mong muốn phổ cập ngôn ngữ Python đến với nhiều bạn có mong muốn tìm hiểu lập trình máy tính."
                 android:textColor="@color/text_color"
-                android:textSize="16dp"
-                android:maxLines="10"
-                android:ellipsize="end"
-                android:lineSpacingExtra="8dp"
-                android:lineSpacingMultiplier="1.2"/>
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/btn_seeMoreInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="50dp"
                 android:drawableEnd="@drawable/baseline_keyboard_arrow_right_24"
                 android:drawableTint="@color/primary_color"
                 android:gravity="center"
@@ -411,40 +409,28 @@
                 android:textColor="@color/primary_color"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                android:translationX="150dp"
-                android:layout_marginBottom="50dp"/>
+                android:translationX="150dp" />
 
         </LinearLayout>
     </ScrollView>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primary_color"
-        android:minHeight="?attr/actionBarSize"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="0.0" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar3"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar3"
-        app:layout_constraintStart_toStartOf="@+id/toolbar3"
-        app:layout_constraintTop_toTopOf="@+id/toolbar3">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        tools:weightSum="3">
 
         <LinearLayout
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:background="@color/white"
             android:gravity="center"
-            android:background="@color/white">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/btn_minus"
@@ -456,42 +442,44 @@
                 android:id="@+id/quantity"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:gravity="center"
                 android:text="1"
                 android:textSize="20dp"
-                android:textStyle="bold"
-                android:gravity="center"/>
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/btn_plus"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/plus"/>
+                android:src="@drawable/plus" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/btn_add_to_cart"
             android:layout_width="140dp"
             android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
             android:layout_marginBottom="2dp"
-            app:srcCompat="@drawable/outline_add_shopping_cart_24"
             android:background="@color/teal_200"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:layout_marginTop="2dp"/>
+            app:srcCompat="@drawable/outline_add_shopping_cart_24" />
 
         <TextView
             android:id="@+id/btn_buy_now"
             android:layout_width="130dp"
             android:layout_height="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
             android:layout_marginBottom="2dp"
             android:background="@color/primary_color"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:layout_marginTop="2dp"
             android:text="Mua ngay"
-            android:textSize="16dp"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textAlignment="center"/>
+            android:textSize="16dp"
+            android:textStyle="bold" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

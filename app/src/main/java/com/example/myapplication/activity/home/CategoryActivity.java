@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.ViewPaperAdapter;
+import com.example.myapplication.adapter.CategoryViewPaperAdapter;
 import com.example.myapplication.fragment.AllFragment;
 import com.example.myapplication.model.Category;
 import com.example.myapplication.model.resObj;
@@ -69,9 +69,9 @@ public class CategoryActivity extends AppCompatActivity {
             search_linearLayout.setVisibility(View.VISIBLE);
             senData("Tất cả", title);
             List<Category> categoryList = new ArrayList<>();
-            ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager(),
+            CategoryViewPaperAdapter categoryViewPaperAdapter = new CategoryViewPaperAdapter(getSupportFragmentManager(),
                     FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, categoryList, title);
-            viewPagerSearch.setAdapter(viewPaperAdapter);
+            viewPagerSearch.setAdapter(categoryViewPaperAdapter);
         }
         else if (filter != null){
 
@@ -121,9 +121,9 @@ public class CategoryActivity extends AppCompatActivity {
                     List<Category> cates;
                     cates = response.body().getData();
                     categoryList = cates;
-                    ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager(),
+                    CategoryViewPaperAdapter categoryViewPaperAdapter = new CategoryViewPaperAdapter(getSupportFragmentManager(),
                             FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, categoryList, "");
-                    viewPager.setAdapter(viewPaperAdapter);
+                    viewPager.setAdapter(categoryViewPaperAdapter);
                     tabLayout.setupWithViewPager(viewPager);
                 }
             }

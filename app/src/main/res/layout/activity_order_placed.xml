@@ -212,7 +212,7 @@
         android:id="@+id/btn_track_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="tại Đây"
+        android:text="tại đây"
         android:textColor="@color/primary_color"
         android:textSize="16sp"
         android:textStyle="bold"

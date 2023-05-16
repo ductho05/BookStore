@@ -16,12 +16,17 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activity.checkout.CheckOut_Address_Activity;
+import com.example.myapplication.activity.home.HomeActivity;
+import com.example.myapplication.activity.login.ProfileActivity;
+import com.example.myapplication.activity.productdetail.ProductDetailActivity;
 import com.example.myapplication.adapter.CartAdapter;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.model.CartItemModel;
@@ -44,6 +49,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
     private CheckBox cbAll;
     private TextView totalPrice;
     private Button btn_checkout;
+    private ImageView backtohome;
+
+    private LinearLayout homepage, btnUser, imgthongbao, imgFavorite;
     String user = "64477d8318a87d6e84a366d0";
     List<CartItemModel> cartItems;
     double total_price = 0;
@@ -55,8 +63,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cart);
-
         AnhXa();
+        ClickToAThing();
         setViewCart();
 
         btn_checkout.setOnClickListener(new View.OnClickListener() {
@@ -79,11 +87,53 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         });
     }
 
+    private void ClickToAThing() {
+        backtohome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        homepage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CartActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CartActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+//        imgthongbao.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        imgFavorite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(ProfileActivity.this, CartActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+    }
+
     public void AnhXa() {
         cbAll = findViewById(R.id.cbAll);
         totalPrice = findViewById(R.id.total_price);
         btn_checkout = findViewById(R.id.btn_checkout);
         recyclerView = findViewById(R.id.recycleView);
+        backtohome = findViewById(R.id.backtohome);
+        homepage = findViewById(R.id.homepage);
+        btnUser = findViewById(R.id.btnUser);
+//        imgthongbao  = findViewById(R.id.imgthongbao);
+//        imgFavorite = findViewById(R.id.imgFavorite);
     }
 
     public void setViewCart() {

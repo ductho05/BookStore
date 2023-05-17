@@ -79,6 +79,12 @@
         <activity
             android:name=".activity.productdetail.ProductDetailActivity"
             android:exported="false" />
+        <activity android:name=".activity.coupon.CouponActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.forgotpassword.ForgetPasswordActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.notification.NotificationActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

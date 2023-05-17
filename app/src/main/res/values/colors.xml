@@ -123,6 +123,8 @@
     <color name="primary_colorEnable">#FEE8B0</color>
     <color name="text_color">#4D4D4D</color>
     <color name="text_color2">#B2B2B2</color>
+    <color name="text_color3">#EDF1D6</color>
+    <color name="text_color4">#609966</color>
     <color name="background_color">#F5F6FA</color>
     <color name="red">#E21818</color>
     <color name="grey">#F6F1F1</color>

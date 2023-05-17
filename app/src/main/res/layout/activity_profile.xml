@@ -27,7 +27,7 @@
                 android:id="@+id/c_tvProfile"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:background="@drawable/top_background"
+                android:background="@color/primary_color"
                 android:padding="10dp"
                 android:text="Hồ sơ cá nhân"
                 android:textColor="@color/primary_text"

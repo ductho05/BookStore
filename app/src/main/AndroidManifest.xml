@@ -37,6 +37,11 @@
             android:name=".activity.account.EvaluateActivity"
             android:exported="false" /> <!-- ĐƠN HÀNG -->
         <activity
+            android:name=".activity.account.AccountActivity"
+            android:exported="false" />
+      <!-- ĐƠN HÀNG -->
+        <!-- ĐƠN HÀNG -->
+        <activity
             android:name=".activity.order.StatusOrderActivity"
             android:exported="false" />
         <activity
@@ -64,9 +69,7 @@
         <activity
             android:name=".activity.home.MainActivity"
             android:exported="false" /> <!-- account -->
-        <activity
-            android:name=".activity.account.LoginActivity"
-            android:exported="false" /> <!-- Cart -->
+        <!-- Cart -->
         <activity
             android:name=".activity.cart.CartActivity"
             android:exported="false" /> <!-- checkout -->
@@ -83,17 +86,17 @@
             android:name=".activity.checkout.Payment_Method"
             android:exported="false" /> <!-- login -->
         <activity
-            android:name=".activity.login.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.login.RegisterActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.login.ProfileActivity"
             android:exported="false" /> <!-- product detail -->
         <activity
             android:name=".activity.productdetail.ProductDetailActivity"
             android:exported="false" />
+        <activity android:name=".activity.coupon.CouponActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.forgotpassword.ForgetPasswordActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.notification.NotificationActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

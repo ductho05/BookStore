@@ -110,13 +110,13 @@
                         android:id="@+id/deletefavorite"
                         android:layout_height="wrap_content"
                         android:background="@drawable/deletefavorite"
-                        android:layout_marginLeft="120dp"></ImageView>
+                        android:layout_marginLeft="100dp"></ImageView>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:id="@+id/addtocart"
                         android:layout_height="wrap_content"
                         android:background="@drawable/add_favorite"
-                        android:layout_marginLeft="12dp"></ImageView>
+                        android:layout_marginLeft="15dp"></ImageView>
 
 
 

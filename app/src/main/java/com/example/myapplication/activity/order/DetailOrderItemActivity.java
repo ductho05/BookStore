@@ -1,5 +1,6 @@
 package com.example.myapplication.activity.order;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,8 +24,7 @@ import com.example.myapplication.model.OrderModel;
 import com.example.myapplication.model.StatusOrder;
 import com.example.myapplication.model.resObj;
 
-import java.text.DateFormat;
-import java.text.NumberFormat;
+import java.text.NumberFormat;;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -126,12 +126,24 @@ public class DetailOrderItemActivity extends AppCompatActivity {
 
     private void setInfoOrder(String orderId) {
         ApiService.apiService.getOrderById(orderId).enqueue(new Callback<resObj<OrderModel>>() {
+
             @Override
             public void onResponse(Call<resObj<OrderModel>> call, Response<resObj<OrderModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     order = response.body().getData();
                     shipping_method.setText(order.getShipping_method());
                     String statusOrder = order.getStatus();
+                    if (statusOrder.equals("DAGIAO")) {
+                        status.setText("Đơn hàng đã được giao thành công");
+                    } else if (statusOrder.equals("HUY")) {
+                        status.setText("Đơn hàng đã bị hủy");
+                    } else if (statusOrder.equals("CHOXACNHAN")) {
+                        status.setText("Đơn hàng đang chờ xác nhận");
+                    } else if (statusOrder.equals("CHOLAYHANG")) {
+                        status.setText("Cửa hàng đang lấy hàng");
+                    } else if (statusOrder.equals("DANGGIAO")) {
+                        status.setText("Đơn hàng đang được giao");
+                    }
 //                    Toast.makeText(DetailOrderItemActivity.this, statusOrder, Toast.LENGTH_SHORT).show();
 //                    if (statusOrder.equals("DAGIAO")) {
 //                        status.setText("Đơn hàng đã được giao thành công");
@@ -156,9 +168,9 @@ public class DetailOrderItemActivity extends AppCompatActivity {
                     payment_method.setText(order.getPayment_method());
                     id.setText(order.get_id());
                     String timeOrder = order.getCreatedAt();
-                    FormatDate(timeOrder, time_order);
-                    String timeComplete = order.getCreatedAt();
-                    FormatDate(timeComplete, time_complete);
+                    String timeComplete = order.getUpdatedAt();
+                    time_order.setText(timeOrder);
+                    time_complete.setText(timeComplete);
                 }
             }
 
@@ -167,18 +179,6 @@ public class DetailOrderItemActivity extends AppCompatActivity {
                 Log.e("Get order: ", t.getMessage());
             }
         });
-    }
-
-    private void FormatDate(String date, TextView tv) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-        try {
-            Date newDate = new Date(date);
-            String formattedDate = dateFormat.format(newDate);
-            tv.setText(formattedDate);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void AnhXa() {

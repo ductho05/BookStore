@@ -7,7 +7,9 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +32,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.activity.account.AccountActivity;
+import com.example.myapplication.activity.account.LoginManager;
 import com.example.myapplication.activity.cart.CartActivity;
 import com.example.myapplication.activity.home.CategoryActivity;
 import com.example.myapplication.activity.home.HomeActivity;
@@ -89,14 +93,16 @@ public class ProductDetailActivity extends AppCompatActivity {
     private List<Product> productList2;
     private List<Evaluate> evaluateList;
     Product product = new Product();
-    // Set user cứng:
-    String user = "64477d8318a87d6e84a366d0";
+    LoginManager loginManager;
+    String user;
     User newUser = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
-
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        loginManager = new LoginManager(sharedPreferences);
+        user = sharedPreferences.getString("id", "");
         AnhXa();
 
         SetFrontEnd();
@@ -147,142 +153,155 @@ public class ProductDetailActivity extends AppCompatActivity {
                 checkQuantity();
             }
         });
-        btn_buyNow.setOnClickListener(view -> { ApiService.apiService.getCartByUser(user).enqueue(new Callback<resObj<CartModel>>() {
-            @Override
-            public void onResponse(Call<resObj<CartModel>> call, Response<resObj<CartModel>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    // Đã có cart
-                    Log.e("Kq: ", "Đã có cart");
-                    CartModel cart = response.body().getData();
-                    CartItem cartItem = getCartItem();
-                    cartItem.setCart(cart.get_id());
-                    ApiService.apiService.getCartItemByProduct(cartItem.getProduct())
-                            .enqueue(new Callback<resObj<CartItemModel>>() {
+        btn_buyNow.setOnClickListener(view -> {
+            if (!loginManager.isLoggedIn()) {
+                noticeNotLogedIn();
+            } else {
+                ApiService.apiService.getCartByUser(user).enqueue(new Callback<resObj<CartModel>>() {
+                    @Override
+                    public void onResponse(Call<resObj<CartModel>> call, Response<resObj<CartModel>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            // Đã có cart
+                            Log.e("Kq: ", "Đã có cart");
+                            CartModel cart = response.body().getData();
+                            CartItem cartItem = getCartItem();
+                            cartItem.setCart(cart.get_id());
+                            ApiService.apiService.getCartItemByProduct(cartItem.getProduct())
+                                    .enqueue(new Callback<resObj<CartItemModel>>() {
+                                        @Override
+                                        public void onResponse(Call<resObj<CartItemModel>> call, Response<resObj<CartItemModel>> response) {
+                                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                                                // Đã có sản phẩm trong giỏ hàng
+                                                CartItemModel cartItem = response.body().getData();
+                                                int quantity = cartItem.getQuantity();
+                                                String cartItemId = cartItem.get_id();
+                                                quantity += 1;
+                                                cartItem.setQuantity(quantity);
+                                                ApiService.apiService.updateCartItem(cartItemId, cartItem).enqueue(new Callback<resObj<String>>() {
+                                                    @Override
+                                                    public void onResponse(Call<resObj<String>> call, Response<resObj<String>> response) {
+                                                        if (response.isSuccessful() && response.body() != null) {
+                                                            Intent intent1 = getIntent();
+                                                            String productId = intent1.getStringExtra("_id");
+                                                            Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                                                            intent.putExtra("_id", productId);
+                                                            startActivity(intent);
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onFailure(Call<resObj<String>> call, Throwable t) {
+
+                                                    }
+                                                });
+                                            } else {
+                                                // Thêm vào giỏ hàng
+                                                AddToCartNow(cartItem);
+                                            }
+                                        }
+                                        @Override
+                                        public void onFailure(Call<resObj<CartItemModel>> call, Throwable t) {}
+                                    });
+                        } else {
+                            // Chưa có cart
+                            Cart cart = getCart();
+                            ApiService.apiService.addCart(cart).enqueue(new Callback<resObj<Cart>>() {
                                 @Override
-                                public void onResponse(Call<resObj<CartItemModel>> call, Response<resObj<CartItemModel>> response) {
-                                    if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
-                                        // Đã có sản phẩm trong giỏ hàng
-                                        CartItemModel cartItem = response.body().getData();
-                                        int quantity = cartItem.getQuantity();
-                                        String cartItemId = cartItem.get_id();
-                                        quantity += 1;
-                                        cartItem.setQuantity(quantity);
-                                        ApiService.apiService.updateCartItem(cartItemId, cartItem).enqueue(new Callback<resObj<String>>() {
-                                            @Override
-                                            public void onResponse(Call<resObj<String>> call, Response<resObj<String>> response) {
-                                                if (response.isSuccessful() && response.body() != null) {
-                                                    Intent intent1 = getIntent();
-                                                    String productId = intent1.getStringExtra("_id");
-                                                    Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
-                                                    intent.putExtra("_id", productId);
-                                                    startActivity(intent);
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onFailure(Call<resObj<String>> call, Throwable t) {
-
-                                            }
-                                        });
-                                    } else {
-                                        // Thêm vào giỏ hàng
+                                public void onResponse(Call<resObj<Cart>> call, Response<resObj<Cart>> response) {
+                                    if (response.isSuccessful() && response.body().isSuccess() && response.body() != null) {
+                                        CartItem cartItem = getCartItem();
+                                        Cart cart = response.body().getData();
+                                        cartItem.setCart(cart.get_id());
                                         AddToCartNow(cartItem);
                                     }
                                 }
                                 @Override
-                                public void onFailure(Call<resObj<CartItemModel>> call, Throwable t) {}
+                                public void onFailure(Call<resObj<Cart>> call, Throwable t) {}
                             });
-                } else {
-                    // Chưa có cart
-                    Cart cart = getCart();
-                    ApiService.apiService.addCart(cart).enqueue(new Callback<resObj<Cart>>() {
-                        @Override
-                        public void onResponse(Call<resObj<Cart>> call, Response<resObj<Cart>> response) {
-                            if (response.isSuccessful() && response.body().isSuccess() && response.body() != null) {
-                                CartItem cartItem = getCartItem();
-                                Cart cart = response.body().getData();
-                                cartItem.setCart(cart.get_id());
-                                AddToCartNow(cartItem);
-                            }
                         }
+                    }
+                    @Override
+                    public void onFailure(Call<resObj<CartModel>> call, Throwable t) {
+                        Log.e("lỗi: ", "Không thành công");
+                    }
+                });
+            }
+        });
+        btn_add_to_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!loginManager.isLoggedIn()) {
+                    noticeNotLogedIn();
+                } else {
+                    ApiService.apiService.getCartByUser(user).enqueue(new Callback<resObj<CartModel>>() {
                         @Override
-                        public void onFailure(Call<resObj<Cart>> call, Throwable t) {}
-                    });
-                }
-            }
-            @Override
-            public void onFailure(Call<resObj<CartModel>> call, Throwable t) {
-                Log.e("lỗi: ", "Không thành công");
-            }
-        });
-
-        });
-        btn_add_to_cart.setOnClickListener(view -> ApiService.apiService.getCartByUser(user).enqueue(new Callback<resObj<CartModel>>() {
-            @Override
-            public void onResponse(Call<resObj<CartModel>> call, Response<resObj<CartModel>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    // Đã có cart
-                    Log.e("Kq: ", "Đã có cart");
-                    CartModel cart = response.body().getData();
-                    CartItem cartItem = getCartItem();
-                    cartItem.setCart(cart.get_id());
-                    ApiService.apiService.getCartItemByProduct(cartItem.getProduct())
-                            .enqueue(new Callback<resObj<CartItemModel>>() {
-                                @Override
-                                public void onResponse(Call<resObj<CartItemModel>> call, Response<resObj<CartItemModel>> response) {
-                                    if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
-                                        // Đã có sản phẩm trong giỏ hàng
-                                        CartItemModel cartItem = response.body().getData();
-                                        int quantity = cartItem.getQuantity();
-                                        String cartItemId = cartItem.get_id();
-                                        quantity += 1;
-                                        cartItem.setQuantity(quantity);
-                                        ApiService.apiService.updateCartItem(cartItemId, cartItem).enqueue(new Callback<resObj<String>>() {
+                        public void onResponse(Call<resObj<CartModel>> call, Response<resObj<CartModel>> response) {
+                            if (response.isSuccessful() && response.body().getData() != null) {
+                                // Đã có cart
+                                Log.e("Kq: ", "Đã có cart");
+                                CartModel cart = response.body().getData();
+                                CartItem cartItem = getCartItem();
+                                cartItem.setCart(cart.get_id());
+                                ApiService.apiService.getCartItemByProduct(cartItem.getProduct())
+                                        .enqueue(new Callback<resObj<CartItemModel>>() {
                                             @Override
-                                            public void onResponse(Call<resObj<String>> call, Response<resObj<String>> response) {
-                                                if (response.isSuccessful() && response.body() != null) {
-                                                    noticeAddToCart();
+                                            public void onResponse(Call<resObj<CartItemModel>> call, Response<resObj<CartItemModel>> response) {
+                                                if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                                                    // Đã có sản phẩm trong giỏ hàng
+                                                    CartItemModel cartItem = response.body().getData();
+                                                    int quantity = cartItem.getQuantity();
+                                                    String cartItemId = cartItem.get_id();
+                                                    quantity += 1;
+                                                    cartItem.setQuantity(quantity);
+                                                    ApiService.apiService.updateCartItem(cartItemId, cartItem).enqueue(new Callback<resObj<String>>() {
+                                                        @Override
+                                                        public void onResponse(Call<resObj<String>> call, Response<resObj<String>> response) {
+                                                            if (response.isSuccessful() && response.body() != null) {
+                                                                noticeAddToCart();
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<resObj<String>> call, Throwable t) {
+
+                                                        }
+                                                    });
+                                                } else {
+                                                    // Thêm vào giỏ hàng
+                                                    AddToCart(cartItem);
                                                 }
                                             }
-
                                             @Override
-                                            public void onFailure(Call<resObj<String>> call, Throwable t) {
-
+                                            public void onFailure(Call<resObj<CartItemModel>> call, Throwable t) {
+                                                Log.e("Xem sản phẩm có trong giỏ: ", t.getMessage());
                                             }
                                         });
-                                    } else {
-                                        // Thêm vào giỏ hàng
-                                        AddToCart(cartItem);
+                            } else {
+                                // Chưa có cart
+                                Cart cart = getCart();
+                                ApiService.apiService.addCart(cart).enqueue(new Callback<resObj<Cart>>() {
+                                    @Override
+                                    public void onResponse(Call<resObj<Cart>> call, Response<resObj<Cart>> response) {
+                                        if (response.isSuccessful() && response.body().isSuccess() && response.body() != null) {
+                                            CartItem cartItem = getCartItem();
+                                            Cart cart = response.body().getData();
+                                            cartItem.setCart(cart.get_id());
+                                            AddToCart(cartItem);
+                                        }
                                     }
-                                }
-                                @Override
-                                public void onFailure(Call<resObj<CartItemModel>> call, Throwable t) {
-                                    Log.e("Xem sản phẩm có trong giỏ: ", t.getMessage());
-                                }
-                            });
-                } else {
-                    // Chưa có cart
-                    Cart cart = getCart();
-                    ApiService.apiService.addCart(cart).enqueue(new Callback<resObj<Cart>>() {
-                        @Override
-                        public void onResponse(Call<resObj<Cart>> call, Response<resObj<Cart>> response) {
-                            if (response.isSuccessful() && response.body().isSuccess() && response.body() != null) {
-                                CartItem cartItem = getCartItem();
-                                Cart cart = response.body().getData();
-                                cartItem.setCart(cart.get_id());
-                                AddToCart(cartItem);
+                                    @Override
+                                    public void onFailure(Call<resObj<Cart>> call, Throwable t) {}
+                                });
                             }
                         }
                         @Override
-                        public void onFailure(Call<resObj<Cart>> call, Throwable t) {}
+                        public void onFailure(Call<resObj<CartModel>> call, Throwable t) {
+                            Log.e("lỗi: ", "Không thành công");
+                        }
                     });
                 }
             }
-            @Override
-            public void onFailure(Call<resObj<CartModel>> call, Throwable t) {
-                Log.e("lỗi: ", "Không thành công");
-            }
-        }));
+        });
     }
 
     Runnable hideProgressBarRunnable = new Runnable() {
@@ -376,6 +395,25 @@ public class ProductDetailActivity extends AppCompatActivity {
             intent.putExtra("_id", productId);
             startActivity(intent);
         });
+    }
+
+    private void noticeNotLogedIn() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.notice_not_logedin, null);
+
+        builder.setView(viewDialog);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        Button button_continue_shopping = viewDialog.findViewById(R.id.btn_toLogin);
+        button_continue_shopping.setOnClickListener(view -> {
+            Intent intent = new Intent(ProductDetailActivity.this, AccountActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
+        });
+
     }
 
     private void setQuantityCart() {

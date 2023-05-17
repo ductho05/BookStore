@@ -55,6 +55,15 @@ public interface ApiService {
             //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
             //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng Thọ
             .baseUrl("http://192.168.239.147:3000/bookstore/api/v1/")// Cổng dành cho Mạng
+
+           //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
+            //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
+            //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng
+            //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
+            //.baseUrl("http://192.168.1.123:3000/bookstore/api/v1/") // becoffe
+            //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
+            //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng Thọ
+            //.baseUrl("http://192.168.47.147:3000/bookstore/api/v1/")// Cổng dành cho Mạng
             //.baseUrl("http://192.168.1.30:3000/bookstore/api/v1/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -62,8 +71,11 @@ public interface ApiService {
 
     @POST("users/")
     Call<resObj<User>> getUserByEmail(@Query("email") String email);
-    @POST("users/id")
-    Call<resObj<User>> getUserById(@Query("id") String id);
+    @GET("users/{id}")
+    Call<resObj<User>> getUserById(@Path("id") String id);
+
+    @POST("users/insert")
+    Call<resObj<User>> registerAccount(@Body User User);
 
     @POST("orders/insert")
     Call<resObj<Order>> addOrder(@Body Order order);
@@ -73,6 +85,12 @@ public interface ApiService {
 
     @POST("orderitems/order")
     Call<resObj<List<OrderItemModel>>> getOrderItemByOrder(@Query("id") String id);
+
+
+
+    // update orderitem
+    @PUT("orderitems/update/{id}")
+    Call<resObj<OrderItem>> updateOrderItem(@Path("id") String id, @Body OrderItem orderItem);
 
     @GET("products/id/{id}")
     Call<resObj<Product>> getProductById(@Path("id") String _id);

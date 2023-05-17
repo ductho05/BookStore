@@ -1,8 +1,13 @@
 package com.example.myapplication.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
-public class Order implements Serializable {
+public class Order implements Serializable, Parcelable {
     private String _id;
     private String name;
     private String address;
@@ -42,6 +47,39 @@ public class Order implements Serializable {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    protected Order(Parcel in) {
+        _id = in.readString();
+        name = in.readString();
+        address = in.readString();
+        city = in.readString();
+        phone = in.readString();
+        quantity = in.readInt();
+        price = in.readFloat();
+        shippingCost = in.readFloat();
+        deliveryDate = in.readString();
+        message = in.readString();
+        byte tmpPid = in.readByte();
+        pid = tmpPid == 0 ? null : tmpPid == 1;
+        user = in.readString();
+        payment_method = in.readString();
+        shipping_method = in.readString();
+        status = in.readString();
+        createdAt = in.readString();
+        updatedAt = in.readString();
+    }
+
+    public static final Creator<Order> CREATOR = new Creator<Order>() {
+        @Override
+        public Order createFromParcel(Parcel in) {
+            return new Order(in);
+        }
+
+        @Override
+        public Order[] newArray(int size) {
+            return new Order[size];
+        }
+    };
 
     public String getStatus() {
         return status;
@@ -177,5 +215,31 @@ public class Order implements Serializable {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(_id);
+        parcel.writeString(name);
+        parcel.writeString(address);
+        parcel.writeString(city);
+        parcel.writeString(phone);
+        parcel.writeInt(quantity);
+        parcel.writeFloat(price);
+        parcel.writeFloat(shippingCost);
+        parcel.writeString(deliveryDate);
+        parcel.writeString(message);
+        parcel.writeByte((byte) (pid == null ? 0 : pid ? 1 : 2));
+        parcel.writeString(user);
+        parcel.writeString(payment_method);
+        parcel.writeString(shipping_method);
+        parcel.writeString(status);
+        parcel.writeString(createdAt);
+        parcel.writeString(updatedAt);
     }
 }

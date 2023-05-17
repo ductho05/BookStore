@@ -7,10 +7,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.app.ComponentActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.account.LoginManager;
 import com.example.myapplication.activity.cart.CartActivity;
 import com.example.myapplication.activity.home.HomeActivity;
 import com.example.myapplication.activity.productdetail.ProductDetailActivity;
@@ -39,6 +43,7 @@ import com.example.myapplication.model.OrderItem;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,14 +61,17 @@ public class CheckOut_Address_Activity extends AppCompatActivity {
     private Button btnNextOrder;
 
     private ImageView btn_back;
-
-
+    String user;
+    LoginManager loginManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.checkout_address_activity);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        loginManager = new LoginManager(sharedPreferences);
+        user = sharedPreferences.getString("id", "");
         AnhXa();
         btnNextOrder.setEnabled(false);
         btnNextOrder.setBackgroundColor(Color.rgb(245,246,250));
@@ -89,7 +97,7 @@ public class CheckOut_Address_Activity extends AppCompatActivity {
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList("cartItems", cartItems);
             intent.putExtras(bundle);
-            intent.putExtra("order", order);
+            intent.putExtra("order", (Serializable) order);
             intent.putExtra("orderItems", orderItems);
 
             String address = order.getAddress() + " " + order.getCity();
@@ -185,12 +193,8 @@ public class CheckOut_Address_Activity extends AppCompatActivity {
         order.setCity(city);
         order.setAddress(address);
         order.setMessage(message);
-//        Set cứng user
-        User user = new User("64477d8318a87d6e84a366d0", false, "ductho", "123", "Ninh Duc Tho2",
-                "https://res.cloudinary.com/dgntuytuu/image/upload/v1682407093/book-store/uuphcpbb3qadnh8eyoui.jpg",
-                "","tho@gmail.com", "","","", null, "2023-04-25T07:13:07.766+00:00",
-                "2023-04-25T07:18:46.440+00:00");
-        order.setUser(user.get_id());
+
+        order.setUser(user);
 
 //        Lấy danh sách sản phẩm thanh toán
         Intent intent = getIntent();

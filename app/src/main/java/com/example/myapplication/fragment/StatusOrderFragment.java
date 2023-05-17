@@ -3,6 +3,8 @@ package com.example.myapplication.fragment;
 
 import static com.example.myapplication.api.ApiService.apiService;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -27,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.account.LoginManager;
 import com.example.myapplication.activity.order.StatusOrderActivity;
 import com.example.myapplication.adapter.OrderAdapter;
 import com.example.myapplication.model.OrderModel;
@@ -60,6 +63,8 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
     DividerItemDecoration divider;
     View view;
     Button btnTuChoiOrder,btnChapNhanOrder;
+    LoginManager loginManager;
+    String user;
 
 //    public StatusOrderFragment() {
 //    }
@@ -89,22 +94,26 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_order_detail, container, false );
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        loginManager = new LoginManager(sharedPreferences);
+        user = sharedPreferences.getString("id", "");
         AnhXa();
+        getOrders(mStatusOrder, user, true);
         switch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 tv_order_status1.setVisibility(View.VISIBLE);
                 tv_order_status2.setVisibility(View.GONE);
-                getOrders(mStatusOrder, "64477d8318a87d6e84a366d0", true);
+                getOrders(mStatusOrder, user, true);
             } else {
                 tv_order_status2.setVisibility(View.VISIBLE);
                 tv_order_status1.setVisibility(View.GONE);
-                getOrders(mStatusOrder, "64477d8318a87d6e84a366d0", false);
+                getOrders(mStatusOrder, user, false);
             }
         });
 
         boolean a = statusOrderActivity.getSort();
         Log.d("filt212er", String.valueOf(a));
-        getOrders(mStatusOrder, "64477d8318a87d6e84a366d0", statusOrderActivity.getSort());
+        getOrders(mStatusOrder, user, statusOrderActivity.getSort());
         return view;
     }
     Runnable hideProgressBarRunnable = new Runnable() {
@@ -187,7 +196,7 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        getOrders(mStatusOrder, "64477d8318a87d6e84a366d0", statusOrderActivity.getSort());
+        getOrders(mStatusOrder, user, statusOrderActivity.getSort());
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

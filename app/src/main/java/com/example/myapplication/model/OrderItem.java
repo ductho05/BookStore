@@ -6,6 +6,7 @@ public class OrderItem implements Serializable {
     private String _id;
     private int quantity;
     private float price;
+    private String status;
     private String order;
     private String product;
 
@@ -17,6 +18,14 @@ public class OrderItem implements Serializable {
         this.price = price;
         this.order = order;
         this.product = product;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String get_id() {

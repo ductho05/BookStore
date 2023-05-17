@@ -1,5 +1,6 @@
 package com.example.myapplication.activity.home;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,23 +9,30 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.myapplication.activity.account.AccountActivity;
+import com.example.myapplication.activity.account.LoginManager;
 import com.example.myapplication.activity.cart.CartActivity;
 import com.example.myapplication.activity.favorite.FavoriteActivity;
 import com.example.myapplication.activity.login.ProfileActivity;
+import com.example.myapplication.activity.productdetail.ProductDetailActivity;
 import com.example.myapplication.adapter.ProductDetailAdapter;
 import com.example.myapplication.adapter.SlideAdapter;
 import com.example.myapplication.api.ApiService;
@@ -45,6 +53,7 @@ import me.relex.circleindicator.CircleIndicator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
@@ -73,8 +82,10 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     List<Product> products;
 
 
+
     LinearLayout btnUser, imgCart, imgFavorite;
 
+    private LoginManager loginManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,15 +93,34 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home);
 
+        Intent intent = getIntent();
+        boolean isLoggin = intent.getBooleanExtra("isLogin", false);
+        if (isLoggin) {
+            noticeSuccessLogin();
+        }
         AnhXa();
-
         ClickOneThing();
         //setViewFlashSale();
         onStart();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        loginManager = new LoginManager(sharedPreferences);
+
         setSlideHome();
         setViewLastBook();
         setViewForYou();
         setViewBestSeller();
+    }
+
+    private void noticeSuccessLogin() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.notice_login_success, null);
+
+        builder.setView(viewDialog);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     public String getQuality() {
@@ -110,15 +140,27 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         imgCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
-                startActivity(intent);
+                if (!loginManager.isLoggedIn()) {
+                    noticeNotLogedIn();
+                } else {
+                    Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
+
         btnUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
-                startActivity(intent);
+
+                if (loginManager.isLoggedIn()) {
+                    Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(HomeActivity.this, AccountActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
         tvNewSeeMore.setOnClickListener(new View.OnClickListener() {
@@ -157,10 +199,24 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
     }
+    private void noticeNotLogedIn() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.notice_not_logedin, null);
 
+        builder.setView(viewDialog);
 
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
+        Button button_continue_shopping = viewDialog.findViewById(R.id.btn_toLogin);
+        button_continue_shopping.setOnClickListener(view -> {
+            Intent intent = new Intent(HomeActivity.this, AccountActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.no_animation, R.anim.no_animation);
+        });
 
+    }
     @Override
     public void onStart() {
         super.onStart();

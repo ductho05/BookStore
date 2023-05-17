@@ -3,6 +3,8 @@ package com.example.myapplication.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,8 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     int flag = 0;
     private List<OrderItemModel> orderItemModels;
 
-    private String _status = "DAGIAO";
+    private String _status;
+    String orderItemStatus;
     public OrderDetailAdapter(Context mContext, List<OrderItemModel> orderItemModels, String status) {
         this.mContext = mContext;
         this.orderItemModels = orderItemModels;
@@ -50,6 +53,8 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViemHolder holder, int position) {
+        OrderItemModel orderItem = orderItemModels.get(position);
+        orderItemStatus = orderItem.getStatus();
         Product product = orderItemModels.get(position).getProduct();
         String quantityProduct = String.valueOf(orderItemModels.get(position).getQuantity());
         Glide.with(mContext).load(product.getImages()).into(holder.productImage);
@@ -63,19 +68,28 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
                 new Locale("vi", "VN")).format(product.getOld_price())));
         holder.quantity.setText("x" + quantityProduct);
 
-        if (!_status.equals("DAGIAO")) {
+        if (!_status.equals("DAGIAO") ) {
             holder.btn_eval.setEnabled(false);
-            holder.btn_eval.setBackgroundColor(Color.rgb(245,246,250));
-            holder.btn_eval.setText("Chưa hoàn thành đơn hàng");
+            holder.btn_eval.setBackgroundColor(Color.rgb(245, 246, 250));
+            holder.btn_eval.setText("Chưa hoàn tất");
+
         } else {
-            holder.btn_eval.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            if (orderItemStatus.equals("DANHGIA")) {
+                holder.btn_eval.setEnabled(false);
+                Log.e("Tesssssst: ", "OK");
+                holder.btn_eval.setBackgroundColor(Color.rgb(245,246,250));
+                holder.btn_eval.setText("Đã đánh giá");
+            } else {
+                holder.btn_eval.setOnClickListener(view -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("orderItem",orderItem );
                     Intent intent = new Intent(mContext, EvaluateActivity.class);
+                    intent.putExtras(bundle);
                     intent.putExtra("_id", product.get_id());
+//                        intent.putExtra("orderItem", orderItem);
                     mContext.startActivity(intent);
-                }
-            });
+                });
+            }
         }
     }
 

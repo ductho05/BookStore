@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.account.LoginManager;
 import com.example.myapplication.activity.checkout.CheckOut_Address_Activity;
 import com.example.myapplication.activity.home.HomeActivity;
 import com.example.myapplication.activity.login.ProfileActivity;
@@ -53,8 +56,8 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
     private Button btn_checkout;
     private ImageView backtohome;
 
-    private LinearLayout homepage, btnUser, imgthongbao, imgFavorite;
-    String user = "64477d8318a87d6e84a366d0";
+    String user;
+    LoginManager loginManager;
     List<CartItemModel> cartItems;
     double total_price = 0;
     private ArrayList<CartItemModel> listCartItem = new ArrayList<>();
@@ -65,6 +68,9 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_cart);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        loginManager = new LoginManager(sharedPreferences);
+        user = sharedPreferences.getString("id", "");
         AnhXa();
         ClickToAThing();
         setViewCart();
@@ -85,8 +91,6 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
             finish();
         });
     }
-
-
     private void ClickToAThing() {
         backtohome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,34 +98,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
                 finish();
             }
         });
-        homepage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CartActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
-        btnUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CartActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
-//        imgthongbao.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        imgFavorite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(ProfileActivity.this, CartActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
     }
 
     public void AnhXa() {
@@ -130,10 +107,7 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
         btn_checkout = findViewById(R.id.btn_checkout);
         recyclerView = findViewById(R.id.recycleView);
         backtohome = findViewById(R.id.backtohome);
-        homepage = findViewById(R.id.homepage);
-        btnUser = findViewById(R.id.btnUser);
-//        imgthongbao  = findViewById(R.id.imgthongbao);
-//        imgFavorite = findViewById(R.id.imgFavorite);
+
     }
 
     @Override
@@ -170,13 +144,14 @@ public class CartActivity extends AppCompatActivity implements CartAdapter.OnIte
     }
 
     public void setViewCart() {
+        Log.e("Xem gio hang: ", user);
         ApiService.apiService.getAllCartItemByUser(user).enqueue(new Callback<resObj<List<CartItemModel>>>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<resObj<List<CartItemModel>>> call, Response<resObj<List<CartItemModel>>> response) {
                 if (response.isSuccessful() && response.body() != null) {
 
-                    cartItems =  (List<CartItemModel>) response.body().getData();
+                    cartItems = response.body().getData();
                     if (cartItems != null) {
                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CartActivity.this, LinearLayoutManager.VERTICAL, false);
                         recyclerView.setLayoutManager(linearLayoutManager);

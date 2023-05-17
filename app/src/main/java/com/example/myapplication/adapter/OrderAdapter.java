@@ -3,6 +3,7 @@ package com.example.myapplication.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     Context context;
     List<OrderModel> array;
 
-    String firstImageBook;
-    public OrderAdapter(Context context, List<OrderModel> array, String firstImageBook) {
+
+    public OrderAdapter(Context context, List<OrderModel> array) {
         this.context = context;
         this.array = array;
-        this.firstImageBook = firstImageBook;
+
     }
     @NonNull
     @Override
@@ -48,22 +49,22 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             holder.Status = order.getStatus();
             int price = (int) order.getPrice();
             holder.nameItem.setText("(Anh/Chị) " + order.getName());
-        holder.price.setText(String.format("%,d",
-                Math.round(order.getPrice())) + "đ");
-        holder.quality.setText("Số lượng: " + order.getQuantity() + " sản phẩm");
-        holder.time.setText("Thời gian đặt: " + order.getCreatedAt());
-        holder.address.setText("Địa chỉ nhận hàng: " + order.getAddress());
-        holder.magiamgia.setText("Mã giảm giá: " + "Có");
-        if (holder.magiamgia.getText() == "Mã giảm giá: Không") {
-            holder.oldPriceItem.setVisibility(View.GONE);
-        }
-        else {
-            holder.oldPriceItem.setVisibility(View.VISIBLE);
-            holder.oldPriceItem.setText("Tạm tính" );
-        }
-        holder.messItem.setText(order.getMessage());
+            holder.price.setText(String.format("%,d",
+                    Math.round(order.getPrice())) + "đ");
+            holder.quality.setText("Số lượng: " + order.getQuantity() + " sản phẩm");
+            holder.time.setText("Thời gian đặt: " + order.getCreatedAt());
+            holder.address.setText("Địa chỉ nhận hàng: " + order.getAddress());
+            holder.magiamgia.setText("Mã giảm giá: " + "Có");
+            if (holder.magiamgia.getText() == "Mã giảm giá: Không") {
+                holder.oldPriceItem.setVisibility(View.GONE);
+            }
+            else {
+                holder.oldPriceItem.setVisibility(View.VISIBLE);
+                holder.oldPriceItem.setText("Tạm tính" );
+            }
+            holder.messItem.setText(order.getMessage());
 
-        //Glide.with(context).load("https://www.facebook.com/photo/?fbid=1517457375429896&set=a.392833837892261").into(holder.images);
+            //Glide.with(context).load("https://www.facebook.com/photo/?fbid=1517457375429896&set=a.392833837892261").into(holder.images);
         }
     }
 
@@ -75,8 +76,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         public TextView price, quality, nameItem, time, address, magiamgia, oldPriceItem, messItem;
 
         public ImageView images;
-        private String id,Status;
-
+        private String id, Status;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,6 +96,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                     Bundle bundle = new Bundle();
                     bundle.putString("OrderId", id);
                     bundle.putString("Status", Status);
+                    Log.e("OrderId", id);
                     Intent intent = new Intent(context, DetailOrderItemActivity.class);
                     intent.putExtras(bundle);
                     context.startActivity(intent);

@@ -18,7 +18,7 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/down"
+            app:srcCompat="@drawable/down"
             app:tint="@color/primary_color">
         </ImageView>
 

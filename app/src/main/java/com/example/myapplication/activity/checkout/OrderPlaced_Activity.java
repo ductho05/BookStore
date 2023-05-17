@@ -23,7 +23,6 @@ import com.example.myapplication.activity.order.StatusOrderActivity;
 
 public class OrderPlaced_Activity extends AppCompatActivity {
 
-    ImageView btn_back;
     TextView btn_track_order;
     Button btn_ctn_buy;
     @Override
@@ -42,14 +41,6 @@ public class OrderPlaced_Activity extends AppCompatActivity {
             Intent intent = new Intent(OrderPlaced_Activity.this, StatusOrderActivity.class);
             startActivity(intent);
         });
-        btn_back.setOnClickListener(view -> {
-            supportFinishAfterTransition();
-            Intent intent = new Intent(OrderPlaced_Activity.this, HomeActivity.class);
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(OrderPlaced_Activity.this);
-            startActivity(intent, optionsCompat.toBundle());
-        });
-
         btn_ctn_buy.setOnClickListener(view -> {
             Intent intent = new Intent(OrderPlaced_Activity.this, HomeActivity.class);
             startActivity(intent);
@@ -59,8 +50,6 @@ public class OrderPlaced_Activity extends AppCompatActivity {
 
     private void AnhXa() {
         btn_track_order  = findViewById(R.id.btn_track_order);
-        btn_back = findViewById(R.id.btn_back);
-        btn_back.setVisibility(View.GONE);
         btn_ctn_buy = findViewById(R.id.btn_ctn_buy);
         noticeSuccessOrder();
     }

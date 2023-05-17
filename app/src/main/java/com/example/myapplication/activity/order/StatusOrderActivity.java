@@ -4,22 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.OrderAdapter;
 import com.example.myapplication.adapter.StatusOrderAdapter;
-import com.example.myapplication.fragment.AllFragment;
 import com.example.myapplication.fragment.StatusOrderFragment;
 import com.example.myapplication.model.StatusOrder;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 public class StatusOrderActivity extends AppCompatActivity {
 

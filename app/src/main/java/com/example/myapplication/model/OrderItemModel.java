@@ -8,6 +8,8 @@ public class OrderItemModel implements Serializable {
     private float price;
     private Order order;
     private Product product;
+    public OrderItemModel() {
+    }
 
     public OrderItemModel(int quantity, float price, Order order, Product product) {
         this.quantity = quantity;

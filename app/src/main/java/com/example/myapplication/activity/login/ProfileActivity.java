@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import com.example.myapplication.R;
 import com.example.myapplication.activity.cart.CartActivity;
 import com.example.myapplication.activity.home.HomeActivity;
-import com.example.myapplication.activity.order.DetailOrderItemActivity;
 import com.example.myapplication.activity.order.StatusOrderActivity;
 
 

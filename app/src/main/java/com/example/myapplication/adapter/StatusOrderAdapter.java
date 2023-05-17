@@ -19,6 +19,7 @@ public class StatusOrderAdapter extends FragmentStatePagerAdapter {
     public StatusOrderAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
+
     @NonNull
     @Override
     public Fragment getItem(int position) {

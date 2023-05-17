@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +31,14 @@ import com.example.myapplication.activity.cart.CartActivity;
 import com.example.myapplication.activity.home.CategoryActivity;
 import com.example.myapplication.activity.home.HomeActivity;
 import com.example.myapplication.activity.home.SearchActivity;
+import com.example.myapplication.adapter.EvaluateAdapter;
 import com.example.myapplication.adapter.ProductDetailAdapter;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.model.Cart;
 import com.example.myapplication.model.CartItem;
 import com.example.myapplication.model.CartItemModel;
 import com.example.myapplication.model.CartModel;
+import com.example.myapplication.model.Evaluate;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.resObj;
@@ -65,14 +68,19 @@ public class ProductDetailActivity extends AppCompatActivity {
     TextView discount;
     ImageView btn_plus;
     ImageView btn_minus;
-    TextView quantity, id, author, year_publish, description,title2, btn_seeMoreIntro, btn_seeMoreCare, btn_seeMoreInfo;
+    TextView quantity, id, author, year_publish, description,title2, btn_seeMoreIntro, btn_seeMoreCare, btn_seeMoreInfo,
+            quantity_eval, btn_seeAllEval, rating_num;
     TextView btn_buyNow, quantityCart;
+    RatingBar rating_star;
     private RecyclerView rv_productIntro;
     private RecyclerView rv_readerCare;
+    private RecyclerView rv_evaluate;
     private ProductDetailAdapter productDetailAdapter1;
     private ProductDetailAdapter productDetailAdapter2;
+    private EvaluateAdapter evaluateAdapter;
     private List<Product> productList1;
     private List<Product> productList2;
+    private List<Evaluate> evaluateList;
     Product product = new Product();
     // Set user cứng:
     String user = "64477d8318a87d6e84a366d0";
@@ -91,6 +99,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         setProductIntro();
         setProductCare(_id);
         setQuantityCart();
+        setEvaluateList();
         btn_pdetail_search.setOnClickListener(view -> {
             supportFinishAfterTransition();
             Intent intent12 = new Intent(ProductDetailActivity.this, SearchActivity.class);
@@ -383,6 +392,34 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
+    private void setEvaluateList() {
+        Intent intent1 = getIntent();
+        String productId = intent1.getStringExtra("_id");
+        ApiService.apiService.getEvaluateByProduct(productId).enqueue(new Callback<resObj<List<Evaluate>>>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(Call<resObj<List<Evaluate>>> call, Response<resObj<List<Evaluate>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    evaluateList = response.body().getData();
+                    evaluateAdapter = new EvaluateAdapter(evaluateList, ProductDetailActivity.this);
+                    rv_evaluate.setHasFixedSize(true);
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ProductDetailActivity.this, LinearLayoutManager.VERTICAL, false);
+                    rv_evaluate.setLayoutManager(linearLayoutManager);
+                    rv_evaluate.setAdapter(evaluateAdapter);
+
+                    String num_eval = String.valueOf(evaluateList.size());
+                    quantity_eval.setText("Đánh giá("+ num_eval+ ")");
+                }
+                Log.e("Load đánh giá: ", "OK");
+            }
+
+            @Override
+            public void onFailure(Call<resObj<List<Evaluate>>> call, Throwable t) {
+                Log.e("Load đánh giá thất bại: ", t.getMessage());
+            }
+        });
+    }
+
     private void AddToCartNow(CartItem cartItem) {
         ApiService.apiService.addCartItem(cartItem).enqueue(new Callback<resObj<CartItem>>() {
             @Override
@@ -483,7 +520,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                         description.setText(product.getDescription());
                         title2.setText(product.getTitle());
                         year_publish.setText(product.getPublished_date());
-
+                        rating_num.setText(product.getRate() + "/5");
+                        rating_star.setRating((float) product.getRate());
                         btn_seeMoreInfo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -544,6 +582,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btn_add_to_cart = (ImageView) findViewById(R.id.btn_add_to_cart);
         rv_readerCare = findViewById(R.id.rv_readerCare);
         rv_productIntro = findViewById(R.id.rv_productIntro);
+        rv_evaluate = findViewById(R.id.rv_evaluate);
         images = findViewById(R.id.images);
         title = findViewById(R.id.title);
         price = findViewById(R.id.tv_price);
@@ -561,5 +600,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         btn_seeMoreIntro = findViewById(R.id.btn_seeMoreIntro);
         btn_seeMoreCare = findViewById(R.id.btn_seeMoreCare);
         btn_seeMoreInfo = findViewById(R.id.btn_seeMoreInfo);
+        quantity_eval = findViewById(R.id.quantity_eval);
+        btn_seeAllEval = findViewById(R.id.btn_seeAllEval);
+        rating_num = findViewById(R.id.rating_num);
+        rating_star = findViewById(R.id.rating_star);
     }
 }

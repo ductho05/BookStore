@@ -10,11 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,18 +27,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myapplication.R;
-import com.example.myapplication.activity.home.CategoryActivity;
 import com.example.myapplication.activity.order.StatusOrderActivity;
 import com.example.myapplication.adapter.OrderAdapter;
-import com.example.myapplication.helper.CustomDividerItemDecoration;
 import com.example.myapplication.model.OrderModel;
 import com.example.myapplication.model.StatusOrder;
 import com.example.myapplication.model.resObj;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +43,7 @@ import retrofit2.Response;
 public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     StatusOrder mStatusOrder;
 
-
+    private Handler handler;
     ConstraintLayout layoutOrderChoXacNhan;
     ProgressBar progressBar;
     int currentPosition;
@@ -55,6 +51,7 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
     OrderAdapter orderAdapter;
     RecyclerView rcOrder;
     Switch switch1;
+    ImageView empty;
     LinearLayout layoutBtn;
     List<OrderModel> listOrder;
     private StatusOrderActivity statusOrderActivity;
@@ -63,6 +60,10 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
     DividerItemDecoration divider;
     View view;
     Button btnTuChoiOrder,btnChapNhanOrder;
+
+//    public StatusOrderFragment() {
+//    }
+
     public StatusOrderFragment(StatusOrder statusOrder) {
         mStatusOrder = statusOrder;
     }
@@ -106,7 +107,16 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
         getOrders(mStatusOrder, "64477d8318a87d6e84a366d0", statusOrderActivity.getSort());
         return view;
     }
+    Runnable hideProgressBarRunnable = new Runnable() {
+        @Override
+        public void run() {
+            progressBar.setVisibility(View.GONE);
+            empty.setVisibility(View.VISIBLE);
+        }
+    };
+
     private void AnhXa() {
+        empty = view.findViewById(R.id.empty);
         //linearLayout2  = view.findViewById(R.id.line);
         layoutOrderChoXacNhan = view.findViewById(R.id.layoutOrderChoXacNhan);
         progressBar = view.findViewById(R.id.progressBar2);
@@ -143,6 +153,8 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
                     listOrder = response.body().getData();
                     if (listOrder.size() == 0) {
                         progressBar.setVisibility(View.VISIBLE);
+                        handler = new Handler();
+                        handler.postDelayed(hideProgressBarRunnable, 4000); // 5000ms = 5 giây
                         switch1.setVisibility(View.GONE);
                         tv_order_status1.setVisibility(View.GONE);
                         tv_order_status2.setVisibility(View.GONE);
@@ -153,7 +165,8 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
                     if (sort) {
                         Collections.reverse(listOrder);
                     }
-                    orderAdapter = new OrderAdapter(getContext(), listOrder, "https://www.facebook.com/photo/?fbid=1517457375429896&set=a.392833837892261");
+                    //orderAdapter = new OrderAdapter(getContext(), listOrder, "https://www.facebook.com/photo/?fbid=1517457375429896&set=a.392833837892261");
+                    orderAdapter = new OrderAdapter(getContext(), listOrder);
                     rcOrder.setHasFixedSize(true);
                     LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
                     //layoutManager.setReverseLayout(true);

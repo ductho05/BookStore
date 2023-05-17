@@ -49,7 +49,7 @@ import retrofit2.Response;
 
 public class Payment_Method extends AppCompatActivity {
 
-    private RadioButton rb_DeliveryCharges;
+    private RadioButton rb_DeliveryCharges, rb_payment_method;
     private TextView shippingDate;
     private TextView price;
     private TextView shippingCost;
@@ -97,7 +97,10 @@ public class Payment_Method extends AppCompatActivity {
         SimpleDateFormat formatter = new SimpleDateFormat("EEEE, dd/MM/yyyy", Locale.getDefault());
         String formattedDate = formatter.format(shipping_date);
         order.setDeliveryDate(String.valueOf(shipping_date));
-
+        String shipping_method = rb_DeliveryCharges.getText().toString();
+        String payment_method = rb_payment_method.getText().toString();
+        order.setPayment_method(payment_method);
+        order.setShipping_method(shipping_method);
         rb_DeliveryCharges.setText("Giao hàng tiêu chuẩn: "+ NumberFormat.getCurrencyInstance(
                 new Locale("vi", "VN")).format(shipping_cost)
         );
@@ -237,5 +240,6 @@ public class Payment_Method extends AppCompatActivity {
         shippingCost = findViewById(R.id.shippingCost);
         total_price = findViewById(R.id.total_price);
         btn_order = findViewById(R.id.btn_order);
+        rb_payment_method = findViewById(R.id.rb_payment_method);
     }
 }

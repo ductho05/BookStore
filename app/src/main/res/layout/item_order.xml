@@ -3,78 +3,153 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="160dp">
+    android:layout_height="200dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/cartitembackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
                 android:layout_width="140dp"
-                android:gravity="center"
+                android:gravity="left"
                 android:orientation="vertical"
+                android:paddingLeft="10dp"
                 android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/imageItem"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/ktlt2"/>
                 <TextView
-                    android:id="@+id/quality"
+                    android:id="@+id/time"
                     android:layout_width="120dp"
-                    android:layout_height="20dp"
-                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:textSize="10dp"
+                    android:textSize="12dp"
+                    android:text="Kỹ thuật lập trình python nâng cao"
+                    android:textColor="#4D4D4D"/>
+                <TextView
+                    android:id="@+id/address"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="10dp"
+                    android:textSize="12dp"
                     android:text="Kỹ thuật lập trình python nâng cao"
                     android:textColor="#4D4D4D"/>
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/quality"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
 
+                    android:layout_marginTop="10dp"
+                    android:textSize="12dp"
+                    android:text="Kỹ thuật lập trình python nâng cao"
+                    android:textColor="#4D4D4D"/>
+
+                <TextView
+                    android:id="@+id/magiamgia"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12dp"
+                    android:text="Kỹ thuật lập trình python nâng cao"
+                    android:textColor="#4D4D4D"/>
+
+
+
+        </LinearLayout>
+<View
+    android:layout_width="0.1dp"
+    android:layout_height="match_parent"
+    android:background="#59000000"/>
             <LinearLayout
                 android:layout_width="match_parent"
+                android:paddingHorizontal="10dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginRight="20dp">
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tvnameItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Người nhận:"
+                    android:textColor="#4D4D4D"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
                 <TextView
                     android:id="@+id/nameItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="2dp"
                     android:text="Kỹ thuật lập trình python nâng cao"
                     android:textColor="#4D4D4D"
+                    android:textSize="15dp"
+                    android:textStyle="italic"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
+                <TextView
+                    android:id="@+id/tvMessItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Nội dung:"
+                    android:textColor="#4D4D4D"
+                    android:textSize="17dp"
                     android:textStyle="bold"
                     android:maxLines="2"
                     android:ellipsize="end"/>
+                <TextView
+                    android:id="@+id/messItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Kỹ thuật lập trình python nâng cao"
+                    android:textColor="#4D4D4D"
+                    android:textSize="12sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
+
+                <TextView
+                    android:id="@+id/oldPriceItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tạm tính: 99.000 đ"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="20dp">
+                    android:layout_gravity="right"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp">
+
+
+                    <TextView
+                        android:id="@+id/thanhtoan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thanh toán: "
+                        android:textSize="20dp"
+                        android:textColor="@color/primary_color"
+                        android:textStyle="bold"/>
+
 
                     <TextView
                         android:id="@+id/salePriceItem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:text="99.000 đ"
                         android:textSize="20dp"
                         android:textColor="@color/primary_color"
@@ -84,5 +159,4 @@
 
             </LinearLayout>
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

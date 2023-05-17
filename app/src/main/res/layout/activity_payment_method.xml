@@ -250,6 +250,7 @@
                 android:layout_margin="20dp">
 
                 <RadioButton
+                    android:id="@+id/rb_payment_method"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/primary_color"

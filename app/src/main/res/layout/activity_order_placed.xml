@@ -9,7 +9,6 @@
     android:background="@color/background_color"
     tools:context=".activity.checkout.OrderPlaced_Activity">
 
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"

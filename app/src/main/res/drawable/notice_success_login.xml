@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="20dp"
-        android:paddingBottom="5dp"
+        android:paddingBottom="20dp"
         android:layout_gravity="center"
         android:gravity="center">
 
@@ -25,27 +25,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Thành công"
+            android:text="Đăng nhập thành công"
             android:textSize="16dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_marginLeft="5dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cảm ơn bạn đã đánh giá sản phẩm"
-            android:textSize="16dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginLeft="5dp"/>
-        <Button
-            android:id="@+id/buttonOK"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Quay lại đơn hàng"
-            android:textSize="16dp"
-            android:textAllCaps="false"/>
     </LinearLayout>
 
 </LinearLayout>

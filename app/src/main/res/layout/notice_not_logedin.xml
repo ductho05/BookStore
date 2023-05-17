@@ -11,39 +11,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="20dp"
-        android:paddingBottom="5dp"
         android:layout_gravity="center"
         android:gravity="center">
 
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:srcCompat="@drawable/down"
-            app:tint="@color/primary_color">
+            app:srcCompat="@drawable/ball"
+            app:tint="@color/red">
         </ImageView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Thành công"
+            android:text="Vui lòng đăng nhập"
             android:textSize="16dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_marginLeft="5dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cảm ơn bạn đã đánh giá sản phẩm"
-            android:textSize="16dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginLeft="5dp"/>
         <Button
-            android:id="@+id/buttonOK"
+            android:id="@+id/btn_toLogin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Quay lại đơn hàng"
+            android:text="Tới trang đăng nhập"
             android:textSize="16dp"
             android:textAllCaps="false"/>
     </LinearLayout>

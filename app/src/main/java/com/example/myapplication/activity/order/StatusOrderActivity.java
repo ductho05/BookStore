@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.account.LoginManager;
 import com.example.myapplication.adapter.OrderAdapter;
 import com.example.myapplication.adapter.StatusOrderAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -21,10 +22,12 @@ public class StatusOrderActivity extends AppCompatActivity {
     public ViewPager2 viewPager;
 
     StatusOrderAdapter statusOrderAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status_order);
+
         AnhXa();
         ClicktoThing();
         statusOrderAdapter = new StatusOrderAdapter(StatusOrderActivity.this);

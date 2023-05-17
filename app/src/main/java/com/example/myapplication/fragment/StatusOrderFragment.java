@@ -3,6 +3,8 @@ package com.example.myapplication.fragment;
 
 import static com.example.myapplication.api.ApiService.apiService;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myapplication.R;
+import com.example.myapplication.activity.account.LoginManager;
 import com.example.myapplication.adapter.OrderAdapter;
 import com.example.myapplication.model.OrderModel;
 import com.example.myapplication.model.StatusOrder;
@@ -40,6 +43,8 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
     List<OrderModel> listOrder;
     View view;
     Button btnTuChoiOrder,btnChapNhanOrder;
+    LoginManager loginManager;
+    String user;
 
 //    public StatusOrderFragment() {
 //    }
@@ -52,8 +57,11 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_order_detail, container, false );
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        loginManager = new LoginManager(sharedPreferences);
+        user = sharedPreferences.getString("id", "");
         AnhXa();
-        getOrders(mStatusOrder, "64477d8318a87d6e84a366d0");
+        getOrders(mStatusOrder, user);
         return view;
     }
     private void AnhXa() {

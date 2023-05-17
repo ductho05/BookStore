@@ -58,8 +58,11 @@ public interface ApiService {
 
     @POST("users/")
     Call<resObj<User>> getUserByEmail(@Query("email") String email);
-    @POST("users/id")
-    Call<resObj<User>> getUserById(@Query("id") String id);
+    @GET("users/{id}")
+    Call<resObj<User>> getUserById(@Path("id") String id);
+
+    @POST("users/insert")
+    Call<resObj<User>> registerAccount(@Body User User);
 
     @POST("orders/insert")
     Call<resObj<Order>> addOrder(@Body Order order);
@@ -69,6 +72,10 @@ public interface ApiService {
 
     @POST("orderitems/order")
     Call<resObj<List<OrderItemModel>>> getOrderItemByOrder(@Query("id") String id);
+
+    // update orderitem
+    @PUT("orderitems/update/{id}")
+    Call<resObj<OrderItem>> updateOrderItem(@Path("id") String id, @Body OrderItem orderItem);
 
     @GET("products/{id}")
     Call<resObj<Product>> getProductById(@Path("id") String _id);

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.example.myapplication.activity.cart.CartActivity;
 import com.example.myapplication.activity.login.ProfileActivity;
 import com.example.myapplication.adapter.ProductDetailAdapter;
+import com.example.myapplication.adapter.PublisherAdapter;
 import com.example.myapplication.adapter.SlideAdapter;
 import com.example.myapplication.api.ApiService;
 import com.example.myapplication.R;
@@ -49,7 +50,9 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private String QUALITY = "12";
     //private String RANDOM_CATE = "";
-    private ViewPager viewPager;
+    private ViewPager viewPager,viewPublisher;
+    private PublisherAdapter publisherAdapter;
+    private List<Slide> mListPublisher;
     private CircleIndicator circleIndicator;
     private SlideAdapter photoAdapter;
 
@@ -90,6 +93,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         setViewLastBook();
         setViewForYou();
         setViewBestSeller();
+        setViewPublisher();
     }
 
     public String getQuality() {
@@ -232,6 +236,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
 
     public void AnhXa() {
+        viewPublisher = findViewById(R.id.viewpublisher);
         imgCart = findViewById(R.id.imgCart);
         btnUser = findViewById(R.id.btnUser);
         tvNewSeeMore = findViewById(R.id.tvNewSeeMore);
@@ -278,12 +283,51 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
     }
+    private List<Slide> getmListPublisher() {
+        List<Slide> list= new ArrayList<>();
+        list.add(new Slide(R.drawable.nxb_cong_thuong,"Tầng 4 tòa nhà Bộ Công Thương, số 655 Phạm văn Đồng, Bắc Từ Liêm, Hà Nội, SĐT:02439387164","Nhà xuất bản Công Thương"));
+        list.add(new Slide(R.drawable.nxb_gdvn,"231 Đ.Nguyễn Văn Cừ , Phường 4, Quận 5, TP Hồ Chí Minh, SĐT:02439714359","Nhà xuất bản Giáo dục Việt Nam"));
+        list.add(new Slide(R.drawable.nxb_kim_dong,"55 Quang Trung, Hà Nội, SĐT:02439434730","Nhà xuất bản Kim Đồng"));
+        list.add(new Slide(R.drawable.nxb_thanh_nien,"Phường Yên Hòa, Quận Cầu Giấy, Hà Nội, SĐT:0906645777","Nhà xuất bản Thanh Niên"));
+        list.add(new Slide(R.drawable.nxb_thoi_dai,"Phường Cầu Diễn, Quận Nam Từ Liêm, Hà Nội, SĐT:0462872348","Nhà xuất bản Thời Đại"));
+        list.add(new Slide(R.drawable.nxb_van_hoc,"Phường Trúc Bạch, Quận Ba Đình ,Hà Nội, SĐT:0904907492","Nhà xuất bản Văn Học"));
+        list.add(new Slide(R.drawable.nxb_tre,"Phường 7, Quận 3, Thành Phố Hồ Chí Minh, SĐT:033367895","Nhà xuất bản Trẻ"));
+        list.add(new Slide(R.drawable.nxb_tri_thuc,"Tp Hồ Chí Minh, SĐT:097427922","Nhà xuất bản Tri Thức"));
+        list.add(new Slide(R.drawable.nxb_yale,"Tp Hồ Chí Minh, SĐT:032256743 ","Nhà xuất bản Yale"));
 
+        return list;
+
+    }
+    private void setViewPublisher(){
+        mListPublisher = getmListPublisher();
+        publisherAdapter = new PublisherAdapter(this, mListPublisher);
+        viewPublisher.setAdapter(publisherAdapter);
+        publisherAdapter.setOnItemClickListener(new PublisherAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Slide slide) {
+                String namePublisher = slide.getResourceName();
+                String descriptionPublisher = slide.getResourceDescription();
+                int imageResourceId = slide.getResourceId();
+                startPublisherDetailActivity(imageResourceId, namePublisher, descriptionPublisher);
+            }
+        });
+
+    }
+    public static final String EXTRA_PUBLISHER_DETAIL = "publisher_detail";
+    public static final String EXTRA_PUBLISHER_NAME = "publisher_name";
+    public static final String EXTRA_PUBLISHER_IMAGE = "publisher_image";
+    private void startPublisherDetailActivity(int imageResourceId,String namePublisher ,String descriptionPublisher) {
+        Intent intent = new Intent(HomeActivity.this, PublisherActivity.class);
+        intent.putExtra(PublisherActivity.EXTRA_PUBLISHER_NAME, namePublisher);
+        intent.putExtra(PublisherActivity.EXTRA_PUBLISHER_DETAIL, descriptionPublisher);
+        intent.putExtra(PublisherActivity.EXTRA_PUBLISHER_IMAGE, imageResourceId);
+        startActivity(intent);
+    }
     private List<Slide> getListPhoto() {
         List<Slide> list= new ArrayList<>();
-        list.add(new Slide(R.drawable.slide_home_1));
-        list.add(new Slide(R.drawable.slide_home_2));
-        list.add(new Slide(R.drawable.slide_home_3));
+        list.add(new Slide(R.drawable.slide_home_1,"",""));
+        list.add(new Slide(R.drawable.slide_home_2,"",""));
+        list.add(new Slide(R.drawable.slide_home_3,"",""));
 
         return list;
 

@@ -21,7 +21,6 @@ import com.example.myapplication.activity.account.AccountActivity;
 import com.example.myapplication.activity.account.LoginManager;
 import com.example.myapplication.activity.cart.CartActivity;
 import com.example.myapplication.activity.home.HomeActivity;
-import com.example.myapplication.activity.order.DetailOrderItemActivity;
 import com.example.myapplication.activity.order.StatusOrderActivity;
 import com.example.myapplication.activity.productdetail.ProductDetailActivity;
 import com.example.myapplication.api.ApiService;

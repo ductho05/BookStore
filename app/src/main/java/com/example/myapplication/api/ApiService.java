@@ -43,6 +43,8 @@ public interface ApiService {
 
     ApiService apiService = new Retrofit.Builder()
 
+            //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
+
            //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
             //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
             //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng
@@ -134,7 +136,7 @@ public interface ApiService {
     // Tìm sản phẩm theo danh mục:
     @GET("products/category/{category}")
     Call<resObj<List<Product>>> getProductByCategory(@Path("category") String category
-                                      );
+    );
 
     // Lọc sản phẩm của từng danh mục
 

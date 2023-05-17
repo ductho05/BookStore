@@ -15,7 +15,6 @@ public class OrderItemModel implements Serializable, Parcelable {
     private String status;
     private Order order;
     private Product product;
-
     public OrderItemModel() {
     }
 

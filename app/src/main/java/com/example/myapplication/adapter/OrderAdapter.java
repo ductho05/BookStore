@@ -26,11 +26,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
     Context context;
     List<OrderModel> array;
 
-    String firstImageBook;
-    public OrderAdapter(Context context, List<OrderModel> array, String firstImageBook) {
+
+    public OrderAdapter(Context context, List<OrderModel> array) {
         this.context = context;
         this.array = array;
-        this.firstImageBook = firstImageBook;
+
     }
     @NonNull
     @Override
@@ -48,13 +48,23 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
             holder.id = order.get_id();
             holder.Status = order.getStatus();
             int price = (int) order.getPrice();
-            holder.nameItem.setText("Người nhận: (Anh/Chị) " + order.getName());
-        holder.price.setText( "Tổng cộng: " + String.format("%,d",
-                Math.round(order.getPrice())) + "đ");
-        holder.quality.setText("Số lượng: " + order.getQuantity() + " sản phẩm");
-        Glide.with(context).load("https://www.facebook.com/photo/?fbid=1517457375429896&set=a.392833837892261").into(holder.images);
+            holder.nameItem.setText("(Anh/Chị) " + order.getName());
+            holder.price.setText(String.format("%,d",
+                    Math.round(order.getPrice())) + "đ");
+            holder.quality.setText("Số lượng: " + order.getQuantity() + " sản phẩm");
+            holder.time.setText("Thời gian đặt: " + order.getCreatedAt());
+            holder.address.setText("Địa chỉ nhận hàng: " + order.getAddress());
+            holder.magiamgia.setText("Mã giảm giá: " + "Có");
+            if (holder.magiamgia.getText() == "Mã giảm giá: Không") {
+                holder.oldPriceItem.setVisibility(View.GONE);
+            }
+            else {
+                holder.oldPriceItem.setVisibility(View.VISIBLE);
+                holder.oldPriceItem.setText("Tạm tính" );
+            }
+            holder.messItem.setText(order.getMessage());
 
-
+            //Glide.with(context).load("https://www.facebook.com/photo/?fbid=1517457375429896&set=a.392833837892261").into(holder.images);
         }
     }
 
@@ -63,23 +73,29 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
         return array == null ? 0 : array.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView price, quality, nameItem;
-        public ImageView images;
-        private String id,Status;
+        public TextView price, quality, nameItem, time, address, magiamgia, oldPriceItem, messItem;
 
+        public ImageView images;
+        private String id, Status;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            messItem = itemView.findViewById(R.id.messItem);
+            address = itemView.findViewById(R.id.address);
+            time = itemView.findViewById(R.id.time);
             nameItem = (TextView) itemView.findViewById(R.id.nameItem);
             price = (TextView) itemView.findViewById(R.id.salePriceItem);
             quality = (TextView) itemView.findViewById(R.id.quality);
-            images =(ImageView) itemView.findViewById(R.id.imageItem);
+            magiamgia = itemView.findViewById(R.id.magiamgia);
+            oldPriceItem = itemView.findViewById(R.id.oldPriceItem);
+            //images =(ImageView) itemView.findViewById(R.id.imageItem);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
                     bundle.putString("OrderId", id);
+                    bundle.putString("Status", Status);
                     Log.e("OrderId", id);
                     Intent intent = new Intent(context, DetailOrderItemActivity.class);
                     intent.putExtras(bundle);

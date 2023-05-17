@@ -73,17 +73,19 @@ public class LoginFragment extends Fragment {
                     public void onResponse(Call<resObj<User>> call, Response<resObj<User>> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             User user = response.body().getData();
-                            String emailLogin = user.getEmail();
                             String passwordLogin = user.getPassword();
                             String id = user.get_id();
-                            if (emailValue.equals(emailLogin) && passwordValue.equals(passwordLogin)) {
+                            if (!passwordValue.equals(passwordLogin)) {
+                                Log.e("tesst sai mat khau: ", "test");
+                                noticeFailedLogin();
+                            } else {
                                 loginManager.saveLogin(id, true);
                                 Intent intent = new Intent(getContext(), HomeActivity.class);
                                 intent.putExtra("isLogin", true);
                                 startActivity(intent);
-                            } else {
-                                noticeFailedLogin();
                             }
+                        } else {
+                            noticeFailedLogin();
                         }
 
                     }
@@ -98,7 +100,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void noticeFailedLogin() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
         View viewDialog = inflater.inflate(R.layout.notice_login_failed, null);
 

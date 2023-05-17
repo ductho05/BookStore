@@ -3,7 +3,9 @@ package com.example.myapplication.activity.account;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +21,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.activity.order.DetailOrderItemActivity;
 import com.example.myapplication.activity.order.StatusOrderActivity;
 import com.example.myapplication.api.ApiService;
-import com.example.myapplication.model.Evaluate;
 import com.example.myapplication.model.EvaluateModel;
 import com.example.myapplication.model.OrderItem;
 import com.example.myapplication.model.OrderItemModel;
@@ -42,14 +43,17 @@ public class EvaluateActivity extends AppCompatActivity {
     private Button btn_eval;
 
     Product product;
-    String user = "64477d8318a87d6e84a366d0";
+    String user;
+    LoginManager loginManager;
 
     OrderItemModel orderItemModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluate);
-
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        loginManager = new LoginManager(sharedPreferences);
+        user = sharedPreferences.getString("id", "");
         AnhXa();
         Bundle bundle = getIntent().getExtras();
         orderItemModel = bundle.getParcelable("orderItem");

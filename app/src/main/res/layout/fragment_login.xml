@@ -122,11 +122,10 @@
                 android:layout_marginStart="10dp"
                 />
 
-            <CheckBox
+            <TextView
                 android:id="@+id/checkbox_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nhớ tôi"
                 android:fontFamily="@font/public_sans_medium"
                 android:textColor="@color/primary_text"
                 android:textSize="15sp"

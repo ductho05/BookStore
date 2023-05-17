@@ -21,12 +21,13 @@
         <activity
             android:name=".activity.account.EvaluateActivity"
             android:exported="false" /> <!-- ĐƠN HÀNG -->
+        <!-- ĐƠN HÀNG -->
         <activity
             android:name=".activity.order.StatusOrderActivity"
             android:exported="false" />
-        <activity
-            android:name=".activity.order.DetailOrderItemActivity"
-            android:exported="false" /> <!-- home -->
+        <activity android:name=".activity.order.DetailOrderItemActivity"
+            android:exported="false" />
+        <!-- home -->
         <activity
             android:name=".activity.productdetail.SeeMoreInfoProductDetail"
             android:exported="false"
@@ -71,6 +72,12 @@
         <activity
             android:name=".activity.productdetail.ProductDetailActivity"
             android:exported="false" />
+        <activity android:name=".activity.coupon.CouponActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.forgotpassword.ForgetPasswordActivity"
+            android:exported="false"/>
+        <activity android:name=".activity.notification.NotificationActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

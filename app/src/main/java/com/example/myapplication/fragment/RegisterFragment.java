@@ -60,13 +60,27 @@ public class RegisterFragment extends Fragment {
                 user.setPassword(password);
                 user.setUsername(userName);
 
-                ApiService.apiService.registerAccount(user).enqueue(new Callback<resObj<User>>() {
+                ApiService.apiService.getUserByEmail(email).enqueue(new Callback<resObj<User>>() {
                     @Override
                     public void onResponse(Call<resObj<User>> call, Response<resObj<User>> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            noticeSuccessRegoster();
+                            noticeEmailValid();
                         } else {
-                            noticeFailedRegoster();
+                            ApiService.apiService.registerAccount(user).enqueue(new Callback<resObj<User>>() {
+                                @Override
+                                public void onResponse(Call<resObj<User>> call, Response<resObj<User>> response) {
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        noticeSuccessRegoster();
+                                    } else {
+                                        noticeFailedRegoster();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<resObj<User>> call, Throwable t) {
+
+                                }
+                            });
                         }
                     }
 
@@ -91,6 +105,7 @@ public class RegisterFragment extends Fragment {
         TextView message_err = viewDialog.findViewById(R.id.notice_success);
         message_err.setText("Đăng ký thành công");
     }
+
     private void noticeFailedRegoster() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
@@ -102,6 +117,19 @@ public class RegisterFragment extends Fragment {
         dialog.show();
         TextView message_err = viewDialog.findViewById(R.id.message_err);
         message_err.setText("Vui lòng kiểm tra lại thông tin đăng kí");
+    }
+
+    private void noticeEmailValid() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.notice_login_failed, null);
+
+        builder.setView(viewDialog);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        TextView message_err = viewDialog.findViewById(R.id.message_err);
+        message_err.setText("Email đã có tài khoản");
     }
 
     private void Validate(EditText editText, TextView errText) {

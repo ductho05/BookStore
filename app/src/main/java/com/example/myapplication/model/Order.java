@@ -15,15 +15,16 @@ public class Order implements Serializable {
     private String message;
     private Boolean pid;
     private String user;
+    private String payment_method;
+    private String shipping_method;
+    private String status;
     private String createdAt;
     private String updatedAt;
 
     public Order() {
     }
 
-    public Order(String name, String address, String city, String phone, int quantity, float price,
-                 float shippingCost, String deliveryDate, String message, Boolean pid, String user,
-                 String createdAt, String updatedAt) {
+    public Order(String name, String address, String city, String phone, int quantity, float price, float shippingCost, String deliveryDate, String message, Boolean pid, String user, String payment_method, String shipping_method, String status, String createdAt, String updatedAt) {
         this.name = name;
         this.address = address;
         this.city = city;
@@ -35,8 +36,35 @@ public class Order implements Serializable {
         this.message = message;
         this.pid = pid;
         this.user = user;
+        this.payment_method = payment_method;
+        this.shipping_method = shipping_method;
+        this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPayment_method() {
+        return payment_method;
+    }
+
+    public void setPayment_method(String payment_method) {
+        this.payment_method = payment_method;
+    }
+
+    public String getShipping_method() {
+        return shipping_method;
+    }
+
+    public void setShipping_method(String shipping_method) {
+        this.shipping_method = shipping_method;
     }
 
     public String get_id() {

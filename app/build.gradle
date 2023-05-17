@@ -26,6 +26,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
 }
 
 dependencies {
@@ -61,4 +64,6 @@ dependencies {
 
     // slide
     implementation 'me.relex:circleindicator:2.1.6'
+//    vector
+    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
 }

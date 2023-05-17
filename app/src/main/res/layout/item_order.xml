@@ -35,7 +35,7 @@
                 android:id="@+id/imageItem"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:src="@drawable/ktlt2"/>
+                app:srcCompat="@drawable/ktlt2"/>
                 <TextView
                     android:id="@+id/quality"
                     android:layout_width="120dp"

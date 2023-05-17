@@ -5,11 +5,14 @@ import com.example.myapplication.model.Cart;
 import com.example.myapplication.model.CartItem;
 import com.example.myapplication.model.CartItemModel;
 import com.example.myapplication.model.CartModel;
+import com.example.myapplication.model.Evaluate;
+import com.example.myapplication.model.EvaluateModel;
 import com.example.myapplication.model.Order;
 import com.example.myapplication.model.OrderItem;
 
 import com.example.myapplication.model.Category;
 
+import com.example.myapplication.model.OrderItemModel;
 import com.example.myapplication.model.OrderModel;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
@@ -24,6 +27,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -39,13 +43,13 @@ public interface ApiService {
 
     ApiService apiService = new Retrofit.Builder()
 
-           .baseUrl("http://192.168.1.88:3000/bookstore/api/v1/") // becoffe
+           //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
             //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
             //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng
             //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
             //.baseUrl("http://192.168.1.123:3000/bookstore/api/v1/") // becoffe
             //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
-            //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng Thọ
+            .baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng Thọ
             //.baseUrl("http://192.168.47.147:3000/bookstore/api/v1/")// Cổng dành cho Mạng
             //.baseUrl("http://192.168.1.30:3000/bookstore/api/v1/")
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -63,6 +67,9 @@ public interface ApiService {
     @POST("orderitems/insert")
     Call<OrderItem> addOrderItem(@Body OrderItem orderItem);
 
+    @POST("orderitems/order")
+    Call<resObj<List<OrderItemModel>>> getOrderItemByOrder(@Query("id") String id);
+
     @GET("products/{id}")
     Call<resObj<Product>> getProductById(@Path("id") String _id);
 
@@ -70,6 +77,9 @@ public interface ApiService {
     @GET("orders")
     Call<resObj<List<OrderModel>>> getAllOrder(@Query("user") String user,
                                                @Query("status") String status);
+
+    @GET("orders/{id}")
+    Call<resObj<OrderModel>> getOrderById(@Path("id") String id);
     // HOME ***********************************
 
     // hiển thị 8 sách mới nhất
@@ -146,4 +156,11 @@ public interface ApiService {
 
     @PUT("cartitems/update/{id}")
     Call<resObj<String>> updateCartItem(@Path("id") String id, @Body CartItemModel cartItem);
+
+    // Evaluate
+    @POST("evaluates/product")
+    Call<resObj<List<Evaluate>>> getEvaluateByProduct(@Query("_id") String id);
+
+    @POST("evaluates/insert")
+    Call<resObj<EvaluateModel>> addEvaluate(@Body EvaluateModel evaluate);
 }

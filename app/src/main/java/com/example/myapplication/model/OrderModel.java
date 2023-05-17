@@ -13,12 +13,38 @@ public class OrderModel implements Serializable {
     private float shippingCost;
     private String deliveryDate;
     private String message;
-    private String status;
-    private boolean pid;
+    private Boolean pid;
     private User user;
+    private String payment_method;
+    private String shipping_method;
+    private String status;
     private String createdAt;
     private String updatedAt;
     private int __v;
+
+    public Boolean getPid() {
+        return pid;
+    }
+
+    public void setPid(Boolean pid) {
+        this.pid = pid;
+    }
+
+    public String getPayment_method() {
+        return payment_method;
+    }
+
+    public void setPayment_method(String payment_method) {
+        this.payment_method = payment_method;
+    }
+
+    public String getShipping_method() {
+        return shipping_method;
+    }
+
+    public void setShipping_method(String shipping_method) {
+        this.shipping_method = shipping_method;
+    }
 
     public String get_id() {
         return _id;

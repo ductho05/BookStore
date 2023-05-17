@@ -71,7 +71,7 @@
             android:id="@+id/btn_pdetail_cart"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/baseline_shopping_cart_24"/>
+            app:srcCompat="@drawable/baseline_shopping_cart_24"/>
 
         <TextView
             android:id="@+id/quantityCart"
@@ -414,7 +414,7 @@
             <View
                 android:id="@+id/view"
                 android:layout_width="fill_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:background="#D8D8D8"/>
 
             <LinearLayout
@@ -430,7 +430,7 @@
                     android:id="@+id/quantity_eval"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Đánh giá(215)"
+                    android:text="Đánh giá(0)"
                     android:textSize="16dp"
                     android:textStyle="bold"/>
 
@@ -443,9 +443,9 @@
                     android:gravity="center"
                     android:text="Xem tất cả"
                     android:textAlignment="center"
-                    android:textSize="16dp"
+                    android:textSize="14dp"
                     android:textStyle="bold"
-                    android:translationX="180dp"/>
+                    android:translationX="150dp"/>
             </LinearLayout>
 
         <LinearLayout
@@ -458,20 +458,32 @@
             android:layout_margin="10dp">
             
             <TextView
+                android:id="@+id/rating_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5/5"
-                android:textStyle="bold"/>
-            
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:numStars="5"
-                android:stepSize="1"
-                android:rating="0"
-                android:isIndicator="true"/>
-        </LinearLayout>
+                android:text="0/5"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"/>
 
+            <RatingBar
+                android:id="@+id/rating_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="1" />
+        </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#D8D8D8"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_evaluate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
 
@@ -497,7 +509,7 @@
                 android:id="@+id/btn_minus"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/minus" />
+                app:srcCompat="@drawable/minus" />
 
             <TextView
                 android:id="@+id/quantity"
@@ -512,7 +524,7 @@
                 android:id="@+id/btn_plus"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/plus" />
+                app:srcCompat="@drawable/plus" />
         </LinearLayout>
 
         <ImageView

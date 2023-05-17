@@ -40,6 +40,10 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
     List<OrderModel> listOrder;
     View view;
     Button btnTuChoiOrder,btnChapNhanOrder;
+
+//    public StatusOrderFragment() {
+//    }
+
     public StatusOrderFragment(StatusOrder statusOrder) {
         mStatusOrder = statusOrder;
     }
@@ -74,7 +78,7 @@ public class StatusOrderFragment extends Fragment implements SwipeRefreshLayout.
 //    }
 
     private void getOrders(StatusOrder mStatusOrder, String userId) {
-        apiService.getAllOrder(userId, mStatusOrder.name()).enqueue(new Callback<resObj<List<OrderModel>>>() {
+        apiService.getAllOrder(userId, String.valueOf(mStatusOrder)).enqueue(new Callback<resObj<List<OrderModel>>>() {
             @Override
             public void onResponse(Call<resObj<List<OrderModel>>> call, Response<resObj<List<OrderModel>>> response) {
                 if (response.isSuccessful()) {

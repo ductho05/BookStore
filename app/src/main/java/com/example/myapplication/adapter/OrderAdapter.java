@@ -3,6 +3,7 @@ package com.example.myapplication.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 Math.round(order.getPrice())) + "đ");
         holder.quality.setText("Số lượng: " + order.getQuantity() + " sản phẩm");
         Glide.with(context).load("https://www.facebook.com/photo/?fbid=1517457375429896&set=a.392833837892261").into(holder.images);
+
+
         }
     }
 
@@ -77,7 +80,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.MyViewHolder
                 public void onClick(View view) {
                     Bundle bundle = new Bundle();
                     bundle.putString("OrderId", id);
-                    bundle.putString("Status", Status);
+                    Log.e("OrderId", id);
                     Intent intent = new Intent(context, DetailOrderItemActivity.class);
                     intent.putExtras(bundle);
                     context.startActivity(intent);

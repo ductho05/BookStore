@@ -216,7 +216,7 @@
                     android:buttonTint="@color/primary_color"
                     android:checked="true"
                     android:paddingLeft="10dp"
-                    android:text="Giao hàng tiêu chuẩn: "
+                    android:text="Giao hàng tiêu chuẩn "
                     android:textColor="@color/text_color"
                     android:textSize="16sp"
                     android:textStyle="bold">
@@ -250,12 +250,13 @@
                 android:layout_margin="20dp">
 
                 <RadioButton
+                    android:id="@+id/rb_payment_method"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/primary_color"
                     android:checked="true"
                     android:paddingLeft="10dp"
-                    android:text="Thanh toán bằng tiền mặt khi giao hàng"
+                    android:text="Thanh toán bằng tiền mặt khi nhận hàng"
                     android:textColor="@color/text_color"
                     android:textSize="16sp"
                     android:textStyle="bold">

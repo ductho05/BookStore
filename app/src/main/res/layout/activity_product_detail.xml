@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activity.productdetail.ProductDetailActivity">
 
+
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
@@ -58,6 +60,7 @@
         app:srcCompat="@drawable/outline_home_24" />
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
@@ -71,24 +74,25 @@
             android:id="@+id/btn_pdetail_cart"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            app:srcCompat="@drawable/baseline_shopping_cart_24"/>
+            app:srcCompat="@drawable/baseline_shopping_cart_24" />
 
         <TextView
             android:id="@+id/quantityCart"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:text="0"
-            android:textSize="14sp"
-            android:textColor="@android:color/white"
-            android:background="@drawable/circle_background"
             android:layout_gravity="top|end"
-            android:gravity="center"/>
+            android:background="@drawable/circle_background"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
 
     </FrameLayout>
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
+
         android:layout_height="0dp"
         android:layout_marginBottom="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -96,6 +100,7 @@
         app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,7 +130,19 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:translationX="340dp"
+                app:tint="@color/red"
                 app:srcCompat="@drawable/heart" />
+            <ImageView
+                android:id="@+id/btn_heart_on"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:translationX="340dp"
+                android:visibility="gone"
+                app:srcCompat="@drawable/heart_on"
+                 />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -488,6 +505,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal"
@@ -532,8 +550,8 @@
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:layout_marginTop="2dp"
-            android:layout_weight="1"
             android:layout_marginBottom="2dp"
+            android:layout_weight="1"
             android:background="@color/teal_200"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
@@ -544,8 +562,8 @@
             android:layout_width="130dp"
             android:layout_height="match_parent"
             android:layout_marginTop="2dp"
-            android:layout_weight="1"
             android:layout_marginBottom="2dp"
+            android:layout_weight="1"
             android:background="@color/primary_color"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
@@ -554,5 +572,25 @@
             android:textColor="@color/white"
             android:textSize="16dp"
             android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fameload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBarDetailProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+                        android:visibility="gone"
+            ></ProgressBar>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

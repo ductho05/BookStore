@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.LayoutInflater;
@@ -18,7 +19,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,7 @@ import com.example.myapplication.model.CartItem;
 import com.example.myapplication.model.CartItemModel;
 import com.example.myapplication.model.CartModel;
 import com.example.myapplication.model.Evaluate;
+import com.example.myapplication.model.Favorite;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.resObj;
@@ -57,11 +61,14 @@ public class ProductDetailActivity extends AppCompatActivity {
     ImageView btn_pdetail_back;
     TextView btn_pdetail_search;
     ImageView btn_pdetail_home;
+    ScrollView scrollView2;
+    Handler handler = new Handler();
     ImageView btn_pdetail_cart;
-    ImageView btn_heart;
+    ImageView btn_heart, btn_heart_on;
     TextView tv_discount_price;
     ImageView btn_add_to_cart;
 
+    ProgressBar progressBar;
     ImageView images;
     TextView title;
     TextView price;
@@ -91,10 +98,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_detail);
 
         AnhXa();
-        ClickToThing();
+
         SetFrontEnd();
         Intent intent = getIntent();
         String _id = intent.getStringExtra("_id");
+        ClickToThing(_id);
+        ckeckFavorite(_id, user);
         displayProduct(_id);
         setProductIntro();
         setProductCare(_id);
@@ -276,11 +285,65 @@ public class ProductDetailActivity extends AppCompatActivity {
         }));
     }
 
-    private void ClickToThing() {
+    Runnable hideProgressBarRunnable = new Runnable() {
+        @Override
+        public void run() {
+            progressBar.setVisibility(View.GONE);
+            scrollView2.setAlpha(1);
+        }
+    };
+
+    private void ckeckFavorite(String id, String user) {
+        ApiService.apiService.checkFavorite(user, id).enqueue(new Callback<resObj<Favorite>>() {
+            @Override
+            public void onResponse(Call<resObj<Favorite>> call, Response<resObj<Favorite>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Favorite favoriteModel = response.body().getData();
+                    if (favoriteModel != null) {
+                        btn_heart.setVisibility(View.GONE);
+                        btn_heart_on.setVisibility(View.VISIBLE);
+                    } else {
+                        btn_heart.setVisibility(View.VISIBLE);
+                        btn_heart_on.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<resObj<Favorite>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void ClickToThing(String id) {
         btn_pdetail_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        btn_heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addFavorite(getFavorite(id));
+                btn_heart.setVisibility(View.GONE);
+                btn_heart_on.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
+                scrollView2.setAlpha(0.5f);
+                handler.postDelayed(hideProgressBarRunnable, 500);
+            }
+        });
+        btn_heart_on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteFavorite(getFavorite(id));
+                btn_heart.setVisibility(View.VISIBLE);
+                btn_heart_on.setVisibility(View.GONE);
+                scrollView2.setAlpha(0.5f);
+                progressBar.setVisibility(View.VISIBLE);
+                handler.postDelayed(hideProgressBarRunnable, 500);
             }
         });
     }
@@ -333,6 +396,52 @@ public class ProductDetailActivity extends AppCompatActivity {
                 Log.e("QuantityCart Item: ", t.getMessage());
             }
         });
+    }
+
+    private Favorite getFavorite(String id){
+        Favorite favorite = new Favorite();
+        favorite.setProductid(id);
+        favorite.setUserid(user);
+        return favorite;
+    }
+
+    private void addFavorite(Favorite favorite) {
+        ApiService.apiService.addFavorite(favorite).enqueue(new Callback<resObj<Favorite>>() {
+            @Override
+            public void onResponse(Call<resObj<Favorite>> call, Response<resObj<Favorite>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(ProductDetailActivity.this, "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<resObj<Favorite>> call, Throwable t) {
+                Log.e("Add Favorite: ", t.getMessage());
+            }
+        });
+    }
+
+    private void deleteFavorite(Favorite favorite) {
+        ApiService.apiService.deleteFavorite(favorite).enqueue(new Callback<resObj<Favorite>>() {
+            @Override
+            public void onResponse(Call<resObj<Favorite>> call, Response<resObj<Favorite>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(ProductDetailActivity.this, "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<resObj<Favorite>> call, Throwable t) {
+                Log.e("Add Favorite: ", t.getMessage());
+            }
+        });
+    }
+
+    private Favorite GetFavorite() {
+        Favorite favorite = new Favorite();
+        favorite.setProductid(product.get_id());
+        favorite.setUserid(user);
+        return favorite;
     }
 
     private void setProductCare(String id) {
@@ -573,11 +682,13 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void AnhXa() {
+        progressBar = findViewById(R.id.progressBarDetailProduct);
         btn_pdetail_back = (ImageView) findViewById(R.id.btn_pdetail_back);
         btn_pdetail_search = findViewById(R.id.btn_pdetail_search);
         btn_pdetail_home = (ImageView) findViewById(R.id.btn_pdetail_home);
         btn_pdetail_cart = (ImageView) findViewById(R.id.btn_pdetail_cart);
         btn_heart = (ImageView) findViewById(R.id.btn_heart);
+        btn_heart_on = (ImageView) findViewById(R.id.btn_heart_on);
         tv_discount_price = (TextView) findViewById(R.id.tv_discount_price);
         btn_add_to_cart = (ImageView) findViewById(R.id.btn_add_to_cart);
         rv_readerCare = findViewById(R.id.rv_readerCare);
@@ -590,6 +701,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btn_minus = findViewById(R.id.btn_minus);
         btn_plus = findViewById(R.id.btn_plus);
         quantity = findViewById(R.id.quantity);
+        scrollView2 = findViewById(R.id.scrollView2);
         id  = findViewById(R.id.id);
         author = findViewById(R.id.author);
         description = findViewById(R.id.description);

@@ -33,7 +33,7 @@ public class StatusOrderAdapter extends FragmentStatePagerAdapter {
                 case 3:
                     return new StatusOrderFragment(StatusOrder.DAGIAO);
                 case 4:
-                    return new StatusOrderFragment(StatusOrder.DANHGIA);
+                    return new StatusOrderFragment(StatusOrder.HUY);
                 default:
                     return new StatusOrderFragment(StatusOrder.CHOXACNHAN);
 

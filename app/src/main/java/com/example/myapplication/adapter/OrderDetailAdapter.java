@@ -63,7 +63,6 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
                 new Locale("vi", "VN")).format(product.getOld_price())));
         holder.quantity.setText("x" + quantityProduct);
 
-
         if (!_status.equals("DAGIAO")) {
             holder.btn_eval.setEnabled(false);
             holder.btn_eval.setBackgroundColor(Color.rgb(245,246,250));

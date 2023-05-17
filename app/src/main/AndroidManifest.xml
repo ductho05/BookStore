@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,19 +14,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBook"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".activity.favorite.FavoriteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Seller.Activity.GraphViewCategoryActicity"
+            android:exported="false" />
+        <activity
+            android:name=".Seller.Activity.GraphViewUserActicity"
+            android:exported="false" />
+        <activity
+            android:name=".Seller.Activity.GraphViewOrderActicity"
+            android:exported="false" /> <!-- SELLER -->
+        <activity
+            android:name=".Seller.Activity.GraphViewProductActicity"
+            android:exported="false" />
+        <activity
+            android:name=".Seller.Activity.MainAdminActivity"
+            android:exported="false"></activity>
         <activity
             android:name=".activity.account.EvaluateActivity"
-            android:exported="false" >
-
-        </activity>
-        <!-- ĐƠN HÀNG -->
+            android:exported="false" /> <!-- ĐƠN HÀNG -->
         <activity
             android:name=".activity.order.StatusOrderActivity"
             android:exported="false" />
-        <activity android:name=".activity.order.DetailOrderItemActivity"
-            android:exported="false" />
-        <!-- home -->
+        <activity
+            android:name=".activity.order.DetailOrderItemActivity"
+            android:exported="false" /> <!-- home -->
         <activity
             android:name=".activity.productdetail.SeeMoreInfoProductDetail"
             android:exported="false"
@@ -39,7 +54,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.home.HomeActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

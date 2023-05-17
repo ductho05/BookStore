@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.activity.cart.CartActivity;
+import com.example.myapplication.activity.favorite.FavoriteActivity;
 import com.example.myapplication.activity.login.ProfileActivity;
 import com.example.myapplication.adapter.ProductDetailAdapter;
 import com.example.myapplication.adapter.SlideAdapter;
@@ -72,7 +73,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     List<Product> products;
 
 
-    LinearLayout btnUser, imgCart;
+    LinearLayout btnUser, imgCart, imgFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,13 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @SuppressLint("ClickableViewAccessibility")
     public void ClickOneThing() {
+        imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, FavoriteActivity.class);
+                startActivity(intent);
+            }
+        });
         imgCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -232,6 +240,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
 
     public void AnhXa() {
+        imgFavorite = findViewById(R.id.imgFavorite);
         imgCart = findViewById(R.id.imgCart);
         btnUser = findViewById(R.id.btnUser);
         tvNewSeeMore = findViewById(R.id.tvNewSeeMore);

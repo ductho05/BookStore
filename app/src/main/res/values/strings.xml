@@ -1,4 +1,26 @@
 <resources>
+     <string name="forgot_pass">
+        Forgot Password?
+    </string>
+    <string name="already_hav">
+        ALREADY HAVE AN ACCOUNT? SIGN UP
+    </string>
+    <string name="have_acc">
+         You have account ? Sign in now
+    </string>
+    <string name="Sign_in">
+        Sign in
+    </string>
+    <string name="Sign_up">
+        Thêm người dùng
+    </string>
+    <string name="login">
+       LOGIN
+    </string>
+    <string name="action_home">Home</string>
+    <string name="action_product">Products</string>
+    <string name="action_Order">Order</string>
+    <string name="action_account">User</string>
     <string name="app_name">ATQHBook</string>
     <string name="email">Email</string>
     <string name="sign_in_to_continue_to_chatvia17">Sign in to continue to Chatvia17</string>
@@ -14,7 +36,6 @@
     <string name="signin">Signin</string>
     <string name="done">Done</string>
     <string name="reset_password">Reset Password</string>
-
     <string name="content_signup" translatable="false">Don\'t you have an account?</string>
     <string name="signup" translatable="false">Signup now</string>
     <string name="sign_in" translatable="false">Sign in</string>

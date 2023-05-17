@@ -7,7 +7,5 @@ public enum StatusOrder {
     DANGGIAO,
     DAGIAO,
     HUY,
-    DANHGIA,
-    ;
 
 }

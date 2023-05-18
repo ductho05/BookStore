@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.example.myapplication.activity.account.AccountActivity;
 import com.example.myapplication.activity.account.LoginManager;
 import com.example.myapplication.activity.cart.CartActivity;
+import com.example.myapplication.activity.favorite.FavoriteActivity;
 import com.example.myapplication.activity.login.ProfileActivity;
 import com.example.myapplication.activity.productdetail.ProductDetailActivity;
 import com.example.myapplication.adapter.ProductDetailAdapter;
@@ -39,6 +40,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.Slide;
 import com.example.myapplication.model.resObj;
+import com.example.myapplication.seller.activity.MainAdminActivity;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -81,9 +83,10 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
     List<Product> products;
 
 
-    LinearLayout btnUser, imgCart;
-    private LoginManager loginManager;
 
+    LinearLayout btnUser, imgCart, imgFavorite;
+
+    private LoginManager loginManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +131,17 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @SuppressLint("ClickableViewAccessibility")
     public void ClickOneThing() {
+        imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!loginManager.isLoggedIn()) {
+                    noticeNotLogedIn();
+                } else {
+                    Intent intent = new Intent(HomeActivity.this, FavoriteActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
         imgCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,8 +159,13 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             public void onClick(View view) {
 
                 if (loginManager.isLoggedIn()) {
-                    Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
-                    startActivity(intent);
+                    if (loginManager.isManager()) {
+                        Intent intent = new Intent(HomeActivity.this, MainAdminActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+                        startActivity(intent);
+                    }
                 } else {
                     Intent intent = new Intent(HomeActivity.this, AccountActivity.class);
                     startActivity(intent);
@@ -287,6 +306,7 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
 
     public void AnhXa() {
+        imgFavorite = findViewById(R.id.imgFavorite);
         imgCart = findViewById(R.id.imgCart);
         btnUser = findViewById(R.id.btnUser);
         tvNewSeeMore = findViewById(R.id.tvNewSeeMore);

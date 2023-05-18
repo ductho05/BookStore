@@ -79,7 +79,7 @@ public class LoginFragment extends Fragment {
                                 Log.e("tesst sai mat khau: ", "test");
                                 noticeFailedLogin();
                             } else {
-                                loginManager.saveLogin(id, true);
+                                loginManager.saveLogin(id, true, user.getManager());
                                 Intent intent = new Intent(getContext(), HomeActivity.class);
                                 intent.putExtra("isLogin", true);
                                 startActivity(intent);

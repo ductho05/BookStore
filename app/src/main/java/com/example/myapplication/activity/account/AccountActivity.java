@@ -13,7 +13,7 @@ import android.widget.TableLayout;
 
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.LoginAdapter;
-import com.example.myapplication.adapter.ViewPagerAdapter;
+
 import com.google.android.material.tabs.TabLayout;
 
 public class AccountActivity extends AppCompatActivity {

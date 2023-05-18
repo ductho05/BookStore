@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBook"
         android:usesCleartextTraffic="true"
-        tools:targetApi="tiramisu">
+        tools:targetApi="31">
         <activity
             android:name=".seller.activity.UpdateProductActivity"
             android:exported="false" />
@@ -22,14 +22,26 @@
             android:name=".seller.activity.AddProductActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.home.HomeActivity"
+            android:name=".seller.activity.MainAdminActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.account.AccountActivity"
+            android:name=".activity.account.AccountActivity"/>
+        <activity
+            android:name=".seller.activity.GraphViewCategoryActicity"
             android:exported="false" />
+        <activity
+            android:name=".seller.activity.GraphViewOrderActicity"
+            android:exported="false" /> <!-- SELLER -->
+        <activity
+            android:name=".seller.activity.GraphViewProductActicity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.home.HomeActivity"
+            android:exported="false"/>
         <activity
             android:name=".activity.account.EvaluateActivity"
             android:exported="false" /> <!-- ĐƠN HÀNG -->
+      <!-- ĐƠN HÀNG -->
         <!-- ĐƠN HÀNG -->
         <activity
             android:name=".activity.order.StatusOrderActivity"

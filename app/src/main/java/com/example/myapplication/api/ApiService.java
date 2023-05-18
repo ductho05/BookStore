@@ -1,12 +1,14 @@
 package com.example.myapplication.api;
 
 
+import com.example.myapplication.Seller.Model.RateModel;
 import com.example.myapplication.model.Cart;
 import com.example.myapplication.model.CartItem;
 import com.example.myapplication.model.CartItemModel;
 import com.example.myapplication.model.CartModel;
 import com.example.myapplication.model.Evaluate;
 import com.example.myapplication.model.EvaluateModel;
+import com.example.myapplication.model.Favorite;
 import com.example.myapplication.model.Order;
 import com.example.myapplication.model.OrderItem;
 
@@ -46,13 +48,22 @@ public interface ApiService {
 
             //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
 
+            //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
+            //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
+
+            //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
+            //.baseUrl("http://192.168.1.123:3000/bookstore/api/v1/") // becoffe
+            //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
+            //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng Thọ
+            .baseUrl("http://192.168.239.29:3000/bookstore/api/v1/")// Cổng dành cho Mạng
+
            //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
             //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
             //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng
             //.baseUrl("http://192.168.1.73:3000/bookstore/api/v1/") // becoffe
             //.baseUrl("http://192.168.1.123:3000/bookstore/api/v1/") // becoffe
             //.baseUrl("http://192.168.2.13:3000/bookstore/api/v1/") // Cổng dành cho Wifi nhà
-            .baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng Thọ
+            //.baseUrl("http://192.168.43.204:3000/bookstore/api/v1/") // Cổng dành cho Mạng Thọ
             //.baseUrl("http://192.168.47.147:3000/bookstore/api/v1/")// Cổng dành cho Mạng
             //.baseUrl("http://192.168.1.30:3000/bookstore/api/v1/")
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -76,12 +87,35 @@ public interface ApiService {
     @POST("orderitems/order")
     Call<resObj<List<OrderItemModel>>> getOrderItemByOrder(@Query("id") String id);
 
+
+
     // update orderitem
     @PUT("orderitems/update/{id}")
     Call<resObj<OrderItem>> updateOrderItem(@Path("id") String id, @Body OrderItem orderItem);
 
-    @GET("products/{id}")
+    @GET("products/id/{id}")
     Call<resObj<Product>> getProductById(@Path("id") String _id);
+
+    // FAVORITE ***********************************
+
+    // thêm sản phẩm vào danh sách yêu thích
+    @POST("favorites/add")
+    Call<resObj<Favorite>> addFavorite(@Body Favorite favorite);
+
+    // Lấy danh sách sản phẩm yêu thích
+    @GET("favorites")
+    Call<resObj<List<Favorite>>> getFavorite(@Query("userid") String userid, @Query("productid") String productid);
+
+
+
+
+    // Check sản phẩm đã có trong danh sách yêu thích chưa
+    @GET("favorites/check")
+    Call<resObj<Favorite>> checkFavorite(@Query("userid") String userid, @Query("productid") String productid);
+    // Xóa sản phẩm khỏi danh sách yêu thích
+    @POST("favorites/delete")
+    Call<resObj<Favorite>> deleteFavorite(@Body Favorite favorite);
+
 
     // ORDER ******************************************
     @GET("orders")
@@ -114,7 +148,16 @@ public interface ApiService {
                                                   @Query("num") int num
     );
 
+    // ADMIN ***********************************
+    // Đếm số lượng sản phẩm có rate = 5
+    @GET("products/rate")
+    Call<resObj<List<RateModel>>> countProductByRate();
 
+    // Phân loại đơn hàng theo trạng thái
+    @GET("orders/status")
+    Call<resObj<List<OrderModel>>> countOrderByStatus(
+            @Query("status") String status
+    );
 
 
 

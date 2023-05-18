@@ -17,10 +17,11 @@ public class LoginManager {
         this.sharedPreferences = sharedPreferences;
     }
 
-    public void saveLogin(String id, Boolean isLogin) {
+    public void saveLogin(String id, Boolean isLogin, Boolean isManager) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("id", id);
         editor.putBoolean("isLoggedIn", isLogin);
+        editor.putBoolean("isManager", isManager);
         editor.apply();
     }
 
@@ -28,6 +29,9 @@ public class LoginManager {
         return sharedPreferences.getBoolean("isLoggedIn", false);
     }
 
+    public boolean isManager() {
+        return sharedPreferences.getBoolean("isManager", false);
+    }
     public void logout() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("token");

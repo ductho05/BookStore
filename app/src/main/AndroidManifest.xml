@@ -16,6 +16,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".seller.activity.UpdateProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".seller.activity.AddProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.home.HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.account.AccountActivity"
             android:exported="false" />
         <activity
@@ -25,9 +34,9 @@
         <activity
             android:name=".activity.order.StatusOrderActivity"
             android:exported="false" />
-        <activity android:name=".activity.order.DetailOrderItemActivity"
-            android:exported="false" />
-        <!-- home -->
+        <activity
+            android:name=".activity.order.DetailOrderItemActivity"
+            android:exported="false" /> <!-- home -->
         <activity
             android:name=".activity.productdetail.SeeMoreInfoProductDetail"
             android:exported="false"
@@ -39,7 +48,7 @@
             android:name=".activity.home.CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.home.HomeActivity"
+            android:name=".seller.activity.ManagerProductActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,12 +81,15 @@
         <activity
             android:name=".activity.productdetail.ProductDetailActivity"
             android:exported="false" />
-        <activity android:name=".activity.coupon.CouponActivity"
-            android:exported="false"/>
-        <activity android:name=".activity.forgotpassword.ForgetPasswordActivity"
-            android:exported="false"/>
-        <activity android:name=".activity.notification.NotificationActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".activity.coupon.CouponActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.forgotpassword.ForgetPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.notification.NotificationActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

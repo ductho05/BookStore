@@ -15,6 +15,7 @@ import com.example.myapplication.model.Category;
 import com.example.myapplication.model.OrderItemModel;
 import com.example.myapplication.model.OrderModel;
 import com.example.myapplication.model.Product;
+import com.example.myapplication.model.ProductModel;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.resObj;
 import com.google.gson.Gson;
@@ -98,6 +99,9 @@ public interface ApiService {
     // hiển thị 8 sách bán chạy nhất
     @GET("products/bestseller/{num})")
     Call<resObj<ArrayList<Product>>> getBestSellerProduct(@Path("num") String num);
+
+    @POST("products/add")
+    Call<resObj<ProductModel>> InsertProduct(@Body ProductModel product);
 
     // hiển thị 8 sách bán rẻ nhất
     @GET("products/sale/{num}")
